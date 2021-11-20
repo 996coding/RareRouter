@@ -14,7 +14,6 @@ buildscript {
 
 allprojects {
     repositories {
-        maven { url 'https://raw.githubusercontent.com/996coding/RouterMaven/main'}
         google()
         jcenter()
     }

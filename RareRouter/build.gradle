@@ -1,0 +1,31 @@
+apply plugin: 'java-library'
+apply plugin:'maven'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.google.auto.service:auto-service:1.0-rc3'
+    annotationProcessor 'com.google.auto.service:auto-service:1.0-rc3'
+}
+
+
+
+
+//uploadArchives {
+//    repositories.mavenDeployer {
+//        //maven 本地文件地址
+//        def mavenLib = file(getProperty('MavenPath'))
+//        repository(url: "file://${mavenLib.absolutePath}")
+//        pom.project {
+//            version RouterVersion
+//            groupId GROUDID
+//            artifactId ARTIFACTID
+//        }
+//    }
+//
+//}
+
+
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
+

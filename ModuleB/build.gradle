@@ -26,9 +26,6 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'
 
-    implementation 'com.lxf:RareRouter:1.0'
-    annotationProcessor 'com.lxf:RareRouter:1.0'
-
-//    implementation files('libs/RareRouter.jar')
-//    annotationProcessor files('libs/RareRouter.jar')
+    implementation project(path: ':RareRouter')
+    annotationProcessor project(path: ':RareRouter')
 }

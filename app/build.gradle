@@ -33,9 +33,6 @@ dependencies {
     implementation project(path: ':ModuleB')
 
 
-    implementation 'com.lxf:RareRouter:1.0'
-    annotationProcessor 'com.lxf:RareRouter:1.0'
-
-//    implementation files('libs/RareRouter.jar')
-//    annotationProcessor files('libs/RareRouter.jar')
+    implementation project(path: ':RareRouter')
+    annotationProcessor project(path: ':RareRouter')
 }
