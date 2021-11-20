@@ -1,0 +1,4 @@
+include ':ModuleB'
+include ':ModuleA'
+include ':app'
+rootProject.name = "RareRouter"
