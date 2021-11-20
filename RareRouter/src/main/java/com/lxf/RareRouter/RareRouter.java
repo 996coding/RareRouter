@@ -1,11 +1,11 @@
-package com.lxf.LxfRouter;
+package com.lxf.RareRouter;
 
 import com.lxf.init.RouteBean;
 import com.lxf.init.RouteMap;
 
 import java.lang.reflect.Proxy;
 
-public class RestfulRouter {
+public class RareRouter {
 
     public static <T> T create(final Class<T> service) {
         return (T) Proxy.newProxyInstance(service.getClassLoader(),

@@ -1,4 +1,4 @@
-package com.lxf.LxfRouter;
+package com.lxf.RareRouter;
 
 import com.lxf.Annotation.RouterMethod;
 import com.lxf.data.LxfDataFactory;

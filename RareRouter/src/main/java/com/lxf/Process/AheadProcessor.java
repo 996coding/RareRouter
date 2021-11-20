@@ -25,7 +25,7 @@ public class AheadProcessor extends BaseProcessor {
     private void genFlagJavaClass() {
         String CLASS_NAME = "RouteFlagClass" + System.currentTimeMillis();
         StringBuilder sb = new StringBuilder();
-        sb.append("package com.lxf.LxfRouter;\n");
+        sb.append("package com.lxf.RareRouter;\n");
         sb.append("import com.lxf.Annotation.FlagAnnotation;\n\n");
         sb.append("@FlagAnnotation\n");
         sb.append("public class " + CLASS_NAME + " { }\n");

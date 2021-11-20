@@ -140,10 +140,6 @@ public class ModuleInfo {
 //                    /*
 //                    分工程依赖、maven依赖
 //                     */
-//                    if (tmp.contains("':LxfRouter'")) {
-//                        module.isRelyRouter = true;
-//                        break;
-//                    }
 //                }
                 if (Application.isRely(tmp)) {
                     module.isRelyRouter = true;

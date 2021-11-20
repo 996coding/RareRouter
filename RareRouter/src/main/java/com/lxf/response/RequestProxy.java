@@ -1,6 +1,6 @@
 package com.lxf.response;
 
-import com.lxf.LxfRouter.DataType;
+import com.lxf.RareRouter.DataType;
 import com.lxf.init.RouteBean;
 import com.lxf.nozzle.JavaClassGetter;
 

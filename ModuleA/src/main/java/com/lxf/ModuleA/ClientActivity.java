@@ -3,15 +3,13 @@ package com.lxf.ModuleA;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
 import android.widget.TextView;
 
 import com.lxf.Annotation.RouterClass;
-import com.lxf.LxfRouter.RestfulRouter;
+import com.lxf.RareRouter.RareRouter;
 import com.lxf.data.LxfDataFactory;
 import com.lxf.data.RouterParcelable;
 
@@ -34,7 +32,7 @@ public class ClientActivity extends AppCompatActivity {
         setContentView(R.layout.activity_client);
 
         textView = findViewById(R.id.text_view);
-        getInfo = RestfulRouter.create(GetInfo.class);
+        getInfo = RareRouter.create(GetInfo.class);
 
         findViewById(R.id.client_btn_1).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,15 +116,15 @@ public class ClientActivity extends AppCompatActivity {
 
     public void funD() {
         Person person = new Person("Tom", "man", 10010);
-        Object aimObj = RestfulRouter.getModuleObj("data_people");
+        Object aimObj = RareRouter.getModuleObj("data_people");
         LxfDataFactory.convert(person, (RouterParcelable) aimObj);
 
-        Intent intent = new Intent(this, RestfulRouter.getActivityClass("that_is_activity"));
+        Intent intent = new Intent(this, RareRouter.getActivityClass("that_is_activity"));
         intent.putExtra("key", (Parcelable) aimObj);
         startActivity(intent);
     }
 
     public void funE() {
-        RestfulRouter.startAndroidComponent(this, "that_is_activity");
+        RareRouter.startAndroidComponent(this, "that_is_activity");
     }
 }
