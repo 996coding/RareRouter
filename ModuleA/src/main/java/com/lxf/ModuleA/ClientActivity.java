@@ -116,15 +116,15 @@ public class ClientActivity extends AppCompatActivity {
 
     public void funD() {
         Person person = new Person("Tom", "man", 10010);
-        Object aimObj = RareRouter.getModuleObj("data_people");
+        Object aimObj = RareRouter.annotationClsInstance("data_people");
         LxfDataFactory.convert(person, (RouterParcelable) aimObj);
 
-        Intent intent = new Intent(this, RareRouter.getActivityClass("that_is_activity"));
+        Intent intent = new Intent(this, RareRouter.annotationClass("that_is_activity"));
         intent.putExtra("key", (Parcelable) aimObj);
         startActivity(intent);
     }
 
     public void funE() {
-        RareRouter.startAndroidComponent(this, "that_is_activity");
+        RareRouter.startActivity(this, "that_is_activity");
     }
 }

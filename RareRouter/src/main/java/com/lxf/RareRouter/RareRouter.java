@@ -13,7 +13,7 @@ public class RareRouter {
                 new RouterHandler(service));
     }
 
-    public static Class<?> getActivityClass(String activityAnnotationPath) {
+    public static Class<?> annotationClass(String activityAnnotationPath) {
         RouteBean routeBean = RouteMap.getInstance().getClassRouteBean(activityAnnotationPath);
         if (routeBean == null) {
             return null;
@@ -21,7 +21,7 @@ public class RareRouter {
         return RouteMap.getInstance().getClazz(routeBean.pkgName);
     }
 
-    public static Object getModuleObj(String annotationPath) {
+    public static Object annotationClsInstance(String annotationPath) {
         RouteBean routeBean = RouteMap.getInstance().getClassRouteBean(annotationPath);
         if (routeBean == null) {
             return null;
@@ -29,8 +29,8 @@ public class RareRouter {
         return RouteMap.getInstance().getObject(routeBean.pkgName);
     }
 
-    public static void startAndroidComponent(Object context, String activityAnnotationPath) {
-        Class<?> cls = getActivityClass(activityAnnotationPath);
+    public static void startActivity(Object context, String activityAnnotationPath) {
+        Class<?> cls = annotationClass(activityAnnotationPath);
         if (cls == null) {
             return;
         }
