@@ -1,4 +1,4 @@
-package com.lxf.RareRouter;
+package com.lxf.Router;
 
 public interface RareInterface {
     /*

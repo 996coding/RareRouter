@@ -1,4 +1,4 @@
-package com.lxf.RareRouter;
+package com.lxf.Router;
 
 import com.lxf.data.RouterParcelable;
 import com.lxf.init.RouteBean;

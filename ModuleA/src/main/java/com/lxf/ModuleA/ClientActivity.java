@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.lxf.Annotation.RouterClass;
-import com.lxf.RareRouter.RareRouter;
+import com.lxf.RareRouter;
 import com.lxf.data.LxfDataFactory;
 import com.lxf.data.RouterParcelable;
 

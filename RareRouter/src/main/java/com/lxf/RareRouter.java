@@ -1,4 +1,6 @@
-package com.lxf.RareRouter;
+package com.lxf;
+
+import com.lxf.Router.RareInterfaceImp;
 
 public class RareRouter {
 

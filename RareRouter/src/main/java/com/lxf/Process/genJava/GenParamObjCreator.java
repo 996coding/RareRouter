@@ -1,6 +1,6 @@
 package com.lxf.Process.genJava;
 
-import com.lxf.RareRouter.DataType;
+import com.lxf.Router.DataType;
 import com.lxf.Process.configure.TxtPath;
 import com.lxf.Process.genTxt.TxtReader;
 
