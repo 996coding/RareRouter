@@ -18,6 +18,7 @@ import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
+import javax.lang.model.element.Modifier;
 import javax.lang.model.element.VariableElement;
 
 @AutoService(Processor.class)
@@ -47,19 +48,24 @@ public class CoreProcessor extends BaseProcessor {
             if (setMethod != null && setMethod.size() > 0) {
                 for (Element e : setMethod) {
                     Bean bean = scanMethodAnnotation(e, RouterMethod.class);
-                    this.beanSet.add(bean);
+                    if (bean != null) {
+                        this.beanSet.add(bean);
+                    }
                 }
             }
             if (setClass != null && setClass.size() > 0) {
                 for (Element e : setClass) {
                     Bean bean = scanClassAnnotation(e, RouterClass.class);
-                    this.beanSet.add(bean);
+                    if (bean != null) {
+                        this.beanSet.add(bean);
+                    }
                 }
             }
         }
     }
 
     public Bean scanClassAnnotation(Element e, Class<RouterClass> clazz) {
+
         /*
         需要获取：
         1、注解RouterClass的path值；
@@ -70,13 +76,90 @@ public class CoreProcessor extends BaseProcessor {
          */
         String path = e.getAnnotation(clazz).path();
         String pkgName = e.asType().toString();
-        String isInterface = e.getKind().toString().toLowerCase().equals("interface") ? "1" : "0";
 
-        Bean bean = new Bean(path, pkgName, isInterface);
+        /*
+        合法性检查：
+        1、是否修饰class ？
+        2、访问权限是否 public、abstract?
+        3、是否为interface ?
+         */
+        if (!e.getKind().name().toLowerCase().equals("class")) {
+            return null;
+        }
+        Set<Modifier> modifiers = e.getModifiers();
+        if (modifiers != null) {
+            boolean isPublic = false, isAbstract = false;
+            for (Modifier m : modifiers) {
+                if (m.name().toLowerCase().equals("public")) {
+                    isPublic = true;
+                }
+                if (m.name().toLowerCase().equals("abstract")) {
+                    isAbstract = true;
+                }
+            }
+            if (!isPublic || isAbstract) {
+                return null;
+            }
+        }
+
+        Bean bean = new Bean(path, pkgName, "0");
         return bean;
     }
 
     public Bean scanMethodAnnotation(Element e, Class<RouterMethod> clazz) {
+        /*
+        合法性检查：
+        1、是否修饰method ？
+        2、访问权限是否 public?
+        3、所在的类必须是 class或者interface ?
+         */
+        if (!e.getKind().name().toLowerCase().equals("method")) {
+            return null;
+        }
+        boolean isStatic = false, isPublic = false, isAbstract = false;
+        Set<Modifier> methodModifiers = e.getModifiers();
+        if (methodModifiers != null) {
+            for (Modifier m : methodModifiers) {
+                if (m.name().toLowerCase().equals("public")) {
+                    isPublic = true;
+                }
+                if (m.name().toLowerCase().equals("abstract")) {
+                    isAbstract = true;
+                }
+                if (m.name().toLowerCase().equals("static")) {
+                    isStatic = true;
+                }
+            }
+        }
+        if (!isPublic) {
+            return null;
+        }
+        boolean isClass = false, isInterface = false;
+        Element classElement = e.getEnclosingElement();
+        isClass = classElement.getKind().toString().toLowerCase().equals("class");
+        isInterface = classElement.getKind().toString().toLowerCase().equals("interface");
+        if (!isClass && !isInterface) {
+            return null;
+        }
+        Set<Modifier> classModifiers = classElement.getModifiers();
+        boolean isClsPublic = false, isClsAbstract = false;
+        if (classModifiers != null) {
+            for (Modifier m : classModifiers) {
+                if (m.name().toLowerCase().equals("public")) {
+                    isClsPublic = true;
+                }
+                if (m.name().toLowerCase().equals("abstract")) {
+                    isClsAbstract = true;
+                }
+            }
+        }
+        if (!isClsPublic) {
+            return null;
+        }
+        if (isClass && isClsAbstract) {
+            return null;
+        }
+
         /*
         需要获取：
         1、注解RouterMethod的path值；
@@ -86,10 +169,8 @@ public class CoreProcessor extends BaseProcessor {
         5、注解修饰方法的参数的包名；
          */
         String path = e.getAnnotation(clazz).path();
-        Element element = e.getEnclosingElement();
-        String pkgName = element.asType().toString();
+        String pkgName = classElement.asType().toString();
         String method = e.getSimpleName().toString();
-        String isInterface = element.getKind().toString().toLowerCase().equals("interface") ? "1" : "0";
 
         ExecutableElement exe = (ExecutableElement) e;
         String returnType = exe.getReturnType().toString();
@@ -100,7 +181,7 @@ public class CoreProcessor extends BaseProcessor {
             paramsList.add(v.asType().toString());
         }
 
-        Bean bean = new Bean(path, pkgName, method, returnType, paramsList, isInterface);
+        Bean bean = new Bean(path, pkgName, method, returnType, paramsList, (isInterface ? "1" : "0"));
         return bean;
     }
 
@@ -138,7 +219,7 @@ public class CoreProcessor extends BaseProcessor {
                     clazzBody.append(space);
                     clazzBody.append(clazzNum + "、注解值：");
                     clazzBody.append(bean.path);
-                    clazzBody.append(getSpaceString(25-bean.path.length()));
+                    clazzBody.append(getSpaceString(25 - bean.path.length()));
                     clazzBody.append("包名：");
                     clazzBody.append(bean.pkgName);
                     clazzBody.append("\n");
@@ -147,10 +228,10 @@ public class CoreProcessor extends BaseProcessor {
                     methodBody.append(space);
                     methodBody.append(methodNum + "、注解值：");
                     methodBody.append(bean.path);
-                    methodBody.append(getSpaceString(25-bean.path.length()));
+                    methodBody.append(getSpaceString(25 - bean.path.length()));
                     methodBody.append("方法名：");
                     methodBody.append(bean.method);
-                    methodBody.append(getSpaceString(20-bean.method.length()));
+                    methodBody.append(getSpaceString(20 - bean.method.length()));
                     methodBody.append("包名：");
                     methodBody.append(bean.pkgName);
                     methodBody.append("\n");
