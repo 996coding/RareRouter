@@ -14,6 +14,10 @@ public final class RouteBean {
     String type = 0; 代表　类
     String type = 1; 代表　方法
     String type = 2; 代表　静态变量/类变量
+
+    对于 type=1 方法，进行位数扩展：
+    第 2 位，0 代表 该方法有实现体， 1 代表 这是一个 interface;
+    第 3 位，0 代表 该方法为静态 static；
      */
     public final String type;
 

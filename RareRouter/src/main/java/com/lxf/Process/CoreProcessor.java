@@ -180,8 +180,12 @@ public class CoreProcessor extends BaseProcessor {
             VariableElement v = params.get(i);
             paramsList.add(v.asType().toString());
         }
+        StringBuilder sb_type = new StringBuilder();
+        sb_type.append("1");
+        sb_type.append(isInterface ? "1" : "0");
+        sb_type.append(isStatic ? "0" : "1");
 
-        Bean bean = new Bean(path, pkgName, method, returnType, paramsList, (isInterface ? "1" : "0"));
+        Bean bean = new Bean(sb_type.toString(), path, pkgName, method, returnType, paramsList, (isInterface ? "1" : "0"));
         return bean;
     }
 

@@ -19,7 +19,7 @@ public class GenMethodImpClazzProvider {
         sb.append("import com.lxf.response.AimClassImp;\n");
         sb.append("import com.lxf.nozzle.FunImpClazz;\n\n");
         sb.append("public class " + CLASS_NAME + " implements FunImpClazz {\n\n");
-        sb.append("    @Override");
+        sb.append("    @Override\n");
         sb.append("    public AimClass create(String pkgFullName) {\n\n");
         for (String clazz : set) {
             sb.append(ifSentence(clazz));

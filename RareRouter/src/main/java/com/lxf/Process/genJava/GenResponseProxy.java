@@ -2,6 +2,7 @@ package com.lxf.Process.genJava;
 
 import com.lxf.Process.base.Bean;
 import com.lxf.response.RequestProxy;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,7 +12,15 @@ public class GenResponseProxy {
     public static Set<String> genJavaResponseProxy(Set<Bean> beanSet, FilerGen filerGen) {
         Set<String> set = new HashSet<>();
         for (Bean bean : beanSet) {
-            if ("1".equals(bean.isInterface) || !"1".equals(bean.type)) {
+            if (bean.type == null) {
+                continue;
+            }
+            if ("1".equals(bean.isInterface)) {
+                continue;
+            }
+            if (bean.type.startsWith("1")) {
+
+            } else {
                 continue;
             }
             String classFullName = RequestProxy.getProxyPkgName(bean.pkgName, bean.method, bean.paramsList);

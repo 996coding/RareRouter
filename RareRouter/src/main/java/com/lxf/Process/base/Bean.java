@@ -13,7 +13,19 @@ public class Bean {
     public final String isInterface;
     public final String type;
 
-    public Bean(String path, String pkgName, String method, String returnType, List<String> pList, String isInterface) {
+     /*
+    结合 RouteBean 看。
+
+   String type = 0; 代表　类
+   String type = 1; 代表　方法
+   String type = 2; 代表　静态变量/类变量
+
+   对于 type=1 方法，进行位数扩展：
+   第 2 位，0 代表 该方法有实现体， 1 代表 这是一个 interface;
+   第 3 位，0 代表 该方法为静态 static；
+    */
+
+    public Bean(String type, String path, String pkgName, String method, String returnType, List<String> pList, String isInterface) {
         this.path = path;
         this.pkgName = pkgName;
         this.method = method;
@@ -24,8 +36,9 @@ public class Bean {
             this.paramsList = pList;
         }
         this.isInterface = isInterface;
-        this.type = "1";
+        this.type = type;
     }
+
 
     public Bean(String path, String pkgName, String isInterface) {
         this.path = path;
@@ -74,10 +87,13 @@ public class Bean {
         String isInterface = isInterface_tmp.substring(isInterface_tmp.indexOf("=") + 1);
         String type = type_tmp.substring(type_tmp.indexOf("=") + 1);
 
+        if (type == null || type.length() == 0) {
+            return null;
+        }
         Bean bean = null;
-        if ("0".equals(type)) {
+        if (type.startsWith("0")) {
             bean = new Bean(path, pkgName, isInterface);
-        } else if ("1".equals(type)) {
+        } else if (type.startsWith("1")) {
             String[] paramsArr = paramsList.split("-");
             List<String> list = new ArrayList<>();
             if (paramsArr != null && paramsArr.length > 0) {
@@ -85,7 +101,7 @@ public class Bean {
                     list.add(paramsArr[i]);
                 }
             }
-            bean = new Bean(path, pkgName, method, returnType, list, isInterface);
+            bean = new Bean(type, path, pkgName, method, returnType, list, isInterface);
         }
         return bean;
     }
