@@ -15,7 +15,7 @@ public class MasterRouteTable implements RouterTable {
     private final int TypeMethodImp = 2;
 
     private List<RouterTable> tableList = null;
-    private Set<Integer> routerIdSet;
+    private Set<String> routerIdSet;
 
     private MasterRouteTable() {
         tableList = new ArrayList<>();
@@ -41,8 +41,8 @@ public class MasterRouteTable implements RouterTable {
     }
 
     @Override
-    public final int routerID() {
-        return 0;
+    public final String routerID() {
+        return "master_router_table";
     }
 
     @Override

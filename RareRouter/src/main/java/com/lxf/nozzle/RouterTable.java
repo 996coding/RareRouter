@@ -5,7 +5,7 @@ import com.lxf.init.RouteBean;
 public interface RouterTable {
     boolean isMasterTable();
 
-    int routerID();
+    String routerID();
 
     RouteBean clazzTableItem(String annotationPath);
 

@@ -5,8 +5,8 @@ import com.lxf.nozzle.AbsSlaveRouteTable;
 
 public class SlaveRouteTable extends AbsSlaveRouteTable {
     @Override
-    public int routerID() {
-        return 0;
+    public String routerID() {
+        return this.getClass().getName();
     }
 
     @Override

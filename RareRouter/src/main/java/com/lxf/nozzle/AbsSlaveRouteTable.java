@@ -10,7 +10,7 @@ public abstract class AbsSlaveRouteTable implements RouterTable {
     }
 
     @Override
-    public abstract int routerID();
+    public abstract String routerID();
 
     @Override
     public abstract RouteBean clazzTableItem(String annotationPath);
