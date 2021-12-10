@@ -5,6 +5,7 @@ import java.util.Set;
 public class GenMethodImpClazzProvider {
 
     public static final String CLASS_NAME = "MethodImpClazzProvider";
+    private static final String CLASS_PKG = "com.lxf.genCode.";
 
     public static void genAimClassCreator(Set<String> set, FilerGen filerGen) {
         String clazzStr = createClassStr(set);
@@ -34,7 +35,7 @@ public class GenMethodImpClazzProvider {
     private static String ifSentence(String classFullName) {
         StringBuilder sb = new StringBuilder();
         sb.append("        if (pkgFullName.equals(\"" + classFullName + "\")) {\n");
-        sb.append("            return new " + classFullName + "();\n");
+        sb.append("            return new "+CLASS_PKG + classFullName + "();\n");
         sb.append("        }\n");
         return sb.toString();
     }

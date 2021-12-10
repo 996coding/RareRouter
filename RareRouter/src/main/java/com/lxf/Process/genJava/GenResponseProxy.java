@@ -42,8 +42,9 @@ public class GenResponseProxy {
     }
 
     private static String createImport(Bean bean) {
-        String pkg = bean.pkgName.substring(0, bean.pkgName.lastIndexOf("."));
-        return "package " + pkg + ";\n\n";
+//        String pkg = bean.pkgName.substring(0, bean.pkgName.lastIndexOf("."));
+//        return "package " + pkg + ";\n\n";
+        return "package com.lxf.genCode;\n\n";
     }
 
     private static String createClassHead(String classFullName) {
@@ -67,7 +68,7 @@ public class GenResponseProxy {
         if (!"void".equals(bean.returnType.toLowerCase())) {
             resultObj = "        this.object = ";
         }
-        sb.append(resultObj + "new " + classSimpleName + "()." + bean.method + "(");
+        sb.append(resultObj + "new " + bean.pkgName + "()." + bean.method + "(");
         for (int i = 0; i < bean.paramsList.size(); i++) {
             sb.append("(" + bean.paramsList.get(i) + ") objects[" + i + "]");
             if (i < bean.paramsList.size() - 1) {

@@ -14,7 +14,7 @@ public class RequestProxy {
 
     public static String getProxyPkgName(String pkgName, String method, List<String> paramsList) {
         StringBuilder sb = new StringBuilder();
-        sb.append(pkgName);
+        sb.append(pkgName.replace(".", "_"));
         sb.append("_");
         sb.append(method);
         for (String param : paramsList) {
