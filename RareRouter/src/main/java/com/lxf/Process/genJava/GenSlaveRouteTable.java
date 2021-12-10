@@ -1,37 +1,28 @@
 package com.lxf.Process.genJava;
 
 import com.lxf.Process.base.Bean;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 public class GenSlaveRouteTable {
 
-    public static final String CLASS_NAME = "SlaveRouteTable";
+    public static String CLASS_NAME = "SlaveRouteTable";
 
-    public static void genRouteInfo(Set<Bean> set, FilerGen filerGen) {
-        String clazzStr = createInfoClass(set);
-        filerGen.genJavaClass(clazzStr, CLASS_NAME);
-    }
-
-    private static String createInfoClass(List<Bean> beanList) {
+    public static void genRouteTable(Set<Bean> clsSet,Set<Bean> mAskSet,Set<Bean> mImpSet,FilerGen filerGen){
+        CLASS_NAME = CLASS_NAME + System.currentTimeMillis();
         StringBuilder sb = new StringBuilder();
         sb.append(infoImport());
         sb.append(infoHead());
 
+        sb.append(method_routerID());
+        sb.append(method_clazzTableItem(clsSet));
+        sb.append(method_methodAskTableItem(mAskSet));
+        sb.append(method_methodImpTableItem(mImpSet));
 
         sb.append(infoTail());
-        return sb.toString();
+        filerGen.genJavaClass(sb.toString(), CLASS_NAME);
     }
 
-    private static String createInfoClass(Set<Bean> beanSet) {
-        List<Bean> beanList = new ArrayList<>();
-        for (Bean bean : beanSet) {
-            beanList.add(bean);
-        }
-        return createInfoClass(beanList);
-    }
+
 
     private static String infoImport() {
         StringBuilder sb = new StringBuilder();
@@ -42,41 +33,70 @@ public class GenSlaveRouteTable {
     }
 
     private static String infoHead() {
-        return "public class " + GenRouteTable.CLASS_NAME + "  extends AbsSlaveRouteTable { \n\n";
+        return "public class " + CLASS_NAME + "  extends AbsSlaveRouteTable { \n\n";
     }
 
-//    private static String createMethod(List<Bean> beanList)
-
-
-    private static String infoFiled_Arr(List<Bean> beanList) {
+    private static String method_routerID(){
         StringBuilder sb = new StringBuilder();
-        sb.append("    public RouteBean[] arr = {");
-        sb.append("\n");
-        if (beanList != null && beanList.size() > 0) {
-            for (Bean bean : beanList) {
-                sb.append(create_sentence(bean));
-            }
-        }
-        sb.append("    };\n");
+        sb.append("    @Override\n");
+        sb.append("    public String routerID() {\n");
+        sb.append("        return this.getClass().getName();\n");
+        sb.append("    }\n\n");
         return sb.toString();
     }
 
-    private static String createImpFun() {
+
+    private static String method_clazzTableItem(Set<Bean> clsSet){
         StringBuilder sb = new StringBuilder();
-        sb.append("\n");
         sb.append("    @Override\n");
-        sb.append("    public RouteBean[] getRouteTable() {\n");
-        sb.append("        return arr;\n");
-        sb.append("    }\n");
+        sb.append("    public RouteBean clazzTableItem(String annotationPath) {\n");
+
+        for (Bean bean:clsSet){
+            sb.append("        if (\"" + bean.path + "\".equals(annotationPath)) {\n");
+            sb.append(create_sentence(bean));
+            sb.append("        }\n");
+        }
+
+        sb.append("        return null;\n");
+        sb.append("    }\n\n");
+        return sb.toString();
+    }
+
+    private static String method_methodAskTableItem(Set<Bean> mAskSet){
+        StringBuilder sb = new StringBuilder();
+        sb.append("    @Override\n");
+        sb.append("    public RouteBean methodAskTableItem(String pkgName) {\n");
+
+        for (Bean bean:mAskSet){
+            sb.append("        if (\"" + bean.pkgName + "\".equals(pkgName)) {\n");
+            sb.append(create_sentence(bean));
+            sb.append("        }\n");
+        }
+
+        sb.append("        return null;\n");
+        sb.append("    }\n\n");
+        return sb.toString();
+    }
+
+    private static String method_methodImpTableItem(Set<Bean> mImpSet){
+        StringBuilder sb = new StringBuilder();
+        sb.append("    @Override\n");
+        sb.append("    public RouteBean methodImpTableItem(String annotationPath) {\n");
+
+        for (Bean bean:mImpSet){
+            sb.append("        if (\"" + bean.path + "\".equals(annotationPath)) {\n");
+            sb.append(create_sentence(bean));
+            sb.append("        }\n");
+        }
+
+        sb.append("        return null;\n");
+        sb.append("    }\n\n");
         return sb.toString();
     }
 
     private static String create_sentence(Bean bean) {
-        if (bean == null) {
-            return "";
-        }
         StringBuilder sb = new StringBuilder();
-        sb.append("            ");
+        sb.append("            return ");
         sb.append("create(" +
                 "\"" + bean.type + "\", " +
                 "\"" + bean.isInterface + "\", " +
@@ -87,7 +107,7 @@ public class GenSlaveRouteTable {
         for (int i = 0; i < bean.paramsList.size(); i++) {
             sb.append(", \"" + bean.paramsList.get(i) + "\"");
         }
-        sb.append("),\n");
+        sb.append(");\n");
         return sb.toString();
     }
 

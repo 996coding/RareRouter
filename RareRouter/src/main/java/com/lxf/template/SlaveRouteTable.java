@@ -12,7 +12,7 @@ public class SlaveRouteTable extends AbsSlaveRouteTable {
     @Override
     public RouteBean clazzTableItem(String annotationPath) {
         if ("hello_get_info".equals(annotationPath)) {
-            create("1", "0", "hello_get_info", "com.lxf.ModuleB.QueryInfo", "getPersonName_Imp", "void", "android.content.Context", "int", "java.util.List<com.lxf.ModuleB.People>");
+            return create("1", "0", "hello_get_info", "com.lxf.ModuleB.QueryInfo", "getPersonName_Imp", "void", "android.content.Context", "int", "java.util.List<com.lxf.ModuleB.People>");
         }
         return null;
     }

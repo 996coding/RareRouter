@@ -6,6 +6,7 @@ import com.lxf.Annotation.RouterMethod;
 import com.lxf.Process.base.BaseProcessor;
 import com.lxf.Process.base.Bean;
 import com.lxf.Process.genJava.GenResponseProxy;
+import com.lxf.Process.genJava.GenSlaveRouteTable;
 import com.lxf.Process.genTxt.TxtLogger;
 import com.lxf.Process.genTxt.TxtWriter;
 
@@ -24,6 +25,9 @@ import javax.lang.model.element.VariableElement;
 @AutoService(Processor.class)
 public class CoreProcessor extends BaseProcessor {
     private Set<Bean> beanSet = new HashSet<>();
+    private Set<Bean> clsSet = new HashSet<>();
+    private Set<Bean> askSet = new HashSet<>();
+    private Set<Bean> impSet = new HashSet<>();
     private int processIndex = 0;
 
     @Override
@@ -42,6 +46,7 @@ public class CoreProcessor extends BaseProcessor {
 
         if (roundEnvironment.processingOver()) {
             genRecordRouteInfo();
+            GenSlaveRouteTable.genRouteTable(clsSet,askSet,impSet,filerGen);
         } else {
             Set<? extends Element> setMethod = roundEnvironment.getElementsAnnotatedWith(RouterMethod.class);
             Set<? extends Element> setClass = roundEnvironment.getElementsAnnotatedWith(RouterClass.class);
@@ -50,6 +55,11 @@ public class CoreProcessor extends BaseProcessor {
                     Bean bean = scanMethodAnnotation(e, RouterMethod.class);
                     if (bean != null) {
                         this.beanSet.add(bean);
+                        if (bean.isInterface.equals("1")){
+                            this.askSet.add(bean);
+                        }else {
+                            this.impSet.add(bean);
+                        }
                     }
                 }
             }
@@ -58,6 +68,7 @@ public class CoreProcessor extends BaseProcessor {
                     Bean bean = scanClassAnnotation(e, RouterClass.class);
                     if (bean != null) {
                         this.beanSet.add(bean);
+                        this.clsSet.add(bean);
                     }
                 }
             }
@@ -98,6 +109,7 @@ public class CoreProcessor extends BaseProcessor {
                 }
             }
             if (!isPublic || isAbstract) {
+                //如果是个接口，将会过滤掉
                 return null;
             }
         }
