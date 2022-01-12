@@ -1,7 +1,5 @@
 package com.lxf.protocol;
 
-public abstract class MethodProxy {
-    public Object methodReturn = null;
-
-    public abstract void proxy(Object... objects);
+public interface MethodProxy {
+    Object proxy(Object instance, String annotationPath, Object... parameters);
 }

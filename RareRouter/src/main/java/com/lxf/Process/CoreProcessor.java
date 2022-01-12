@@ -8,6 +8,7 @@ import com.lxf.Process.base.Bean;
 import com.lxf.Process.genJava.GenClazzBeansImpl;
 import com.lxf.Process.genJava.GenClazzHelperImpl;
 import com.lxf.Process.genJava.GenMethodBeansImpl;
+import com.lxf.Process.genJava.GenMethodProxyImpl;
 import com.lxf.Process.genJava.GenResponseProxy;
 import com.lxf.Process.genJava.GenSlaveRouteTable;
 import com.lxf.Process.genTxt.TxtLogger;
@@ -53,6 +54,7 @@ public class CoreProcessor extends BaseProcessor {
             GenClazzBeansImpl.gen(clsSet,filerGen);
             GenMethodBeansImpl.gen(askSet,impSet,filerGen);
             GenClazzHelperImpl.gen(clsSet,filerGen);
+            GenMethodProxyImpl.gen(impSet,filerGen);
         } else {
             Set<? extends Element> setMethod = roundEnvironment.getElementsAnnotatedWith(RouterMethod.class);
             Set<? extends Element> setClass = roundEnvironment.getElementsAnnotatedWith(RouterClass.class);
