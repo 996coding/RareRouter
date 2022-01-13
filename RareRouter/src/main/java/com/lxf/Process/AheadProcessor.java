@@ -8,6 +8,9 @@ import com.lxf.Process.configure.TxtPath;
 import com.lxf.Process.genJava.GenConfig;
 import com.lxf.Process.genTxt.TxtLogger;
 
+import java.io.File;
+import java.io.StringReader;
+
 import javax.annotation.processing.Processor;
 
 
@@ -67,18 +70,21 @@ public class AheadProcessor extends BaseProcessor {
 
 
     private void initModuleInfo(String genJavaPath) {
-        String projectPath = System.getProperty("user.dir");
-        String str1 = genJavaPath.replaceFirst(projectPath, "");
-        String str2 = str1.replace(FLAG_CLASS_NAME + ".java", "");
-        int genIndex = str2.lastIndexOf(GenConfig.PACKAGE_SUFFIX);
-        String dirPathSplit = str2.substring(genIndex + GenConfig.PACKAGE_SUFFIX.length());
-        int buildIndex = str2.indexOf(dirPathSplit + "build" + dirPathSplit);
-        String str3 = str2.substring(0, buildIndex);
-        modulePath = projectPath + str3;
-        moduleName = str3.replace(dirPathSplit, "");
+        rootProjectPath = System.getProperty("user.dir");
+        String strA = genJavaPath.replace(FLAG_CLASS_NAME + ".java", "");
+        int genIndex = strA.lastIndexOf(GenConfig.PACKAGE_SUFFIX);
+        String dirPathSplit = strA.substring(genIndex + GenConfig.PACKAGE_SUFFIX.length());
+        int buildIndex = strA.lastIndexOf(dirPathSplit + "build" + dirPathSplit);
+        String strB = strA.substring(0,buildIndex);
+        int lastDirSplitIndex = strB.lastIndexOf(dirPathSplit);
+        moduleName = strB.substring(lastDirSplitIndex+1);
 
-        print("--->>>  " + modulePath);
+        print("--->>>  " + rootProjectPath);
+        print("--->>>  " + strA);
+        print("--->>>  " + dirPathSplit);
+        print("--->>>  " + strB);
         print("--->>>  " + moduleName);
+
 
     }
 }
