@@ -3,11 +3,11 @@ package com.lxf.protocol;
 public interface RareInterface {
     String rareID();
 
-    ClazzBeans classBeans();
+    ClassBeans classBeans();
 
     MethodBeans methodBeans();
 
-    ClazzHelper classHelper();
+    RouterClazz routerClazz();
 
     MethodProxy methodProxy();
 

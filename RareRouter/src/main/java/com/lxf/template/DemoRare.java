@@ -1,8 +1,8 @@
 package com.lxf.template;
 
 
-import com.lxf.protocol.ClazzBeans;
-import com.lxf.protocol.ClazzHelper;
+import com.lxf.protocol.ClassBeans;
+import com.lxf.protocol.RouterClazz;
 import com.lxf.protocol.MethodBeans;
 import com.lxf.protocol.DateBean;
 import com.lxf.protocol.MethodProxy;
@@ -16,7 +16,7 @@ public class DemoRare implements RareInterface {
     }
 
     @Override
-    public ClazzBeans classBeans() {
+    public ClassBeans classBeans() {
         return null;
     }
 
@@ -26,7 +26,7 @@ public class DemoRare implements RareInterface {
     }
 
     @Override
-    public ClazzHelper classHelper() {
+    public RouterClazz routerClazz() {
         return null;
     }
 
@@ -39,6 +39,4 @@ public class DemoRare implements RareInterface {
     public DateBean dateBean() {
         return null;
     }
-
-
 }

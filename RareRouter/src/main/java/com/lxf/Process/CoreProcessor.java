@@ -6,8 +6,8 @@ import com.lxf.Annotation.RouterBean;
 import com.lxf.Annotation.RouterMethod;
 import com.lxf.Process.base.BaseProcessor;
 import com.lxf.Process.base.Bean;
-import com.lxf.Process.genJava.GenClazzBeansImpl;
-import com.lxf.Process.genJava.GenClazzHelperImpl;
+import com.lxf.Process.genJava.GenClassBeansImpl;
+import com.lxf.Process.genJava.GenRouterClazzImpl;
 import com.lxf.Process.genJava.GenDateBeanImpl;
 import com.lxf.Process.genJava.GenMethodBeansImpl;
 import com.lxf.Process.genJava.GenMethodProxyImpl;
@@ -54,9 +54,9 @@ public class CoreProcessor extends BaseProcessor {
         if (roundEnvironment.processingOver()) {
             genRecordRouteInfo();
 //            GenSlaveRouteTable.genRouteTable(clsSet,askSet,impSet,filerGen);
-            GenClazzBeansImpl.gen(clsSet, filerGen);
+            GenClassBeansImpl.gen(clsSet, filerGen);
             GenMethodBeansImpl.gen(askSet, impSet, filerGen);
-            GenClazzHelperImpl.gen(clsSet, filerGen);
+            GenRouterClazzImpl.gen(clsSet, filerGen);
             GenMethodProxyImpl.gen(impSet, filerGen);
             GenDateBeanImpl.gen(routerBeansSet,filerGen);
         } else {
