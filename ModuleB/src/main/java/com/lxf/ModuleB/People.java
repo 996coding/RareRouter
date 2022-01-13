@@ -1,9 +1,11 @@
 package com.lxf.ModuleB;
 
+import com.lxf.Annotation.RouterBean;
 import com.lxf.data.read.Reader;
 import com.lxf.data.RouterParcelable;
 import com.lxf.data.write.Writer;
 
+@RouterBean()
 public class People implements RouterParcelable {
     public String name_Server = "";
     public String sex_Server = "";

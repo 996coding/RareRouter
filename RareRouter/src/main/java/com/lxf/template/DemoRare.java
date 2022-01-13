@@ -4,7 +4,8 @@ package com.lxf.template;
 import com.lxf.protocol.ClazzBeans;
 import com.lxf.protocol.ClazzHelper;
 import com.lxf.protocol.MethodBeans;
-import com.lxf.protocol.MethodHelper;
+import com.lxf.protocol.DateBean;
+import com.lxf.protocol.MethodProxy;
 import com.lxf.protocol.RareInterface;
 
 public class DemoRare implements RareInterface {
@@ -30,7 +31,14 @@ public class DemoRare implements RareInterface {
     }
 
     @Override
-    public MethodHelper methodHelper() {
+    public MethodProxy methodProxy() {
         return null;
     }
+
+    @Override
+    public DateBean dateBean() {
+        return null;
+    }
+
+
 }

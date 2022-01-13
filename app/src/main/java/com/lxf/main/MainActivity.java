@@ -8,7 +8,9 @@ import android.view.View;
 
 import com.lxf.Annotation.RouterClass;
 import com.lxf.ModuleA.ClientActivity;
+import com.lxf.Annotation.RouterBean;
 
+@RouterBean()
 @RouterClass(path = "this_is_activity")
 public class MainActivity extends AppCompatActivity {
 

@@ -2,15 +2,16 @@ package com.lxf.Process;
 
 import com.google.auto.service.AutoService;
 import com.lxf.Annotation.RouterClass;
+import com.lxf.Annotation.RouterBean;
 import com.lxf.Annotation.RouterMethod;
 import com.lxf.Process.base.BaseProcessor;
 import com.lxf.Process.base.Bean;
 import com.lxf.Process.genJava.GenClazzBeansImpl;
 import com.lxf.Process.genJava.GenClazzHelperImpl;
+import com.lxf.Process.genJava.GenDateBeanImpl;
 import com.lxf.Process.genJava.GenMethodBeansImpl;
 import com.lxf.Process.genJava.GenMethodProxyImpl;
 import com.lxf.Process.genJava.GenResponseProxy;
-import com.lxf.Process.genJava.GenSlaveRouteTable;
 import com.lxf.Process.genTxt.TxtLogger;
 import com.lxf.Process.genTxt.TxtWriter;
 
@@ -32,6 +33,7 @@ public class CoreProcessor extends BaseProcessor {
     private Set<Bean> clsSet = new HashSet<>();
     private Set<Bean> askSet = new HashSet<>();
     private Set<Bean> impSet = new HashSet<>();
+    private Set<String> routerBeansSet = new HashSet<>();
     private int processIndex = 0;
 
     @Override
@@ -39,6 +41,7 @@ public class CoreProcessor extends BaseProcessor {
         Set<String> annotationSet = new HashSet<>();
         annotationSet.add(RouterMethod.class.getName());
         annotationSet.add(RouterClass.class.getName());
+        annotationSet.add(RouterBean.class.getName());
         return annotationSet;
     }
 
@@ -51,21 +54,24 @@ public class CoreProcessor extends BaseProcessor {
         if (roundEnvironment.processingOver()) {
             genRecordRouteInfo();
 //            GenSlaveRouteTable.genRouteTable(clsSet,askSet,impSet,filerGen);
-            GenClazzBeansImpl.gen(clsSet,filerGen);
-            GenMethodBeansImpl.gen(askSet,impSet,filerGen);
-            GenClazzHelperImpl.gen(clsSet,filerGen);
-            GenMethodProxyImpl.gen(impSet,filerGen);
+            GenClazzBeansImpl.gen(clsSet, filerGen);
+            GenMethodBeansImpl.gen(askSet, impSet, filerGen);
+            GenClazzHelperImpl.gen(clsSet, filerGen);
+            GenMethodProxyImpl.gen(impSet, filerGen);
+            GenDateBeanImpl.gen(routerBeansSet,filerGen);
         } else {
             Set<? extends Element> setMethod = roundEnvironment.getElementsAnnotatedWith(RouterMethod.class);
             Set<? extends Element> setClass = roundEnvironment.getElementsAnnotatedWith(RouterClass.class);
+            Set<? extends Element> setRouteBean = roundEnvironment.getElementsAnnotatedWith(RouterBean.class);
+
             if (setMethod != null && setMethod.size() > 0) {
                 for (Element e : setMethod) {
                     Bean bean = scanMethodAnnotation(e, RouterMethod.class);
                     if (bean != null) {
                         this.beanSet.add(bean);
-                        if (bean.isInterface.equals("1")){
+                        if (bean.isInterface.equals("1")) {
                             this.askSet.add(bean);
-                        }else {
+                        } else {
                             this.impSet.add(bean);
                         }
                     }
@@ -80,7 +86,36 @@ public class CoreProcessor extends BaseProcessor {
                     }
                 }
             }
+            if (setRouteBean != null && setRouteBean.size() > 0) {
+                for (Element e : setRouteBean) {
+                    scanRouterBeanAnnotation(e);
+                }
+            }
         }
+    }
+
+    public void scanRouterBeanAnnotation(Element e) {
+        String pkgName = e.asType().toString();
+        if (!e.getKind().name().toLowerCase().equals("class")) {
+            return;
+        }
+        Set<Modifier> modifiers = e.getModifiers();
+        if (modifiers != null) {
+            boolean isPublic = false, isAbstract = false;
+            for (Modifier m : modifiers) {
+                if (m.name().toLowerCase().equals("public")) {
+                    isPublic = true;
+                }
+                if (m.name().toLowerCase().equals("abstract")) {
+                    isAbstract = true;
+                }
+            }
+            if (!isPublic || isAbstract) {
+                //如果是个接口，将会过滤掉
+                return;
+            }
+        }
+        routerBeansSet.add(pkgName);
     }
 
     public Bean scanClassAnnotation(Element e, Class<RouterClass> clazz) {

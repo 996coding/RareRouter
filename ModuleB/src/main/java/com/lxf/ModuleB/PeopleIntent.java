@@ -4,11 +4,13 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.lxf.Annotation.RouterClass;
+import com.lxf.Annotation.RouterBean;
 import com.lxf.data.RouterParcelable;
 import com.lxf.data.read.Reader;
 import com.lxf.data.write.Writer;
 
 @RouterClass(path = "data_people")
+@RouterBean()
 public class PeopleIntent implements RouterParcelable, Parcelable {
     public String name_Server = "";
     public String sex_Server = "";

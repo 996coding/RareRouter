@@ -9,6 +9,8 @@ public interface RareInterface {
 
     ClazzHelper classHelper();
 
-    MethodHelper methodHelper();
+    MethodProxy methodProxy();
+
+    DateBean dateBean();
 }
 
