@@ -5,6 +5,7 @@ import com.lxf.Process.base.BaseProcessor;
 import com.lxf.Process.configure.ScanIndex;
 import com.lxf.Process.configure.SystemConfig;
 import com.lxf.Process.configure.TxtPath;
+import com.lxf.Process.genJava.GenConfig;
 import com.lxf.Process.genTxt.TxtLogger;
 
 import javax.annotation.processing.Processor;
@@ -13,6 +14,7 @@ import javax.annotation.processing.Processor;
 @AutoService(Processor.class)
 public class AheadProcessor extends BaseProcessor {
     private TxtPath txtPath;
+    private String FLAG_CLASS_NAME = "RouteFlagClass";
 
     @Override
     public void init() {
@@ -23,13 +25,14 @@ public class AheadProcessor extends BaseProcessor {
     }
 
     private void genFlagJavaClass() {
-        String CLASS_NAME = "RouteFlagClass" + System.currentTimeMillis();
+        FLAG_CLASS_NAME = "RouteFlagClass" + System.currentTimeMillis();
         StringBuilder sb = new StringBuilder();
-        sb.append("package com.lxf.RareFlag;\n");
+        sb.append("package " + GenConfig.PACKAGE + ";\n");
         sb.append("import com.lxf.Annotation.FlagAnnotation;\n\n");
         sb.append("@FlagAnnotation\n");
-        sb.append("public class " + CLASS_NAME + " { }\n");
-        String javaPath = this.filerGen.genJavaClass(sb.toString(), CLASS_NAME);
+        sb.append("public class " + FLAG_CLASS_NAME + " { }\n");
+        String javaPath = this.filerGen.genJavaClass(sb.toString(), FLAG_CLASS_NAME);
+        initModuleInfo(javaPath);
         logTxt(javaPath);
     }
 
@@ -62,4 +65,20 @@ public class AheadProcessor extends BaseProcessor {
         TxtLogger.output_new_section(log_sb.toString());
     }
 
+
+    private void initModuleInfo(String genJavaPath) {
+        String projectPath = System.getProperty("user.dir");
+        String str1 = genJavaPath.replaceFirst(projectPath, "");
+        String str2 = str1.replace(FLAG_CLASS_NAME + ".java", "");
+        int genIndex = str2.lastIndexOf(GenConfig.PACKAGE_SUFFIX);
+        String dirPathSplit = str2.substring(genIndex + GenConfig.PACKAGE_SUFFIX.length());
+        int buildIndex = str2.indexOf(dirPathSplit + "build" + dirPathSplit);
+        String str3 = str2.substring(0, buildIndex);
+        modulePath = projectPath + str3;
+        moduleName = str3.replace(dirPathSplit, "");
+
+        print("--->>>  " + modulePath);
+        print("--->>>  " + moduleName);
+
+    }
 }

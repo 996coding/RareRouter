@@ -21,6 +21,8 @@ public abstract class BaseProcessor extends AbstractProcessor {
     protected Filer filer;
     protected FilerGen filerGen;
 
+    public static String moduleName;
+    public static String modulePath;
 
     @Override
     public final synchronized void init(ProcessingEnvironment processingEnvironment) {

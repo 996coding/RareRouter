@@ -7,7 +7,7 @@ import javax.annotation.processing.Filer;
 import javax.tools.JavaFileObject;
 
 public class FilerGen {
-    private String pkgName = "com.lxf.router.gen.";
+    private String pkgName = GenConfig.PACKAGE+".";
     private Filer filer;
 
     public FilerGen(Filer filer) {
