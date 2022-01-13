@@ -24,6 +24,7 @@ public abstract class BaseProcessor extends AbstractProcessor {
     public static String rootProjectPath;
     public static String moduleName;
     public static String modulePath;
+    public static String systemDirPathSplit;
 
     @Override
     public final synchronized void init(ProcessingEnvironment processingEnvironment) {

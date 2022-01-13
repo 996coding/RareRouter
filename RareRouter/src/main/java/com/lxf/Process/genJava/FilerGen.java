@@ -7,21 +7,22 @@ import javax.annotation.processing.Filer;
 import javax.tools.JavaFileObject;
 
 public class FilerGen {
-    private String pkgName = GenConfig.PACKAGE+".";
+    private String pkgName = GenConfig.PACKAGE + ".";
     private Filer filer;
 
     public FilerGen(Filer filer) {
         this.filer = filer;
     }
 
-    public String genJavaClass(String clazzStr, String className) {
+    public java.net.URI genJavaClass(String clazzStr, String className) {
         Writer writer = null;
-        String javaPath = null;
+        java.net.URI uri = null;
         try {
             JavaFileObject sourceFile = filer.createSourceFile(pkgName + className);
             writer = sourceFile.openWriter();
             writer.write(clazzStr);
-            javaPath = sourceFile.toUri().getPath().toString();
+//            javaPath = sourceFile.toUri().getPath().toString();
+            uri = sourceFile.toUri();
         } catch (Exception e) {
 
         } finally {
@@ -33,6 +34,6 @@ public class FilerGen {
                 }
             }
         }
-        return javaPath;
+        return uri;
     }
 }
