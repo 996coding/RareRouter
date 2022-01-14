@@ -1,7 +1,10 @@
 package com.lxf.manager;
 
+import com.lxf.Process.genJava.GenConfig;
+import com.lxf.Process.genJava.GenRareAdder;
 import com.lxf.init.RouteBean;
 import com.lxf.protocol.*;
+import com.lxf.template.RareAdder;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -16,6 +19,7 @@ public class RareAppImpl implements ClassBeans, MethodBeans, RouterClazz, Method
     private RareAppImpl() {
         rareImplList = new ArrayList<>();
         implPkgSet = new HashSet<>();
+        autoAddRareImpl();
     }
 
     public static RareAppImpl getRareAppImpl() {
@@ -32,12 +36,26 @@ public class RareAppImpl implements ClassBeans, MethodBeans, RouterClazz, Method
         }
     }
 
+    private void autoAddRareImpl() {
+        if (!RareAdder.enable) {
+            try {
+                Class.forName(GenConfig.PACKAGE_JAVA_CODE + GenRareAdder.CLASS_NAME_BACK_UP);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     private void putRareImpl(String rareId, RareInterface rareModuleImpl) {
         if (implPkgSet.contains(rareId)) {
             return;
         }
         implPkgSet.add(rareId);
         rareImplList.add(rareModuleImpl);
+    }
+
+    public List<RareInterface> getRareImplList() {
+        return rareImplList;
     }
 
     @Override

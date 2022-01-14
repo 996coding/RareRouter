@@ -10,6 +10,7 @@ import android.view.View;
 import com.lxf.Annotation.RouterClass;
 import com.lxf.ModuleA.ClientActivity;
 import com.lxf.Annotation.RouterBean;
+import com.lxf.manager.RareAppImpl;
 import com.lxf.template.RareAdder;
 
 @RouterBean()
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Log.e("lv123"," rare adder   = "+ RareAdder.enable);
+        Log.e("lv123"," rare adder   = "+ RareAppImpl.getRareAppImpl().getRareImplList().size());
     }
 
 

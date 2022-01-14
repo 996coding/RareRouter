@@ -31,15 +31,18 @@ import javax.annotation.processing.RoundEnvironment;
 @AutoService(Processor.class)
 public class LastProcessor extends BaseProcessor {
 
-    private String txt_rare_list, txt_last_add;
-    private String lastAdder;
+    private String txt_rare_list, txt_last_add, txt_last_add_bp;
+    private String lastAdder, lastAdder_bp;
 
     @Override
     public void init() {
         txt_rare_list = RareXml.logDir + systemDirPathSplit + "RareRouter" + systemDirPathSplit + "rareImpl.txt";
         txt_last_add = RareXml.logDir + systemDirPathSplit + "RareRouter" + systemDirPathSplit + "lastImpl.txt";
+        txt_last_add_bp = RareXml.logDir + systemDirPathSplit + "RareRouter" + systemDirPathSplit + "lastImpl_bp.txt";
+
         TxtCreator.createFileIfNone(txt_rare_list);
         TxtCreator.createFileIfNone(txt_last_add);
+        TxtCreator.createFileIfNone(txt_last_add_bp);
     }
 
     @Override
@@ -56,16 +59,27 @@ public class LastProcessor extends BaseProcessor {
             TxtWriter.txtAppendWrite(txt_rare_list, GenConfig.PACKAGE + "." + GenModuleRareImpl.CLASS_NAME);
             if (RareXml.appModule == null || RareXml.appModule.length() == 0) {
                 lastAdder = TxtReader.readTxt(txt_last_add).trim();
+                lastAdder_bp = TxtReader.readTxt(txt_last_add_bp).trim();
+
                 File file = new File(lastAdder);
+                File file_bp = new File(lastAdder_bp);
+
                 if (file.exists()) {
                     file.delete();
                 }
+                if (file_bp.exists()) {
+                    file_bp.delete();
+                }
+
                 Set<String> set = TxtReader.readTrimLine(txt_rare_list);
                 GenRareAdder.gen(set, filerGen);
+                GenRareAdder.genBackUp(set, filerGen);
                 TxtWriter.writeTxt(txt_last_add, GenRareAdder.FILE_PATH);
+                TxtWriter.writeTxt(txt_last_add_bp, GenRareAdder.FILE_PATH_BACK_UP);
             } else if (RareXml.appModule.equals(moduleName)) {
                 Set<String> set = TxtReader.readTrimLine(txt_rare_list);
                 GenRareAdder.gen(set, filerGen);
+                GenRareAdder.genBackUp(set, filerGen);
             }
         }
         if (ScanIndex.isLastScan() && roundEnvironment.processingOver()) {
