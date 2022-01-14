@@ -93,7 +93,7 @@ public class GenMethodProxyImpl {
         }
         sb.append(");\n");
         if (voidReturn){
-            sb.append("            return null;\n");
+            sb.append("            return MethodReturn.NULL;\n");
         }
         return sb.toString();
     }
