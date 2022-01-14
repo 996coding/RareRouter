@@ -40,7 +40,7 @@ public class GenRareAdder {
         int i = 0;
         for (String pkgName : set) {
             i++;
-            sb.append("    public static Class<?> cls" + i + " = " + pkgName + ".class;\n");
+            sb.append("    public static int flag" + i + " = " + pkgName + ".flag;\n");
         }
         return sb.toString();
     }

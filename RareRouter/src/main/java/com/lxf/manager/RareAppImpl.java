@@ -19,7 +19,7 @@ public class RareAppImpl implements ClassBeans, MethodBeans, RouterClazz, Method
     private RareAppImpl() {
         rareImplList = new ArrayList<>();
         implPkgSet = new HashSet<>();
-        autoAddRareImpl();
+//        autoAddRareImpl();
     }
 
     public static RareAppImpl getRareAppImpl() {
@@ -36,7 +36,7 @@ public class RareAppImpl implements ClassBeans, MethodBeans, RouterClazz, Method
         }
     }
 
-    private void autoAddRareImpl() {
+    public void autoAddRareImpl() {
         if (!RareAdder.enable) {
             try {
                 Class.forName(GenConfig.PACKAGE_JAVA_CODE + GenRareAdder.CLASS_NAME_BACK_UP);

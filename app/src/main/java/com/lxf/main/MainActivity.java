@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        RareAppImpl.getRareAppImpl().autoAddRareImpl();
         Log.e("lv123"," rare adder   = "+ RareAppImpl.getRareAppImpl().getRareImplList().size());
     }
 
