@@ -3,4 +3,8 @@
 <!--    根节点至少包含一个AppModule属性,属性值为项目的ApplicationModule名称-->
 <Rare AppModule="app">
 
+    <!--    指定log输出日志的目录，默认目录：rootDir/ApplicationModule/build-->
+    <!--    rootDir代表项目根目录路径，ApplicationModule代表主module名字-->
+    <Log dir="./app/build" />
+
 </Rare>

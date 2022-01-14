@@ -1,5 +1,6 @@
 package com.lxf.utils;
 
+import com.lxf.Process.base.BaseProcessor;
 import com.lxf.Process.configure.RareXml;
 
 import org.w3c.dom.Document;
@@ -24,6 +25,31 @@ public class XmlParser {
             return;
         }
         RareXml.appModule = rareNode.getAttribute("AppModule");
+    }
+
+    private void parse_Log_dir() {
+        String dir = null;
+        if (rareNode != null) {
+            NodeList logNodeList = rareNode.getElementsByTagName("Log");
+            if (logNodeList != null && logNodeList.getLength() > 0) {
+                Element logNode = (Element) logNodeList.item(0);
+                dir = logNode.getAttribute("dir");
+            }
+        }
+        if (dir != null && dir.length() > 0) {
+            if (dir.startsWith(".")) {
+                dir = dir.replace("/", BaseProcessor.systemDirPathSplit);
+                RareXml.logDir = BaseProcessor.rootProjectPath + dir.substring(1);
+            } else {
+                RareXml.logDir = dir;
+            }
+        } else {
+            String mName = RareXml.appModule;
+            if (mName == null || mName.length() == 0) {
+                mName = "RareLog";
+            }
+            RareXml.logDir = BaseProcessor.rootProjectPath + BaseProcessor.systemDirPathSplit + RareXml.appModule + BaseProcessor.systemDirPathSplit + "build";
+        }
     }
 
     //用Element方式
@@ -58,21 +84,21 @@ public class XmlParser {
     }
 
     public boolean parse() {
+        boolean isParseOk = false;
         //1.创建DocumentBuilderFactory对象
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         //2.创建DocumentBuilder对象
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();
             document = builder.parse(xmlPath);
+            rareNode = document.getDocumentElement();
+            isParseOk = true;
         } catch (Exception e) {
-            return false;
+
         }
-        if (document == null) {
-            return false;
-        }
-        rareNode = document.getDocumentElement();
         parse_Rare_appModule();
-        return true;
+        parse_Log_dir();
+        return isParseOk;
     }
 
     public String getPkgVal() {

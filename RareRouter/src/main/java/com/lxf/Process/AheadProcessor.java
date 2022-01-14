@@ -79,8 +79,9 @@ public class AheadProcessor extends BaseProcessor {
         if (!RareXml.isXmlExists){
             String error = "RareRouter Except:there has no RareRouter.xml in project root Dir("+rootProjectPath+")";
             printOther("\n\n");
-            printError(error);
+            print(error);
             printOther("\n\n");
         }
+
     }
 }
