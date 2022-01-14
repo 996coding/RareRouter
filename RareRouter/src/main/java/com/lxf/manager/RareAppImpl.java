@@ -39,7 +39,7 @@ public class RareAppImpl implements ClassBeans, MethodBeans, RouterClazz, Method
     public void autoAddRareImpl() {
         if (!RareAdder.enable) {
             try {
-                Class.forName(GenConfig.PACKAGE_JAVA_CODE + GenRareAdder.CLASS_NAME_BACK_UP);
+                Class.forName(GenConfig.PACKAGE_JAVA_CODE + "." + GenRareAdder.CLASS_NAME_BACK_UP);
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
