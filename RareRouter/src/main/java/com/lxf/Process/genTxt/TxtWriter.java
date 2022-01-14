@@ -10,6 +10,13 @@ import java.util.Set;
 import static com.lxf.Process.genTxt.TxtReader.readTxt;
 
 public class TxtWriter {
+
+    public static void txtAppendWrite(String txtPath, String content) {
+        TxtCreator.createFileIfNone(txtPath);
+        String txtContent = TxtReader.readTxt(txtPath).trim();
+        writeTxt(txtPath, txtContent + "\n" + content);
+    }
+
     public static void writeTxt(String txtPath, String info) {
         try {
             BufferedWriter out = new BufferedWriter(new FileWriter(txtPath));
@@ -52,13 +59,14 @@ public class TxtWriter {
 
         return TxtReader.readBeans();
     }
+
     public static void writeMethodImpClazz(Set<String> classes) {
         if (classes == null || classes.size() == 0) {
             return;
         }
         StringBuilder sb = new StringBuilder();
         String readContent = readTxt(TxtPath.PATH_SCAN_PROXY);
-        if (readContent!=null && readContent.length()>0){
+        if (readContent != null && readContent.length() > 0) {
             sb.append(readContent);
             sb.append("\n");
         }
@@ -68,15 +76,16 @@ public class TxtWriter {
         }
         writeTxt(TxtPath.PATH_SCAN_PROXY, sb.toString());
     }
+
     public static void recordParamClazz(Set<Bean> set) {
         StringBuilder sb = new StringBuilder();
         for (Bean bean : set) {
-            if (bean.returnType!=null && bean.returnType.length()>0){
+            if (bean.returnType != null && bean.returnType.length() > 0) {
                 sb.append(bean.returnType.trim());
                 sb.append("\n");
             }
             for (String param : bean.paramsList) {
-                if (param!=null && param.length()>0){
+                if (param != null && param.length() > 0) {
                     sb.append(param.trim());
                     sb.append("\n");
                 }

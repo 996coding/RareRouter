@@ -3,8 +3,12 @@ package com.lxf.Process.genJava;
 
 import com.lxf.Process.base.BaseProcessor;
 
+import java.io.File;
+import java.net.URI;
+
 public class GenModuleRareImpl {
     public static String CLASS_NAME = "ModuleRareImpl";
+    public static String FILE_PATH;
 
     public static void gen(FilerGen filerGen) {
         CLASS_NAME = CLASS_NAME + "_" + BaseProcessor.moduleName;
@@ -17,7 +21,9 @@ public class GenModuleRareImpl {
         sb.append(method());
 
         sb.append(clazz_tail());
-        filerGen.genJavaClass(sb.toString(), CLASS_NAME);
+        URI uri = filerGen.genJavaClass(sb.toString(), CLASS_NAME);
+        File file = new File(uri);
+        FILE_PATH = file.getAbsolutePath();
     }
 
     private static String static_code() {
