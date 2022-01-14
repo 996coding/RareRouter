@@ -1,5 +1,6 @@
 package com.lxf.Process.genJava;
 
+import com.lxf.Process.base.BaseProcessor;
 import com.lxf.Process.base.Bean;
 
 import java.util.Set;
@@ -8,7 +9,7 @@ public class GenMethodProxyImpl {
     public static String CLASS_NAME = "MethodProxyImpl";
 
     public static void gen(Set<Bean> set, FilerGen filerGen) {
-        CLASS_NAME = CLASS_NAME + System.currentTimeMillis();
+        CLASS_NAME = CLASS_NAME + "_" + BaseProcessor.moduleName;
 
         StringBuilder sb = new StringBuilder();
         sb.append(class_import());

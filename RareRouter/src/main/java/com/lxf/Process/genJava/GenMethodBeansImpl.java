@@ -1,5 +1,6 @@
 package com.lxf.Process.genJava;
 
+import com.lxf.Process.base.BaseProcessor;
 import com.lxf.Process.base.Bean;
 
 import java.util.Set;
@@ -9,7 +10,7 @@ public class GenMethodBeansImpl {
     public static String CLASS_NAME = "MethodBeansImpl";
 
     public static void gen(Set<Bean> askSet, Set<Bean> implSet, FilerGen filerGen) {
-        CLASS_NAME = CLASS_NAME + System.currentTimeMillis();
+        CLASS_NAME = CLASS_NAME + "_" + BaseProcessor.moduleName;
         StringBuilder sb = new StringBuilder();
         sb.append(class_import());
         sb.append(class_head());

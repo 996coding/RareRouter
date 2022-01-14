@@ -1,5 +1,6 @@
 package com.lxf.Process.genJava;
 
+import com.lxf.Process.base.BaseProcessor;
 import com.lxf.Process.base.Bean;
 
 import java.util.HashSet;
@@ -10,7 +11,7 @@ public class GenRouterClazzImpl {
     public static String CLASS_NAME = "RouterClazzImpl";
 
     public static void gen(Set<Bean> set, FilerGen filerGen) {
-        CLASS_NAME = CLASS_NAME + System.currentTimeMillis();
+        CLASS_NAME = CLASS_NAME + "_" + BaseProcessor.moduleName;
         Set<Bean> clsSet = getClassSet(set);
 
         StringBuilder sb = new StringBuilder();

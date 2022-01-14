@@ -1,11 +1,13 @@
 package com.lxf.Process.genJava;
 
 
+import com.lxf.Process.base.BaseProcessor;
+
 public class GenModuleRareImpl {
     public static String CLASS_NAME = "ModuleRareImpl";
 
     public static void gen(FilerGen filerGen) {
-        CLASS_NAME = CLASS_NAME + System.currentTimeMillis();
+        CLASS_NAME = CLASS_NAME + "_" + BaseProcessor.moduleName;
 
         StringBuilder sb = new StringBuilder();
         sb.append(class_import());

@@ -1,12 +1,14 @@
 package com.lxf.Process.genJava;
 
+import com.lxf.Process.base.BaseProcessor;
+
 import java.util.Set;
 
 public class GenDateBeanImpl {
     public static String CLASS_NAME = "DateBeanImpl";
 
     public static void gen(Set<String> set, FilerGen filerGen) {
-        CLASS_NAME = CLASS_NAME + System.currentTimeMillis();
+        CLASS_NAME = CLASS_NAME + "_" + BaseProcessor.moduleName;
 
         StringBuilder sb = new StringBuilder();
         sb.append(class_import());

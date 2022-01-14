@@ -75,5 +75,12 @@ public class AheadProcessor extends BaseProcessor {
 
         XmlParser xmlParser = new XmlParser(rootProjectPath + systemDirPathSplit + "RareRouter.xml");
         RareXml.isXmlExists = xmlParser.parse();
+
+        if (!RareXml.isXmlExists){
+            String error = "RareRouter Except:there has no RareRouter.xml in project root Dir("+rootProjectPath+")";
+            printOther("\n\n");
+            printError(error);
+            printOther("\n\n");
+        }
     }
 }

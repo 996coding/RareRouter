@@ -60,6 +60,14 @@ public abstract class BaseProcessor extends AbstractProcessor {
         this.messager.printMessage(Diagnostic.Kind.NOTE, str);
     }
 
+    public final void printError(String str) {
+        this.messager.printMessage(Diagnostic.Kind.ERROR, str);
+    }
+
+    public final void printOther(String str) {
+        this.messager.printMessage(Diagnostic.Kind.OTHER, str);
+    }
+
     public void init() {
 
     }
