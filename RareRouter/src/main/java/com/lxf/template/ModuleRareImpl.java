@@ -1,8 +1,12 @@
 package com.lxf.template;
 
+import com.lxf.manager.RareAppImpl;
 import com.lxf.protocol.*;
 
 public class ModuleRareImpl implements RareInterface {
+    static {
+        RareAppImpl.addRareImpl(new ModuleRareImpl());
+    }
 
     @Override
     public ClassBeans classBeans() {
