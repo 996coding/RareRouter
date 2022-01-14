@@ -6,6 +6,7 @@ import com.lxf.Process.configure.ScanIndex;
 import com.lxf.Process.configure.TxtPath;
 import com.lxf.Process.genJava.GenConfig;
 import com.lxf.Process.genTxt.TxtLogger;
+import com.lxf.utils.XmlParser;
 
 import java.io.File;
 import java.net.URI;
@@ -66,10 +67,15 @@ public class AheadProcessor extends BaseProcessor {
         systemDirPathSplit = strA.substring(genIndex + GenConfig.PACKAGE_SUFFIX.length());
 
         int buildIndex = strA.lastIndexOf(systemDirPathSplit + "build" + systemDirPathSplit);
-        modulePath = strA.substring(0,buildIndex);
+        modulePath = strA.substring(0, buildIndex);
 
         int lastDirSplitIndex = modulePath.lastIndexOf(systemDirPathSplit);
-        moduleName = modulePath.substring(lastDirSplitIndex+1);
+        moduleName = modulePath.substring(lastDirSplitIndex + 1);
+
+        XmlParser xmlParser = new XmlParser(rootProjectPath + systemDirPathSplit + "RareRouter.xml");
+        if (!xmlParser.parse()) {
+            return;
+        }
 
     }
 }
