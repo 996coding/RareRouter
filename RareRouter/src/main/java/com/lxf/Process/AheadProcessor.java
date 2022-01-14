@@ -2,6 +2,7 @@ package com.lxf.Process;
 
 import com.google.auto.service.AutoService;
 import com.lxf.Process.base.BaseProcessor;
+import com.lxf.Process.configure.RareXml;
 import com.lxf.Process.configure.ScanIndex;
 import com.lxf.Process.configure.TxtPath;
 import com.lxf.Process.genJava.GenConfig;
@@ -73,9 +74,6 @@ public class AheadProcessor extends BaseProcessor {
         moduleName = modulePath.substring(lastDirSplitIndex + 1);
 
         XmlParser xmlParser = new XmlParser(rootProjectPath + systemDirPathSplit + "RareRouter.xml");
-        if (!xmlParser.parse()) {
-            return;
-        }
-
+        RareXml.isXmlExists = xmlParser.parse();
     }
 }
