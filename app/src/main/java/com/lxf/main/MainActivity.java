@@ -10,6 +10,7 @@ import android.view.View;
 import com.lxf.Annotation.RouterClass;
 import com.lxf.ModuleA.ClientActivity;
 import com.lxf.Annotation.RouterBean;
+import com.lxf.log.RareLog;
 import com.lxf.manager.RareAppImpl;
 import com.lxf.template.RareAdder;
 
@@ -24,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
+        RareLog.setLogger(new MyLog());
+
         findViewById(R.id.main_module).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -32,9 +35,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         RareAppImpl.getRareAppImpl().autoAddRareImpl();
-        Log.e("lv123"," rare adder   = "+ RareAppImpl.getRareAppImpl().getRareImplList().size());
+        Log.e("lv123", " rare adder   = " + RareAppImpl.getRareAppImpl().getRareImplList().size());
     }
-
 
 
 }

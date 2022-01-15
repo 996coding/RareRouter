@@ -1,5 +1,5 @@
 package com.lxf.log;
 
-public interface JavaLibLog {
+public interface Printer {
     void log(String s);
 }

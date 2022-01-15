@@ -5,7 +5,7 @@ import com.lxf.data.LxfDataFactory;
 import com.lxf.data.RouterParcelable;
 import com.lxf.init.RouteBean;
 import com.lxf.init.RouteMap;
-import com.lxf.log.Log;
+import com.lxf.log.RareLog;
 import com.lxf.nozzle.JavaClassGetter;
 import com.lxf.response.AimClass;
 import com.lxf.response.RequestProxy;
@@ -49,7 +49,7 @@ public class RouterHandler implements InvocationHandler {
         if (bean == null) {
             return null;
         }
-        Log.e(bean.toString());
+        RareLog.output(bean.toString());
 
 
         //旧方式
@@ -102,6 +102,7 @@ public class RouterHandler implements InvocationHandler {
 //        RouteBean requestBean = RouteMap.getInstance().getInterfaceRouteBean(path, service.getName());
         RouteBean requestBean = RouteBean.createInterfaceBean(service,method);
 
+        RareLog.output(requestBean.toString());
         if (!checkParams(requestBean, bean)) {
             return null;
         }
@@ -170,8 +171,8 @@ public class RouterHandler implements InvocationHandler {
     }
 
     private boolean checkParams(RouteBean request, RouteBean response) {
-        Log.e("request   " + request);
-        Log.e("response   " + response);
+        RareLog.output("request   " + request);
+        RareLog.output("response   " + response);
         return true;
     }
 

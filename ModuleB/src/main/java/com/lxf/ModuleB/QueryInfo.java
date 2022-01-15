@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.widget.Toast;
 
 import com.lxf.Annotation.RouterMethod;
-import com.lxf.log.Log;
 
 import java.util.List;
 
