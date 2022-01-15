@@ -99,7 +99,9 @@ public class RouterHandler implements InvocationHandler {
         3、检查返回值类型；
          */
 
-        RouteBean requestBean = RouteMap.getInstance().getInterfaceRouteBean(path, service.getName());
+//        RouteBean requestBean = RouteMap.getInstance().getInterfaceRouteBean(path, service.getName());
+        RouteBean requestBean = RouteBean.createInterfaceBean(service,method);
+
         if (!checkParams(requestBean, bean)) {
             return null;
         }

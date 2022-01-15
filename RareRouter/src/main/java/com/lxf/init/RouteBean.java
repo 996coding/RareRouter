@@ -1,5 +1,9 @@
 package com.lxf.init;
 
+import com.lxf.Annotation.RouterMethod;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +47,25 @@ public final class RouteBean {
             }
         }
         return new RouteBean(type, isInterface, path, pkgName, method, returnType, paramsList);
+    }
+
+    public static RouteBean createInterfaceBean(Class<?> clazz, Method method) {
+        if (method == null || clazz == null || !clazz.isInterface()) {
+            return null;
+        }
+        RouterMethod annotation = method.getAnnotation(RouterMethod.class);
+        if (annotation == null) {
+            return null;
+        }
+        String pkgName = clazz.getName();
+        String path = annotation.path();
+        String methodName = method.getName();
+        String returnType = method.getReturnType().getName();
+        List<String> paramsList = new ArrayList<>();
+        for (Class<?> param : method.getParameterTypes()) {
+            paramsList.add(param.getName());
+        }
+        return create("0", "1", path, pkgName, methodName, returnType, paramsList);
     }
 
     @Override
