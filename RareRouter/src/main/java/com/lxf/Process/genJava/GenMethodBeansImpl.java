@@ -67,9 +67,11 @@ public class GenMethodBeansImpl {
             return "\n";
         }
         StringBuilder sb = new StringBuilder();
+        sb.append("        RouteBean bean;\n");
         for (Bean bean : set) {
             sb.append("        if (\"" + bean.pkgName + "\".equals(pkgName) && \"" + bean.path + "\".equals(annotationPath)) {\n");
             sb.append(create_sentence(bean));
+            sb.append("            return bean;\n");
             sb.append("        }\n");
         }
         return sb.toString();
@@ -77,7 +79,7 @@ public class GenMethodBeansImpl {
 
     private static String create_sentence(Bean bean) {
         StringBuilder sb = new StringBuilder();
-        sb.append("            return ");
+        sb.append("            bean = ");
         sb.append("RouteBean.create(" +
                 "\"" + bean.type + "\", " +
                 "\"" + bean.isInterface + "\", " +
@@ -112,9 +114,11 @@ public class GenMethodBeansImpl {
             return "\n";
         }
         StringBuilder sb = new StringBuilder();
+        sb.append("        RouteBean bean;\n");
         for (Bean bean : set) {
             sb.append("        if (\"" + bean.path + "\".equals(annotationPath)) {\n");
             sb.append(create_sentence(bean));
+            sb.append("            return bean;\n");
             sb.append("        }\n");
         }
 
