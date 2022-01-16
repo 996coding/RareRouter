@@ -54,12 +54,12 @@ public class CoreProcessor extends BaseProcessor {
 
         if (roundEnvironment.processingOver()) {
             genRecordRouteInfo();
-//            GenSlaveRouteTable.genRouteTable(clsSet,askSet,impSet,filerGen);
+            //--------------------------------------------------------
             GenClassBeansImpl.gen(clsSet, filerGen);
             GenMethodBeansImpl.gen(askSet, impSet, filerGen);
             GenRouterClazzImpl.gen(clsSet, filerGen);
             GenMethodProxyImpl.gen(impSet, filerGen);
-            GenDateBeanImpl.gen(routerBeansSet,filerGen);
+            GenDateBeanImpl.gen(routerBeansSet, filerGen);
             GenModuleRareImpl.gen(filerGen);//该条必须最后执行
         } else {
             Set<? extends Element> setMethod = roundEnvironment.getElementsAnnotatedWith(RouterMethod.class);
