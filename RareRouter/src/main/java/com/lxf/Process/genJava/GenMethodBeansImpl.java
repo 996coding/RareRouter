@@ -51,7 +51,7 @@ public class GenMethodBeansImpl {
     private static String method_head() {
         StringBuilder sb = new StringBuilder();
         sb.append("    @Override\n");
-        sb.append("    public RouteBean methodAskRouteBean(String pkgName) {\n");
+        sb.append("    public RouteBean methodAskRouteBean(String annotationPath, String pkgName) {\n");
         return sb.toString();
     }
 
@@ -68,7 +68,7 @@ public class GenMethodBeansImpl {
         }
         StringBuilder sb = new StringBuilder();
         for (Bean bean : set) {
-            sb.append("        if (\"" + bean.pkgName + "\".equals(pkgName)) {\n");
+            sb.append("        if (\"" + bean.pkgName + "\".equals(pkgName) && \"" + bean.path + "\".equals(annotationPath)) {\n");
             sb.append(create_sentence(bean));
             sb.append("        }\n");
         }

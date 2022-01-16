@@ -4,8 +4,9 @@ import com.lxf.init.RouteBean;
 import com.lxf.protocol.MethodBeans;
 
 public class MethodBeansImpl implements MethodBeans {
+
     @Override
-    public RouteBean methodAskRouteBean(String pkgName) {
+    public RouteBean methodAskRouteBean(String annotationPath, String pkgName) {
         return null;
     }
 
