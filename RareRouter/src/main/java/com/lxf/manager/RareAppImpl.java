@@ -6,6 +6,7 @@ import com.lxf.init.RouteBean;
 import com.lxf.protocol.*;
 import com.lxf.template.RareAdder;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -103,9 +104,9 @@ public class RareAppImpl implements ClassBeans, MethodBeans, RouterClazz, Method
     }
 
     @Override
-    public Object proxy(Object instance, String annotationPath, Object... parameters) {
+    public Object proxy(Object instance, Method method, Checker checker, String annotationPath, Object... parameters) {
         for (RareInterface impl : rareImplList) {
-            Object methodReturn = impl.methodProxy().proxy(instance, annotationPath, parameters);
+            Object methodReturn = impl.methodProxy().proxy(instance, method, checker, annotationPath, parameters);
             if (methodReturn != null) {
                 if (methodReturn == MethodReturn.NULL) {
                     return null;

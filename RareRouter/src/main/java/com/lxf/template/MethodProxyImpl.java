@@ -1,10 +1,13 @@
 package com.lxf.template;
 
+import com.lxf.protocol.Checker;
 import com.lxf.protocol.MethodProxy;
+
+import java.lang.reflect.Method;
 
 public class MethodProxyImpl implements MethodProxy {
     @Override
-    public Object proxy(Object instance, String annotationPath, Object... parameters) {
+    public Object proxy(Object instance, Method method, Checker checker, String annotationPath, Object... parameters) {
 //        if ("start_activity".equals(annotationPath)) {
 //            com.lxf.ModuleB.QueryInfo proxyInstance = null;
 //            if (instance != null && instance instanceof com.lxf.ModuleB.QueryInfo){
