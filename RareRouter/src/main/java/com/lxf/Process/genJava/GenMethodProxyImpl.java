@@ -66,7 +66,7 @@ public class GenMethodProxyImpl {
         for (Bean bean : set) {
             sb.append("        if (\"" + bean.path + "\".equals(annotationPath)) {\n");
             sb.append(create_route_bean(bean));
-            sb.append("            CheckResult result = checker.methodCheck(bean, parameters);\n");
+            sb.append("            CheckResult result = checker.methodCheck(bean, " + bean.pkgName + ".class, parameters);\n");
             sb.append("            if (!result.isOk) {\n");
             sb.append("                return MethodReturn.ERROR_PARAMETER;\n");
             sb.append("            }\n");
