@@ -27,7 +27,6 @@ public class GenMethodProxyImpl {
         StringBuilder sb = new StringBuilder();
         sb.append("package " + GenConfig.PACKAGE + ";\n\n");
         sb.append("import com.lxf.init.RouteBean;\n");
-        sb.append("import java.lang.reflect.Method;\n");
         sb.append("import com.lxf.protocol.*;\n\n");
         return sb.toString();
     }
@@ -48,7 +47,7 @@ public class GenMethodProxyImpl {
     private static String method_head() {
         StringBuilder sb = new StringBuilder();
         sb.append("    @Override\n");
-        sb.append("    public Object proxy(Object instance, Method method, Checker checker, String annotationPath, Object... parameters) {\n");
+        sb.append("    public Object proxy(Object instance, Checker checker, String annotationPath, Object... parameters) {\n");
         return sb.toString();
     }
 
@@ -67,7 +66,7 @@ public class GenMethodProxyImpl {
         for (Bean bean : set) {
             sb.append("        if (\"" + bean.path + "\".equals(annotationPath)) {\n");
             sb.append(create_route_bean(bean));
-            sb.append("            CheckResult result = checker.methodChecker(bean, method, parameters);\n");
+            sb.append("            CheckResult result = checker.methodCheck(bean, parameters);\n");
             sb.append("            if (!result.isOk) {\n");
             sb.append("                return MethodReturn.ERROR_PARAMETER;\n");
             sb.append("            }\n");
@@ -81,7 +80,7 @@ public class GenMethodProxyImpl {
     private static String create_sentence(Bean bean) {
         StringBuilder sb = new StringBuilder();
         sb.append("            " + bean.pkgName + " proxyInstance = null;\n");
-        sb.append("            if (instance != null && instance instanceof " + bean.pkgName + "){\n");
+        sb.append("            if (checker.instanceCheck(instance, " + bean.pkgName + ".class)) {\n");
         sb.append("                proxyInstance = (" + bean.pkgName + ") instance;\n");
         sb.append("            }else {\n");
         sb.append("                proxyInstance = new " + bean.pkgName + "();\n");

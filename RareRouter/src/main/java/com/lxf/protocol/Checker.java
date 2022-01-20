@@ -5,5 +5,7 @@ import com.lxf.init.RouteBean;
 import java.lang.reflect.Method;
 
 public interface Checker {
-    CheckResult methodChecker(RouteBean bean, Method method, Object... parameterArray);
+    CheckResult methodCheck(RouteBean bean, Object... parameterArray);
+
+    boolean instanceCheck(Object instance, Class<?> clazz);
 }
