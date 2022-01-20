@@ -5,6 +5,7 @@ import com.lxf.data.DataChecker;
 import com.lxf.init.RouteBean;
 import com.lxf.manager.RareAppImpl;
 import com.lxf.protocol.Checker;
+import com.lxf.protocol.MethodProxy;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -28,7 +29,11 @@ public class RareHandler implements InvocationHandler {
         if (annotation == null) {
             return null;
         }
-        RouteBean askBean = RareAppImpl.getRareAppImpl().methodAskRouteBean(annotation.path(), service.getName());
+        String annotationPath = annotation.path();
+        if (annotationPath == null || annotationPath.length() == 0) {
+            return null;
+        }
+        RouteBean askBean = RareAppImpl.getRareAppImpl().methodAskRouteBean(annotationPath, service.getName());
         if (askBean == null) {
             return null;
         }

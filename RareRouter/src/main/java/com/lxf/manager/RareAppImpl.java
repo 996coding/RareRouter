@@ -107,12 +107,13 @@ public class RareAppImpl implements ClassBeans, MethodBeans, RouterClazz, Method
     public Object proxy(Object instance, Checker checker, String annotationPath, Object... parameters) {
         for (RareInterface impl : rareImplList) {
             Object methodReturn = impl.methodProxy().proxy(instance, checker, annotationPath, parameters);
-            if (methodReturn != null) {
-                if (methodReturn == MethodReturn.NULL) {
-                    return null;
-                }
-                return methodReturn;
+            if (methodReturn == null) {
+                continue;
             }
+            if (methodReturn instanceof MethodReturn) {
+                return null;
+            }
+            return methodReturn;
         }
         return null;
     }
