@@ -48,15 +48,16 @@ public class DataChecker implements Checker {
 
 
     private boolean returnCheck() {
-//        String ask = askReturn.getName();
-//        if (replyReturn.equals(ask)) {
-//            return true;
-//        }
-        return true;
+        if (askBean.returnType.equals(replyBean.returnType)) {
+            return true;
+        }
+        //暂时先检查通过
+        return false;
     }
 
     private boolean parameterCheck(String parameter, Class<?> askParameter, int index, Object[] resultParams, Object[] askParams) {
-        return true;
+        //暂时先检查通过
 
+        return true;
     }
 }

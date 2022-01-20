@@ -2,8 +2,6 @@ package com.lxf.protocol;
 
 import com.lxf.init.RouteBean;
 
-import java.lang.reflect.Method;
-
 public interface Checker {
     CheckResult methodCheck(RouteBean bean, Object... parameterArray);
 
