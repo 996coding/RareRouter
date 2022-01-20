@@ -119,9 +119,9 @@ public class RareAppImpl implements ClassBeans, MethodBeans, RouterClazz, Method
     }
 
     @Override
-    public Class<?> getClazz(String pkgName) {
+    public Class<?> getClazz(String annotationPath) {
         for (RareInterface impl : rareImplList) {
-            Class<?> clazz = impl.routerClazz().getClazz(pkgName);
+            Class<?> clazz = impl.routerClazz().getClazz(annotationPath);
             if (clazz != null) {
                 return clazz;
             }

@@ -61,7 +61,7 @@ public class GenRouterClazzImpl {
     private static String method_head() {
         StringBuilder sb = new StringBuilder();
         sb.append("    @Override\n");
-        sb.append("    public Class<?> getClazz(String pkgName) {\n");
+        sb.append("    public Class<?> getClazz(String annotationPath) {\n");
         return sb.toString();
     }
 
@@ -87,7 +87,7 @@ public class GenRouterClazzImpl {
 
     private static String create_sentence(Bean bean) {
         StringBuilder sb = new StringBuilder();
-        sb.append("        if (pkgName.equals(\"" + bean.pkgName + "\")) {\n");
+        sb.append("        if (annotationPath.equals(\"" + bean.path + "\")) {\n");
         sb.append("            return " + bean.pkgName + ".class;\n");
         sb.append("        }\n");
         return sb.toString();
