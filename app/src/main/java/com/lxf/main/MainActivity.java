@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.main_module).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Class<?> clazz = RareApplication.annotateClazz("here_is_activity");
+                Class<?> clazz = RareApplication.annotateClazz("this_is_TestActivity");
                 Log.e("lv123",""+clazz.getName());
                 Intent intent = new Intent(MainActivity.this, clazz);
                 startActivity(intent);

@@ -33,7 +33,8 @@ public class DataChecker implements Checker {
 
         this.replyBean = replyBean;
         for (Method m : replyClazz.getMethods()) {
-            if (annotation.equals(m.getAnnotation(RouterMethod.class))) {
+            RouterMethod replyAnnotate = m.getAnnotation(RouterMethod.class);
+            if (replyAnnotate != null && annotation.equals(replyAnnotate.path())) {
                 replyMethod = m;
                 break;
             }
@@ -50,7 +51,7 @@ public class DataChecker implements Checker {
         if (parameters.length != parameterArray.length) {
             return result;
         }
-        result.parameterArray = new Object[parameterArray.length];
+        result.parameterArray = parameterArray;
         for (int i = 0; i < parameters.length; i++) {
             if (!parameterCheck(askBean.paramsList.get(i), askMethod.getParameterTypes()[i], replyBean.paramsList.get(i), replyMethod.getParameterTypes()[i], i)) {
                 return result;
@@ -98,7 +99,7 @@ public class DataChecker implements Checker {
 
         if (askCls.isInterface() && replyCls.isInterface()) {
             result.parameterArray[index] = Proxy.newProxyInstance(replyCls.getClassLoader(), new Class<?>[]{replyCls},
-                    new CallBackHandler(replyCls, result.parameterArray[index]));
+                    new CallBackHandler(replyCls, result.parameterArray[index], replyCls));
             return true;
         }
 

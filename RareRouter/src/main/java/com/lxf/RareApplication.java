@@ -11,14 +11,14 @@ public final class RareApplication {
         RareAppImpl.getRareAppImpl().autoAddRareImpl();
     }
 
-    public static <T> T methodProxy(Class<T> service, Object proxyInstance) {
+    public static <T> T createImpl(Class<T> service, Object proxyInstance) {
         return (T) Proxy.newProxyInstance(service.getClassLoader(),
                 new Class<?>[]{service},
                 new RareHandler(service, proxyInstance));
     }
 
-    public static <T> T methodProxy(Class<T> service) {
-        return methodProxy(service, null);
+    public static <T> T createImpl(Class<T> service) {
+        return createImpl(service, null);
     }
 
     public static Class<?> annotateClazz(String annotateClazzPath) {

@@ -13,10 +13,13 @@ import java.lang.reflect.Method;
 public class CallBackHandler implements InvocationHandler {
     private Class<?> service;
     private Object proxyInstance;
+    private Class<?> proxyClazz;
 
-    public CallBackHandler(Class<?> service, Object proxyInstance) {
+
+    public CallBackHandler(Class<?> service, Object proxyInstance, Class<?> proxyClazz) {
         this.service = service;
         this.proxyInstance = proxyInstance;
+        this.proxyClazz = proxyClazz;
     }
 
     @Override
@@ -32,28 +35,20 @@ public class CallBackHandler implements InvocationHandler {
         if (annotationPath == null || annotationPath.length() == 0) {
             return null;
         }
-        Method methodReply = null;
-        for (Method m : proxyInstance.getClass().getMethods()) {
-            RouterMethod annotationReply = m.getAnnotation(RouterMethod.class);
-            if (annotationReply != null && annotationPath.equals(annotationReply.path())) {
-                methodReply = m;
-                break;
-            }
-        }
+        Method methodReply = proxyInstance.getClass().getMethod(method.getName(), method.getParameterTypes());
         if (methodReply == null) {
             return null;
         }
-
-        RouteBean askBean = RareAppImpl.getRareAppImpl().methodAskRouteBean(annotation.path(), service.getName());
+        RouteBean askBean = RareAppImpl.getRareAppImpl().methodAskRouteBean(annotationPath, service.getName());
         if (askBean == null) {
             return null;
         }
-        RouteBean replyBean = RareAppImpl.getRareAppImpl().methodAskRouteBean(annotation.path(), proxyInstance.getClass().getName());
+        RouteBean replyBean = RareAppImpl.getRareAppImpl().methodAskRouteBean(annotationPath, proxyClazz.getName());
         if (replyBean == null) {
             return null;
         }
         Checker checker = new DataChecker(askBean, method);
-        CheckResult result = checker.methodCheck(replyBean, proxyInstance.getClass(), args);
+        CheckResult result = checker.methodCheck(replyBean, proxyClazz, args);
         if (result.isOk) {
             return methodReply.invoke(proxyInstance, result.parameterArray);
         }
