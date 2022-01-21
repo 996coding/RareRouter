@@ -9,5 +9,5 @@ public interface HelloWorld {
     void say(Context context, String content);
 
     @RouterMethod(path = "say_hello_world2")
-    void say(String str, CallBack2 callBack2);
+    void say( Context context, String str, CallBack2 callBack2);
 }

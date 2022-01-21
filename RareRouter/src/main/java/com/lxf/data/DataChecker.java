@@ -99,7 +99,7 @@ public class DataChecker implements Checker {
 
         if (askCls.isInterface() && replyCls.isInterface()) {
             result.parameterArray[index] = Proxy.newProxyInstance(replyCls.getClassLoader(), new Class<?>[]{replyCls},
-                    new CallBackHandler(replyCls, result.parameterArray[index], replyCls));
+                    new CallBackHandler(replyCls, result.parameterArray[index], askCls));
             return true;
         }
 

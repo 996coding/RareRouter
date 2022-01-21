@@ -36,10 +36,16 @@ public class TestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (helloWorld != null) {
-                    helloWorld.say("你好！Hello World!", new CallBack2() {
+                    helloWorld.say(TestActivity.this, "你好！Hello World!", new CallBack2() {
                         @Override
                         public void returnSth(String sth) {
                             Toast.makeText(TestActivity.this, sth, Toast.LENGTH_LONG).show();
+                        }
+
+                        @Override
+                        public void returnCallBackSth(String sth, CallBack3 callBack3) {
+                            String str = sth + "->TestActivity";
+                            callBack3.returnSth(str);
                         }
                     });
                 }

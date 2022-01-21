@@ -35,7 +35,13 @@ public class CallBackHandler implements InvocationHandler {
         if (annotationPath == null || annotationPath.length() == 0) {
             return null;
         }
-        Method methodReply = proxyInstance.getClass().getMethod(method.getName(), method.getParameterTypes());
+        Method methodReply = null;
+        for (Method m : proxyClazz.getMethods()) {
+            RouterMethod routerMethod = m.getAnnotation(RouterMethod.class);
+            if (routerMethod != null && annotationPath.equals(routerMethod.path())) {
+                methodReply = proxyInstance.getClass().getMethod(m.getName(), m.getParameterTypes());
+            }
+        }
         if (methodReply == null) {
             return null;
         }

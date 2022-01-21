@@ -13,7 +13,12 @@ public class HelloWorldImpl {
     }
 
     @RouterMethod(path = "say_hello_world2")
-    public void say(String str, CallBack2 callBack2) {
-        callBack2.returnSth(str + "->HelloWorldImpl");
+    public void say(final Context context, String str, CallBack2 callBack2) {
+        callBack2.returnCallBackSth(str + "->HelloWorldImpl", new CallBack3() {
+            @Override
+            public void returnSth(String sth) {
+                Toast.makeText(context, sth+"->HelloWorldImpl", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
