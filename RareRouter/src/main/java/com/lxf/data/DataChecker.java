@@ -1,8 +1,10 @@
 package com.lxf.data;
 
+import com.lxf.Annotation.RouterBean;
 import com.lxf.Annotation.RouterMethod;
 import com.lxf.Router.CallBackHandler;
 import com.lxf.init.RouteBean;
+import com.lxf.manager.RareAppImpl;
 import com.lxf.protocol.CheckResult;
 import com.lxf.protocol.Checker;
 
@@ -94,6 +96,9 @@ public class DataChecker implements Checker {
          */
         if (isRareParcelable(askCls) && isRareParcelable(replyCls)) {
             //转换
+            RouterParcelable replyParcelable = createRareParcelable(replyCls);
+            convert((RouterParcelable) result.parameterArray[index], replyParcelable);
+            result.parameterArray[index] = replyParcelable;
             return true;
         }
 
@@ -116,7 +121,7 @@ public class DataChecker implements Checker {
 
 
     private boolean isRareParcelable(Class<?> clazz) {
-        if (clazz == RareParcelable.class) {
+        if (clazz == RouterParcelable.class) {
             return true;
         }
         Class<?>[] interfaceClazzArr = clazz.getInterfaces();
@@ -136,4 +141,27 @@ public class DataChecker implements Checker {
         return false;
     }
 
+    private RouterParcelable createRareParcelable(Class<?> replyCls) {
+        RouterBean bean = replyCls.getAnnotation(RouterBean.class);
+        RouterParcelable obj = null;
+        if (bean == null || bean.path().length() == 0) {
+            try {
+                obj = (RouterParcelable) replyCls.newInstance();
+            } catch (Exception e) {
+            }
+        } else {
+            obj = (RouterParcelable) RareAppImpl.getRareAppImpl().beanCreator(bean.path()).createInstance();
+        }
+        return obj;
+    }
+
+    private boolean convert(RouterParcelable source, RouterParcelable des) {
+        if (source == null || des == null) {
+            return false;
+        }
+        DataConvert convert = new DataConvert();
+        source.routerParcelableRead(convert);
+        des.routerParcelableWrite(convert);
+        return true;
+    }
 }
