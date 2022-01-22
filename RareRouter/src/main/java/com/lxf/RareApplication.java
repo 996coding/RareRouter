@@ -3,6 +3,7 @@ package com.lxf;
 import com.lxf.Router.RareHandler;
 import com.lxf.manager.RareAppImpl;
 import com.lxf.nozzle.JavaClassGetter;
+import com.lxf.protocol.DataBeanCreator;
 
 import java.lang.reflect.Proxy;
 
@@ -25,8 +26,13 @@ public final class RareApplication {
         return RareAppImpl.getRareAppImpl().getClazz(annotateClazzPath);
     }
 
-    public static Object annotateBean(String pkgFullName) {
-        return RareAppImpl.getRareAppImpl().getDateBean(pkgFullName);
+    public static Object annotateBean(String annotateBeanPath) {
+        DataBeanCreator creator = dataBeanCreator(annotateBeanPath);
+        return creator.createInstance();
+    }
+
+    public static DataBeanCreator dataBeanCreator(String annotateBeanPath) {
+        return RareAppImpl.getRareAppImpl().beanCreator(annotateBeanPath);
     }
 
     public static void startActivity(Object context, String activityAnnotate) {

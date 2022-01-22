@@ -9,6 +9,6 @@ public interface RareInterface {
 
     MethodProxy methodProxy();
 
-    DateBean dateBean();
+    InstanceCreator instanceCreator();
 }
 

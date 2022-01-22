@@ -10,7 +10,6 @@ import com.lxf.Process.genJava.GenClassBeansImpl;
 import com.lxf.Process.genJava.GenInstanceCreatorImpl;
 import com.lxf.Process.genJava.GenModuleRareImpl;
 import com.lxf.Process.genJava.GenRouterClazzImpl;
-import com.lxf.Process.genJava.GenDateBeanImpl;
 import com.lxf.Process.genJava.GenMethodBeansImpl;
 import com.lxf.Process.genJava.GenMethodProxyImpl;
 import com.lxf.Process.genJava.GenResponseProxy;
@@ -37,7 +36,6 @@ public class CoreProcessor extends BaseProcessor {
     private Set<Bean> clsSet = new HashSet<>();
     private Set<Bean> askSet = new HashSet<>();
     private Set<Bean> impSet = new HashSet<>();
-    private Set<String> routerBeansSet = new HashSet<>();
     private Map<String, String> dataBeanMap = new HashMap<>();
     private int processIndex = 0;
 
@@ -63,7 +61,6 @@ public class CoreProcessor extends BaseProcessor {
             GenMethodBeansImpl.gen(askSet, impSet, filerGen);
             GenRouterClazzImpl.gen(clsSet, filerGen);
             GenMethodProxyImpl.gen(impSet, filerGen);
-            GenDateBeanImpl.gen(routerBeansSet, filerGen);
             GenInstanceCreatorImpl.gen(dataBeanMap, filerGen);
             GenModuleRareImpl.gen(filerGen);//该条必须最后执行
         } else {
@@ -123,7 +120,6 @@ public class CoreProcessor extends BaseProcessor {
             }
         }
         String path = e.getAnnotation(clazz).path();
-        routerBeansSet.add(pkgName);
         if (dataBeanMap.keySet().contains(path)) {
             dataBeanMap.remove(path);
         } else {

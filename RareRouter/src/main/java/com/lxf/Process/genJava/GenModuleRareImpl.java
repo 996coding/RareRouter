@@ -78,8 +78,8 @@ public class GenModuleRareImpl {
         sb.append("    }\n\n");
 
         sb.append("    @Override\n");
-        sb.append("    public DateBean dateBean() {\n");
-        sb.append("        return new com.lxf.genCode." + GenDateBeanImpl.CLASS_NAME + "();\n");
+        sb.append("    public InstanceCreator instanceCreator() {\n");
+        sb.append("        return new com.lxf.genCode." + GenInstanceCreatorImpl.CLASS_NAME + "();\n");
         sb.append("    }\n\n");
 
         return sb.toString();

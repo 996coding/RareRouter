@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class RareAppImpl implements ClassBeans, MethodBeans, RouterClazz, MethodProxy, DateBean {
+public class RareAppImpl implements ClassBeans, MethodBeans, RouterClazz, MethodProxy, InstanceCreator {
     private static final RareAppImpl instance = new RareAppImpl();
     private List<RareInterface> rareImplList;
     private Set<String> implPkgSet;
@@ -71,9 +71,9 @@ public class RareAppImpl implements ClassBeans, MethodBeans, RouterClazz, Method
     }
 
     @Override
-    public Object getDateBean(String pkgFullName) {
+    public DataBeanCreator beanCreator(String annotateBeanPath) {
         for (RareInterface impl : rareImplList) {
-            Object bean = impl.dateBean().getDateBean(pkgFullName);
+            DataBeanCreator bean = impl.instanceCreator().beanCreator(annotateBeanPath);
             if (bean != null) {
                 return bean;
             }

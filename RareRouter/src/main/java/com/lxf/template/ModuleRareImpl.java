@@ -29,7 +29,9 @@ public class ModuleRareImpl implements RareInterface {
     }
 
     @Override
-    public DateBean dateBean() {
-        return new DateBeanImpl();
+    public InstanceCreator instanceCreator() {
+        return null;
     }
+
+
 }
