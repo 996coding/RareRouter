@@ -15,7 +15,7 @@ import com.lxf.log.RareLog;
 import com.lxf.manager.RareAppImpl;
 import com.lxf.template.RareAdder;
 
-@RouterBean()
+@RouterBean(path = "annotate.com.lxf.main.MainActivity")
 @RouterClass(path = "this_is_activity")
 public class MainActivity extends AppCompatActivity {
 

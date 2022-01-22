@@ -10,7 +10,7 @@ import com.lxf.data.read.Reader;
 import com.lxf.data.write.Writer;
 
 @RouterClass(path = "data_people")
-@RouterBean()
+@RouterBean(path = "annotate.com.lxf.ModuleB.PeopleIntent")
 public class PeopleIntent implements RouterParcelable, Parcelable {
     public String name_Server = "";
     public String sex_Server = "";

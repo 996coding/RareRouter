@@ -7,6 +7,7 @@ import com.lxf.Annotation.RouterMethod;
 import com.lxf.Process.base.BaseProcessor;
 import com.lxf.Process.base.Bean;
 import com.lxf.Process.genJava.GenClassBeansImpl;
+import com.lxf.Process.genJava.GenInstanceCreatorImpl;
 import com.lxf.Process.genJava.GenModuleRareImpl;
 import com.lxf.Process.genJava.GenRouterClazzImpl;
 import com.lxf.Process.genJava.GenDateBeanImpl;
@@ -17,8 +18,10 @@ import com.lxf.Process.genTxt.TxtLogger;
 import com.lxf.Process.genTxt.TxtWriter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.processing.Processor;
@@ -35,6 +38,7 @@ public class CoreProcessor extends BaseProcessor {
     private Set<Bean> askSet = new HashSet<>();
     private Set<Bean> impSet = new HashSet<>();
     private Set<String> routerBeansSet = new HashSet<>();
+    private Map<String, String> dataBeanMap = new HashMap<>();
     private int processIndex = 0;
 
     @Override
@@ -60,6 +64,7 @@ public class CoreProcessor extends BaseProcessor {
             GenRouterClazzImpl.gen(clsSet, filerGen);
             GenMethodProxyImpl.gen(impSet, filerGen);
             GenDateBeanImpl.gen(routerBeansSet, filerGen);
+            GenInstanceCreatorImpl.gen(dataBeanMap, filerGen);
             GenModuleRareImpl.gen(filerGen);//该条必须最后执行
         } else {
             Set<? extends Element> setMethod = roundEnvironment.getElementsAnnotatedWith(RouterMethod.class);
@@ -90,13 +95,13 @@ public class CoreProcessor extends BaseProcessor {
             }
             if (setRouteBean != null && setRouteBean.size() > 0) {
                 for (Element e : setRouteBean) {
-                    scanRouterBeanAnnotation(e);
+                    scanRouterBeanAnnotation(e, RouterBean.class);
                 }
             }
         }
     }
 
-    public void scanRouterBeanAnnotation(Element e) {
+    public void scanRouterBeanAnnotation(Element e, Class<RouterBean> clazz) {
         String pkgName = e.asType().toString();
         if (!e.getKind().name().toLowerCase().equals("class")) {
             return;
@@ -117,7 +122,13 @@ public class CoreProcessor extends BaseProcessor {
                 return;
             }
         }
+        String path = e.getAnnotation(clazz).path();
         routerBeansSet.add(pkgName);
+        if (dataBeanMap.keySet().contains(path)) {
+            dataBeanMap.remove(path);
+        } else {
+            dataBeanMap.put(path, pkgName);
+        }
     }
 
     public Bean scanClassAnnotation(Element e, Class<RouterClass> clazz) {
