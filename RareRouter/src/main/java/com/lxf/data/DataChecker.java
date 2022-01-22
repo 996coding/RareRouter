@@ -89,13 +89,13 @@ public class DataChecker implements Checker {
 //            return true;
 //        }
 //
-//        /*
-//        查看是否为：RareParcelable类型.
-//         */
-//        if (isRareParcelable(askCls) && isRareParcelable(replyCls)){
-//            //转换
-//            return true;
-//        }
+        /*
+        查看是否为：RareParcelable类型.
+         */
+        if (isRareParcelable(askCls) && isRareParcelable(replyCls)) {
+            //转换
+            return true;
+        }
 
         if (askCls.isInterface() && replyCls.isInterface()) {
             result.parameterArray[index] = Proxy.newProxyInstance(replyCls.getClassLoader(), new Class<?>[]{replyCls},
@@ -116,8 +116,24 @@ public class DataChecker implements Checker {
 
 
     private boolean isRareParcelable(Class<?> clazz) {
-
-        return true;
+        if (clazz == RareParcelable.class) {
+            return true;
+        }
+        Class<?>[] interfaceClazzArr = clazz.getInterfaces();
+        if (interfaceClazzArr != null && interfaceClazzArr.length > 0) {
+            for (Class<?> item : interfaceClazzArr) {
+                if (isRareParcelable(item)) {
+                    return true;
+                }
+            }
+        }
+        Class<?> superClazz = clazz.getSuperclass();
+        if (superClazz != null) {
+            if (isRareParcelable(superClazz)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
