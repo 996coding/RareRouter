@@ -121,6 +121,6 @@ public class ClientActivity extends AppCompatActivity {
     }
 
     public void funE() {
-        RareApplication.startActivity(this, "that_is_activity");
+        RareApplication.startIntent(this, "that_is_activity");
     }
 }

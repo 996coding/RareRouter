@@ -34,10 +34,10 @@ public final class RareApplication {
         return RareAppImpl.getRareAppImpl().beanCreator(annotateBeanPath);
     }
 
-    public static void startActivity(Object context, String activityAnnotate) {
+    public static void startIntent(Object context, String activityAnnotate) {
         Class<?> cls = annotateClazz(activityAnnotate);
         if (cls != null && context != null) {
-            //JavaClassGetter.getIntentStarter().startActivity(context, cls);
+            RareAppImpl.getRareAppImpl().startIntent(context, cls);
         }
     }
 

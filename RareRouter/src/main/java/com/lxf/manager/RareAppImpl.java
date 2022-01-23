@@ -1,6 +1,7 @@
 package com.lxf.manager;
 
 import com.lxf.Process.genJava.GenConfig;
+import com.lxf.Process.genJava.GenIntentStarter;
 import com.lxf.Process.genJava.GenRareAdder;
 import com.lxf.protocol.RouteBean;
 import com.lxf.protocol.*;
@@ -11,10 +12,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class RareAppImpl implements ClassBeans, MethodBeans, RouterClazz, MethodProxy, InstanceCreator {
+public class RareAppImpl implements ClassBeans, MethodBeans, RouterClazz, MethodProxy, InstanceCreator, IntentStarter {
     private static final RareAppImpl instance = new RareAppImpl();
     private List<RareInterface> rareImplList;
     private Set<String> implPkgSet;
+    private IntentStarter intentStarter;
 
     private RareAppImpl() {
         rareImplList = new ArrayList<>();
@@ -137,5 +139,19 @@ public class RareAppImpl implements ClassBeans, MethodBeans, RouterClazz, Method
             }
         }
         return null;
+    }
+
+    @Override
+    public void startIntent(Object context, Class<?> clazz) {
+        if (intentStarter == null) {
+            try {
+                intentStarter = (IntentStarter) Class.forName(GenConfig.PACKAGE + "." + GenIntentStarter.CLASS_NAME).newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if (intentStarter != null) {
+            intentStarter.startIntent(context, clazz);
+        }
     }
 }

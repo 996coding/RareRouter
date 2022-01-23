@@ -5,6 +5,7 @@ import com.lxf.Annotation.FlagAnnotation;
 import com.lxf.Process.base.BaseProcessor;
 import com.lxf.Process.configure.RareXml;
 import com.lxf.Process.genJava.GenConfig;
+import com.lxf.Process.genJava.GenIntentStarter;
 import com.lxf.Process.genJava.GenModuleRareImpl;
 import com.lxf.Process.genJava.GenRareAdder;
 import com.lxf.Process.genTxt.TxtCreator;
@@ -71,6 +72,7 @@ public class LastProcessor extends BaseProcessor {
                 Set<String> set = TxtReader.readTrimLine(txt_rare_list);
                 GenRareAdder.gen(set, filerGen);
                 GenRareAdder.genBackUp(set, filerGen);
+                GenIntentStarter.gen(filerGen);
                 TxtLogger.flushLog();
                 print("======================== scan over ***********************");
             }
