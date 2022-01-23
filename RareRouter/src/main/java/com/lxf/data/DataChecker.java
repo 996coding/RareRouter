@@ -10,7 +10,13 @@ import com.lxf.protocol.Checker;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class DataChecker implements Checker {
 
@@ -93,9 +99,9 @@ public class DataChecker implements Checker {
         2、Map；
         3、Set；
          */
-        if (result.parameterArray[index] == null) {
-            return true;
-        }
+//        if (result.parameterArray[index] == null) {
+//            return true;
+//        }
         if (askStr.equals(replyStr)) {
             return true;
         }
@@ -112,9 +118,20 @@ public class DataChecker implements Checker {
 //            return true;
 //        }
 //
-        /*
-        查看是否为：RareParcelable类型.
+
+
+         /*
+        集合数据,:
+        1、list;
+        2、map;
+        3、set;
          */
+//        if (askCls == replyCls && askStr.startsWith("java.util.") && replyStr.startsWith("java.util.")) {
+//            /* 如果两个类型相同，编译时产生的askStr、replyStr却不一样，说明一定有泛型。*/
+//            return containerConvert(askStr, askCls, replyStr, replyCls, index);
+//        }
+
+        /* 查看是否为：RareParcelable类型. */
         if (isRareParcelable(askCls) && isRareParcelable(replyCls)) {
             //转换
             RouterParcelable replyParcelable = createRareParcelable(replyCls);
@@ -129,23 +146,44 @@ public class DataChecker implements Checker {
             return true;
         }
 
-        /*
-        集合数据,:
-        1、list;
-        2、map;
-        3、set;
-         */
-//        if (askCls == java.util.List.class && replyCls == java.util.List.class) {
-//            List aimList = new ArrayList();
-//            List sourceList = (List) result.parameterArray[index];
-//            if (listConvert(sourceList, aimList, askStr, replyStr)) {
-//                result.parameterArray[index] = aimList;
-//                return true;
-//            } else {
-//                return false;
-//            }
-//        }
 
+        return false;
+    }
+
+
+    private boolean containerConvert(String askStr, Class<?> askCls, String replyStr, Class<?> replyCls, int index) {
+        /*
+        取出泛型里面的 字符串：askStrNew、replyStrNew。
+        replyStrNew、replyStrNew 肯定不相等，否则走不到这一步。
+        所以，replyStrNew、replyStrNew 只能是 泛型 或者 RouterParcelable类型。
+        换句话：如果不包含泛型，又不是RouterParcelable类型，无法进行转换。
+         */
+        int askGrcIndex = askStr.indexOf("<");
+        int replyGrcIndex = askStr.indexOf("<");
+        if (askGrcIndex < 0 || replyGrcIndex < 0) {
+            return false;
+        }
+        String askStrNew = askStr.substring(askGrcIndex + 1, askStr.length() - 1);
+        String replyStrNew = replyStr.substring(replyGrcIndex + 1, replyStr.length() - 1);
+
+        /* 如果都是 List、ArrayList、LinkedList 类型 */
+        if (askCls == List.class && replyCls == List.class) {
+
+        } else if (askCls == ArrayList.class && replyCls == ArrayList.class) {
+
+        } else if (askCls == LinkedList.class && replyCls == LinkedList.class) {
+
+        } else if (askCls == ArrayList.class && replyCls == ArrayList.class) {
+
+        } else if (askCls == Set.class && replyCls == Set.class) {
+
+        } else if (askCls == HashSet.class && replyCls == HashSet.class) {
+
+        } else if (askCls == Map.class && replyCls == Map.class) {
+
+        } else if (askCls == HashMap.class && replyCls == HashMap.class) {
+
+        }
         return false;
     }
 

@@ -1,6 +1,5 @@
 package com.lxf.data;
 
-import java.util.HashMap;
 
 public final class DataType {
     public static final String TYPE_int = "int";
@@ -61,4 +60,24 @@ public final class DataType {
         return -1;
     }
 
+    /*
+    集合类:
+    java.util.Map
+    java.util.Map<java.lang.String,java.lang.String>
+    java.util.HashMap,
+    java.util.HashMap<java.lang.Integer,java.lang.String>
+
+    java.util.List
+    java.util.List<java.lang.String>
+    java.util.ArrayList
+    java.util.ArrayList<java.lang.Integer>
+    java.util.LinkedList
+    java.util.LinkedList<java.lang.Boolean>
+
+    java.util.Set
+    java.util.Set<java.lang.String>
+    java.util.HashSet
+    java.util.HashSet<java.lang.Integer>
+
+    */
 }
