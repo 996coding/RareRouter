@@ -4,7 +4,7 @@ import com.lxf.Annotation.RouterBean;
 import com.lxf.Annotation.RouterMethod;
 import com.lxf.Router.CallBackHandler;
 import com.lxf.protocol.RouteBean;
-import com.lxf.manager.RareAppImpl;
+import com.lxf.Router.RareAppImpl;
 import com.lxf.protocol.CheckResult;
 import com.lxf.protocol.Checker;
 

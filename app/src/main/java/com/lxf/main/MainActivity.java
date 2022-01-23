@@ -2,18 +2,13 @@ package com.lxf.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.lxf.Annotation.RouterClass;
-import com.lxf.ModuleA.ClientActivity;
 import com.lxf.Annotation.RouterBean;
 import com.lxf.RareApplication;
 import com.lxf.log.RareLog;
-import com.lxf.manager.RareAppImpl;
-import com.lxf.template.RareAdder;
 
 @RouterBean(path = "annotate.com.lxf.main.MainActivity")
 @RouterClass(path = "this_is_activity")

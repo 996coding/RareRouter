@@ -1,7 +1,7 @@
 package com.lxf;
 
 import com.lxf.Router.RareHandler;
-import com.lxf.manager.RareAppImpl;
+import com.lxf.Router.RareAppImpl;
 import com.lxf.protocol.DataBeanCreator;
 
 import java.lang.reflect.Proxy;

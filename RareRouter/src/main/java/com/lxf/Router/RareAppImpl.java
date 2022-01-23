@@ -1,4 +1,4 @@
-package com.lxf.manager;
+package com.lxf.Router;
 
 import com.lxf.Process.genJava.GenConfig;
 import com.lxf.Process.genJava.GenIntentStarter;

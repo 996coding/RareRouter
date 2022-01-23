@@ -29,7 +29,7 @@ public class GenModuleRareImpl {
     private static String static_code() {
         StringBuilder sb = new StringBuilder();
         sb.append("    static {\n");
-        sb.append("        com.lxf.manager.RareAppImpl.addRareImpl(new " + CLASS_NAME + "());\n");
+        sb.append("        RareImplAdder.addRareImpl(new " + CLASS_NAME + "());\n");
         sb.append("    }\n\n");
         sb.append("    public static int flag = 0;\n\n");
         return sb.toString();
