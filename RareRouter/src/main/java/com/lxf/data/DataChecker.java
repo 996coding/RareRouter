@@ -166,6 +166,13 @@ public class DataChecker implements Checker {
         String askStrNew = askStr.substring(askGrcIndex + 1, askStr.length() - 1);
         String replyStrNew = replyStr.substring(replyGrcIndex + 1, replyStr.length() - 1);
 
+        boolean isAskGrc = askStrNew.contains("<");
+        boolean isReplyGrc = replyStrNew.contains("<");
+
+        if (isAskGrc != isReplyGrc) {
+            return false;
+        }
+
         /* 如果都是 List、ArrayList、LinkedList 类型 */
         if (askCls == List.class && replyCls == List.class) {
 
