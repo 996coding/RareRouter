@@ -12,7 +12,6 @@ import com.lxf.Process.genJava.GenModuleRareImpl;
 import com.lxf.Process.genJava.GenRouterClazzImpl;
 import com.lxf.Process.genJava.GenMethodBeansImpl;
 import com.lxf.Process.genJava.GenMethodProxyImpl;
-import com.lxf.Process.genJava.GenResponseProxy;
 import com.lxf.Process.genTxt.TxtLogger;
 import com.lxf.Process.genTxt.TxtWriter;
 
@@ -258,8 +257,6 @@ public class CoreProcessor extends BaseProcessor {
         if (this.beanSet == null || this.beanSet.size() == 0) {
             return;
         }
-        Set<String> genClasses = GenResponseProxy.genJavaResponseProxy(this.beanSet, this.filerGen);
-        TxtWriter.writeMethodImpClazz(genClasses);
 
         Set<Bean> newSet = TxtWriter.writeBeans(this.beanSet);
 

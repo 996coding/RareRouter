@@ -2,16 +2,12 @@ package com.lxf.ModuleA;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.TextView;
 
 import com.lxf.Annotation.RouterClass;
-import com.lxf.RareRouter;
-import com.lxf.data.LxfDataFactory;
-import com.lxf.data.RouterParcelable;
+import com.lxf.RareApplication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +28,7 @@ public class ClientActivity extends AppCompatActivity {
         setContentView(R.layout.activity_client);
 
         textView = findViewById(R.id.text_view);
-        getInfo = RareRouter.create(GetInfo.class);
+        getInfo = RareApplication.createImpl(GetInfo.class);
 
         findViewById(R.id.client_btn_1).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,16 +111,16 @@ public class ClientActivity extends AppCompatActivity {
     }
 
     public void funD() {
-        Person person = new Person("Tom", "man", 10010);
-        Object aimObj = RareRouter.annotationClsInstance("data_people");
-        LxfDataFactory.convert(person, (RouterParcelable) aimObj);
-
-        Intent intent = new Intent(this, RareRouter.annotationClass("that_is_activity"));
-        intent.putExtra("key", (Parcelable) aimObj);
-        startActivity(intent);
+//        Person person = new Person("Tom", "man", 10010);
+//        Object aimObj = RareRouter.annotationClsInstance("data_people");
+//        LxfDataFactory.convert(person, (RouterParcelable) aimObj);
+//
+//        Intent intent = new Intent(this, RareRouter.annotationClass("that_is_activity"));
+//        intent.putExtra("key", (Parcelable) aimObj);
+//        startActivity(intent);
     }
 
     public void funE() {
-        RareRouter.startActivity(this, "that_is_activity");
+        RareApplication.startActivity(this, "that_is_activity");
     }
 }

@@ -2,7 +2,6 @@ package com.lxf;
 
 import com.lxf.Router.RareHandler;
 import com.lxf.manager.RareAppImpl;
-import com.lxf.nozzle.JavaClassGetter;
 import com.lxf.protocol.DataBeanCreator;
 
 import java.lang.reflect.Proxy;
@@ -38,7 +37,7 @@ public final class RareApplication {
     public static void startActivity(Object context, String activityAnnotate) {
         Class<?> cls = annotateClazz(activityAnnotate);
         if (cls != null && context != null) {
-            JavaClassGetter.getIntentStarter().startActivity(context, cls);
+            //JavaClassGetter.getIntentStarter().startActivity(context, cls);
         }
     }
 

@@ -1,10 +1,6 @@
 package com.lxf.Router;
 
 import com.lxf.data.RouterParcelable;
-import com.lxf.init.RouteBean;
-import com.lxf.init.RouteMap;
-
-import java.util.List;
 
 public class DataType {
     public static final String TYPE_int = "int";
@@ -119,14 +115,4 @@ public class DataType {
         return false;
     }
 
-    public static boolean isInstanceOfInterface(String pkgName) {
-        if (pkgName == null || pkgName.length() == 0) {
-            return false;
-        }
-        List<RouteBean> list = RouteMap.getInstance().getInterfaceRouteBeans(pkgName);
-        if (list != null && list.size() > 0) {
-            return true;
-        }
-        return false;
-    }
 }
