@@ -2,10 +2,9 @@ package com.lxf.Router;
 
 import com.lxf.Annotation.RouterMethod;
 import com.lxf.data.DataChecker;
-import com.lxf.init.RouteBean;
+import com.lxf.protocol.RouteBean;
 import com.lxf.manager.RareAppImpl;
 import com.lxf.protocol.Checker;
-import com.lxf.protocol.MethodProxy;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

@@ -2,11 +2,10 @@ package com.lxf.manager;
 
 import com.lxf.Process.genJava.GenConfig;
 import com.lxf.Process.genJava.GenRareAdder;
-import com.lxf.init.RouteBean;
+import com.lxf.protocol.RouteBean;
 import com.lxf.protocol.*;
 import com.lxf.template.RareAdder;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

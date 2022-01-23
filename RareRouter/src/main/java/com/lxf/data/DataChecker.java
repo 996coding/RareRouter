@@ -3,14 +3,13 @@ package com.lxf.data;
 import com.lxf.Annotation.RouterBean;
 import com.lxf.Annotation.RouterMethod;
 import com.lxf.Router.CallBackHandler;
-import com.lxf.init.RouteBean;
+import com.lxf.protocol.RouteBean;
 import com.lxf.manager.RareAppImpl;
 import com.lxf.protocol.CheckResult;
 import com.lxf.protocol.Checker;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.util.ArrayList;
 import java.util.List;
 
 public class DataChecker implements Checker {

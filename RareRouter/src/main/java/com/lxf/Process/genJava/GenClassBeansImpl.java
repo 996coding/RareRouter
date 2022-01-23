@@ -24,8 +24,7 @@ public class GenClassBeansImpl {
     private static String class_import() {
         StringBuilder sb = new StringBuilder();
         sb.append("package " + GenConfig.PACKAGE + ";\n\n");
-        sb.append("import com.lxf.init.RouteBean;\n");
-        sb.append("import com.lxf.protocol.ClassBeans;\n\n");
+        sb.append("import com.lxf.protocol.*;\n\n");
         return sb.toString();
     }
 
