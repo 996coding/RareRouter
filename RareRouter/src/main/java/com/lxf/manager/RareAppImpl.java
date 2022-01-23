@@ -82,6 +82,17 @@ public class RareAppImpl implements ClassBeans, MethodBeans, RouterClazz, Method
     }
 
     @Override
+    public DataBeanCreator beanGenerate(String pkgName) {
+        for (RareInterface impl : rareImplList) {
+            DataBeanCreator bean = impl.instanceCreator().beanGenerate(pkgName);
+            if (bean != null) {
+                return bean;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public RouteBean methodAskRouteBean(String annotationPath, String pkgName) {
         for (RareInterface impl : rareImplList) {
             RouteBean bean = impl.methodBeans().methodAskRouteBean(annotationPath, pkgName);

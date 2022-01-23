@@ -10,6 +10,8 @@ import com.lxf.protocol.Checker;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DataChecker implements Checker {
 
@@ -81,9 +83,29 @@ public class DataChecker implements Checker {
     }
 
     private boolean parameterCheck(String askStr, Class<?> askCls, String replyStr, Class<?> replyCls, int index) {
+        /*
+        只能解析：
+        1、基本数据类型；
+        2、String；
+        3、自定义数据类型，Parcelable；
+        4、接口；
+        以及集合类：
+        1、List；
+        2、Map；
+        3、Set；
+         */
+        if (result.parameterArray[index] == null) {
+            return true;
+        }
         if (askStr.equals(replyStr)) {
             return true;
         }
+        /*
+        如果不相等，可能由于：
+        1、自定义数据类型，Parcelable；
+        2、接口；
+        3、泛型。
+         */
 //        int askBasicTypeID = DataType.getBasicTypeID(askStr);
 //        int replyBasicTypeID = DataType.getBasicTypeID(replyStr);
 //
@@ -114,11 +136,43 @@ public class DataChecker implements Checker {
         2、map;
         3、set;
          */
-
+//        if (askCls == java.util.List.class && replyCls == java.util.List.class) {
+//            List aimList = new ArrayList();
+//            List sourceList = (List) result.parameterArray[index];
+//            if (listConvert(sourceList, aimList, askStr, replyStr)) {
+//                result.parameterArray[index] = aimList;
+//                return true;
+//            } else {
+//                return false;
+//            }
+//        }
 
         return false;
     }
 
+    private boolean listConvert(List sourceList, List aimList, String askStr, String replyStr) {
+
+        /* askStrNew 和 replyStrNew 肯定不会相等，否则走不到这一步 */
+        String askStrNew = askStr.substring("java.util.List<".length(), askStr.length() - 1);
+        String replyStrNew = replyStr.substring("java.util.List<".length(), replyStr.length() - 1);
+
+        /* askStrNew 和 replyStrNew 肯定不是基本数据类型，否则不可能不相等 */
+        /* askStrNew 和 replyStrNew 看下收否还存在泛型 */
+        boolean askGeneric = askStrNew.contains("<");
+        boolean replyGeneric = replyStr.contains("<");
+        if (askGeneric && replyGeneric) {
+            /* askStrNew 和 replyStrNew 都是泛型 */
+
+
+        } else if (!askGeneric && !replyGeneric) {
+            /* askStrNew 和 replyStrNew 都不是泛型，只能是 RareParcelable，否则类型检测失败 */
+
+        } else {
+            return false;
+        }
+        return false;
+
+    }
 
     private boolean isRareParcelable(Class<?> clazz) {
         if (clazz == RouterParcelable.class) {

@@ -10,11 +10,13 @@ public class GenInstanceCreatorImpl {
 
     public static void gen(Map<String, String> map, FilerGen filerGen) {
 
-        Map<String, String> newMap = new HashMap<>();
+        Map<String, String> newMapCreate = new HashMap<>();
+        Map<String, String> newMapGen = new HashMap<>();
         for (String annotate : map.keySet()) {
             String className = map.get(annotate);
             String pkgName = className.replace(".", "_") + "_Impl";
-            newMap.put(pkgName, annotate);
+            newMapCreate.put(pkgName, annotate);
+            newMapGen.put(className,pkgName);
             genCreatorImpl(pkgName, className, filerGen);
         }
 
@@ -26,8 +28,12 @@ public class GenInstanceCreatorImpl {
         sb.append(class_head());
 
         sb.append(method_head());
-        sb.append(method_body(newMap));
+        sb.append(method_body(newMapCreate));
         sb.append(method_tail());
+
+        sb.append(method_head2());
+        sb.append(method_body2(newMapGen));
+        sb.append(method_tail2());
 
         sb.append(clazz_tail());
         filerGen.genJavaClass(sb.toString(), CLASS_NAME);
@@ -75,7 +81,21 @@ public class GenInstanceCreatorImpl {
         return sb.toString();
     }
 
+    private static String method_head2() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("    @Override\n");
+        sb.append("    public DataBeanCreator beanGenerate(String pkgName) {\n");
+        return sb.toString();
+    }
+
     private static String method_tail() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("        return null;\n");
+        sb.append("    }\n\n");
+        return sb.toString();
+    }
+
+    private static String method_tail2() {
         StringBuilder sb = new StringBuilder();
         sb.append("        return null;\n");
         sb.append("    }\n\n");
@@ -95,4 +115,16 @@ public class GenInstanceCreatorImpl {
         return sb.toString();
     }
 
+    private static String method_body2(Map<String, String> map) {
+        if (map == null || map.size() == 0) {
+            return "\n";
+        }
+        StringBuilder sb = new StringBuilder();
+        for (String className : map.keySet()) {
+            sb.append("        if (\"" + className + "\".equals(pkgName)){\n");
+            sb.append("            return new " + map.get(className) + "();\n");
+            sb.append("        }\n");
+        }
+        return sb.toString();
+    }
 }
