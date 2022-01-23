@@ -1,14 +1,14 @@
 package com.lxf;
 
 import com.lxf.Router.RareHandler;
-import com.lxf.Router.RareAppImpl;
+import com.lxf.Router.RareCore;
 import com.lxf.protocol.DataBeanCreator;
 
 import java.lang.reflect.Proxy;
 
 public final class RareApplication {
     static {
-        RareAppImpl.getRareAppImpl().autoAddRareImpl();
+        RareCore.getRareCore().autoAddRareImpl();
     }
 
     public static <T> T createImpl(Class<T> service, Object proxyInstance) {
@@ -22,7 +22,7 @@ public final class RareApplication {
     }
 
     public static Class<?> annotateClazz(String annotateClazzPath) {
-        return RareAppImpl.getRareAppImpl().getClazz(annotateClazzPath);
+        return RareCore.getRareCore().getClazz(annotateClazzPath);
     }
 
     public static Object annotateBean(String annotateBeanPath) {
@@ -31,13 +31,13 @@ public final class RareApplication {
     }
 
     public static DataBeanCreator dataBeanCreator(String annotateBeanPath) {
-        return RareAppImpl.getRareAppImpl().beanCreator(annotateBeanPath);
+        return RareCore.getRareCore().beanCreator(annotateBeanPath);
     }
 
     public static void startIntent(Object context, String activityAnnotate) {
         Class<?> cls = annotateClazz(activityAnnotate);
         if (cls != null && context != null) {
-            RareAppImpl.getRareAppImpl().startIntent(context, cls);
+            RareCore.getRareCore().startIntent(context, cls);
         }
     }
 

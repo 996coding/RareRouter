@@ -12,19 +12,19 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class RareAppImpl implements ClassBeans, MethodBeans, RouterClazz, MethodProxy, InstanceCreator, IntentStarter {
-    private static final RareAppImpl instance = new RareAppImpl();
+public class RareCore implements ClassBeans, MethodBeans, RouterClazz, MethodProxy, InstanceCreator, IntentStarter {
+    private static final RareCore instance = new RareCore();
     private List<RareInterface> rareImplList;
     private Set<String> implPkgSet;
     private IntentStarter intentStarter;
 
-    private RareAppImpl() {
+    private RareCore() {
         rareImplList = new ArrayList<>();
         implPkgSet = new HashSet<>();
 //        autoAddRareImpl();
     }
 
-    public static RareAppImpl getRareAppImpl() {
+    public static RareCore getRareCore() {
         return instance;
     }
 
@@ -33,7 +33,7 @@ public class RareAppImpl implements ClassBeans, MethodBeans, RouterClazz, Method
             return;
         }
         String pkgName = rareImpl.getClass().getName();
-        synchronized (RareAppImpl.class) {
+        synchronized (RareCore.class) {
             instance.putRareImpl(pkgName, rareImpl);
         }
     }

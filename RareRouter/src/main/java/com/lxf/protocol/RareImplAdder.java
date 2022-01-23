@@ -1,9 +1,9 @@
 package com.lxf.protocol;
 
-import com.lxf.Router.RareAppImpl;
+import com.lxf.Router.RareCore;
 
 public final class RareImplAdder {
     public static void addRareImpl(RareInterface impl) {
-        RareAppImpl.addRareImpl(impl);
+        RareCore.addRareImpl(impl);
     }
 }

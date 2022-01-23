@@ -44,11 +44,11 @@ public class CallBackHandler implements InvocationHandler {
         if (methodReply == null) {
             return null;
         }
-        RouteBean askBean = RareAppImpl.getRareAppImpl().methodAskRouteBean(annotationPath, service.getName());
+        RouteBean askBean = RareCore.getRareCore().methodAskRouteBean(annotationPath, service.getName());
         if (askBean == null) {
             return null;
         }
-        RouteBean replyBean = RareAppImpl.getRareAppImpl().methodAskRouteBean(annotationPath, proxyClazz.getName());
+        RouteBean replyBean = RareCore.getRareCore().methodAskRouteBean(annotationPath, proxyClazz.getName());
         if (replyBean == null) {
             return null;
         }

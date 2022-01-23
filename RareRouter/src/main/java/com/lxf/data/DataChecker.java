@@ -4,7 +4,7 @@ import com.lxf.Annotation.RouterBean;
 import com.lxf.Annotation.RouterMethod;
 import com.lxf.Router.CallBackHandler;
 import com.lxf.protocol.RouteBean;
-import com.lxf.Router.RareAppImpl;
+import com.lxf.Router.RareCore;
 import com.lxf.protocol.CheckResult;
 import com.lxf.protocol.Checker;
 
@@ -203,7 +203,7 @@ public class DataChecker implements Checker {
             } catch (Exception e) {
             }
         } else {
-            obj = (RouterParcelable) RareAppImpl.getRareAppImpl().beanCreator(bean.path()).createInstance();
+            obj = (RouterParcelable) RareCore.getRareCore().beanCreator(bean.path()).createInstance();
         }
         return obj;
     }

@@ -31,11 +31,11 @@ public class RareHandler implements InvocationHandler {
         if (annotationPath == null || annotationPath.length() == 0) {
             return null;
         }
-        RouteBean askBean = RareAppImpl.getRareAppImpl().methodAskRouteBean(annotationPath, service.getName());
+        RouteBean askBean = RareCore.getRareCore().methodAskRouteBean(annotationPath, service.getName());
         if (askBean == null) {
             return null;
         }
         Checker checker = new DataChecker(askBean, method);
-        return RareAppImpl.getRareAppImpl().proxy(proxyInstance, checker, annotation.path(), args);
+        return RareCore.getRareCore().proxy(proxyInstance, checker, annotation.path(), args);
     }
 }
