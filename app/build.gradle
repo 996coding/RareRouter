@@ -31,8 +31,12 @@ dependencies {
 
     implementation project(path: ':ModuleA')
     implementation project(path: ':ModuleB')
+//    implementation project(path: ':ModuleOnline')
 
 
     implementation project(path: ':RareRouter')
     annotationProcessor project(path: ':RareRouter')
+
+    implementation 'com.squareup.okhttp3:okhttp:4.4.0'
+
 }

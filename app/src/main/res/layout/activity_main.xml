@@ -11,18 +11,38 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_centerVertical="true"
-        android:textAllCaps="false"
-        android:text="点击进入 Module A" />
+        android:text="点击进入 Module A"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/http_load_jar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_below="@+id/main_module"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="10dp"
+        android:text="下载jar包"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/local_load_jar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_below="@+id/http_load_jar"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="10dp"
+        android:text="加载jar包"
+        android:textAllCaps="false" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/main_module"
         android:layout_marginLeft="70dp"
         android:layout_marginRight="70dp"
         android:layout_marginBottom="70dp"
-        android:layout_above="@+id/main_module"
-        android:textSize="22dp"
+        android:text="此Demo展示 Module-A 与 Module-B 之间的通信。\n包含方法调用、activity启动。"
         android:textAllCaps="false"
-        android:text="此Demo展示 Module-A 与 Module-B 之间的通信。\n包含方法调用、activity启动。"/>
+        android:textSize="22dp" />
 
 </RelativeLayout>

@@ -158,18 +158,51 @@ public class DataChecker implements Checker {
         所以，replyStrNew、replyStrNew 只能是 泛型 或者 RouterParcelable类型。
         换句话：如果不包含泛型，又不是RouterParcelable类型，无法进行转换。
          */
-        int askGrcIndex = askStr.indexOf("<");
-        int replyGrcIndex = askStr.indexOf("<");
-        if (askGrcIndex < 0 || replyGrcIndex < 0) {
-            return false;
+//        int askGrcIndex = askStr.indexOf("<");
+//        int replyGrcIndex = askStr.indexOf("<");
+//        if (askGrcIndex < 0 || replyGrcIndex < 0) {
+//            return false;
+//        }
+//        String askStrNew = askStr.substring(askGrcIndex + 1, askStr.length() - 1);
+//        String replyStrNew = replyStr.substring(replyGrcIndex + 1, replyStr.length() - 1);
+//
+//        boolean isAskGrc = askStrNew.contains("<");
+//        boolean isReplyGrc = replyStrNew.contains("<");
+//
+//        if (isAskGrc != isReplyGrc) {
+//            return false;
+//        }
+
+        Object methodRes = null;
+
+        String askStrChild = askStr;
+        String replyStrChild = replyStr;
+
+        while (askStrChild.contains("<") && replyStrChild.contains("<")) {
+            int askIndex = askStr.indexOf("<");
+            int replyIndex = askStr.indexOf("<");
+            if (askIndex == replyIndex) {
+                String askPrefix = askStrChild.substring(0, askIndex);
+                String replyPrefix = replyStrChild.substring(0, replyIndex);
+                if (askPrefix.equals(replyPrefix)) {
+                    Object tmpContainer = createJavaUtil(askPrefix);
+                    if (tmpContainer == null) {
+                        return false;
+                    }
+                    if (methodRes == null) {
+                        methodRes = tmpContainer;
+                    } else {
+                        javaUtilAdd(methodRes,tmpContainer);
+                    }
+
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
         }
-        String askStrNew = askStr.substring(askGrcIndex + 1, askStr.length() - 1);
-        String replyStrNew = replyStr.substring(replyGrcIndex + 1, replyStr.length() - 1);
-
-        boolean isAskGrc = askStrNew.contains("<");
-        boolean isReplyGrc = replyStrNew.contains("<");
-
-        if (isAskGrc != isReplyGrc) {
+        if (askStrChild.contains("<") || replyStrChild.contains("<")) {
             return false;
         }
 
@@ -192,6 +225,23 @@ public class DataChecker implements Checker {
 
         }
         return false;
+    }
+
+    private void javaUtilAdd(Object father,Object child){
+
+    }
+
+    private Object createJavaUtil(String pkgName) {
+        if (List.class.getName().equals(pkgName) || ArrayList.class.getName().equals(pkgName)) {
+            return new ArrayList();
+        } else if (LinkedList.class.getName().equals(pkgName)) {
+            return new LinkedList();
+        } else if (Set.class.getName().equals(pkgName) || HashSet.class.getName().equals(pkgName)) {
+            return new HashSet();
+        } else if (Map.class.getName().equals(pkgName) || HashMap.class.getName().equals(pkgName)) {
+            return new HashMap();
+        }
+        return null;
     }
 
     private boolean listConvert(List sourceList, List aimList, String askStr, String replyStr) {

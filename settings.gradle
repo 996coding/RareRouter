@@ -1,3 +1,4 @@
+include ':ModuleOnline'
 include ':ModuleB'
 include ':ModuleA'
 include ':app'

@@ -28,7 +28,7 @@ public class TestActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (helloWorld != null) {
-                    helloWorld.say(TestActivity.this, "你好！Hello World!");
+                    Toast.makeText(TestActivity.this, helloWorld.say("你好！Hello World!"), Toast.LENGTH_SHORT).show();
                 }
             }
         });

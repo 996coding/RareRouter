@@ -8,8 +8,8 @@ import com.lxf.Annotation.RouterMethod;
 
 public class HelloWorldImpl {
     @RouterMethod(path = "say_hello_world")
-    public void say(Context context, String content) {
-        Toast.makeText(context, content, Toast.LENGTH_LONG).show();
+    public String say(String content) {
+        return content + "->HelloWorldImpl";
     }
 
     @RouterMethod(path = "say_hello_world2")
@@ -17,7 +17,7 @@ public class HelloWorldImpl {
         callBack2.returnCallBackSth(str + "->HelloWorldImpl", new CallBack3() {
             @Override
             public void returnSth(String sth) {
-                Toast.makeText(context, sth+"->HelloWorldImpl", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, sth + "->HelloWorldImpl", Toast.LENGTH_LONG).show();
             }
         });
     }
