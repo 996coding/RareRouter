@@ -216,7 +216,9 @@ public class DataChecker implements Checker {
         if (replyCreator!=null){
             replyP = replyCreator.createInstance();
         }
-        if (RouterParcelable.class.isInstance())
+//        if (RouterParcelable.class.isInstance()){
+//
+//        }
 
         /* 如果都是 List、ArrayList、LinkedList 类型 */
         if (askCls == List.class && replyCls == List.class) {

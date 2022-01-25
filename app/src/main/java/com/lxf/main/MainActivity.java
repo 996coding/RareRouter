@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void downloadJar() {
 //        String url = "http://192.168.124.8:8080/hotfix_war_exploded/down/a.jar";
-        String url = "http://192.168.43.203/a.jar";
+        String url = "http://192.168.50.243/a.jar";
         DownloadUtil.get().download(url, "", new DownloadUtil.OnDownloadListener() {
             @Override
             public void onDownloadSuccess(String path) {
@@ -86,25 +86,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    public void loadJar(String filepath) {
-        //拿到jar文件
-        File path = new File(filepath);
-        if (!path.exists()){
-            Log.e("lv123", "jar不存在  "+filepath);
-            return;
-        }
-        DexClassLoader cl = new DexClassLoader(path.getAbsolutePath(), getFilesDir().getAbsolutePath(),
-                getFilesDir().getAbsolutePath(), getClassLoader());
-        Class myClass = null;
-        try {
-            // 载入JarLoader类， 并且通过反射构建JarLoader对象， 然后调用sayHi方法
-            cl.loadClass("com.lxf.genCode.ModuleRareImpl_ModuleOnline");  //这里要用类的完整名称
-            Log.e("lv123", "-------->>>>动态加载");
-        } catch (Exception exception) {
-            Log.e("lv123", "-------->>>>动态加载" + exception.getMessage());
-        }
     }
 
     public void a(String jarPath){
