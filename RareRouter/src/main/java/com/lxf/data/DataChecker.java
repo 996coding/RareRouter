@@ -3,6 +3,7 @@ package com.lxf.data;
 import com.lxf.Annotation.RouterBean;
 import com.lxf.Annotation.RouterMethod;
 import com.lxf.Router.CallBackHandler;
+import com.lxf.protocol.DataBeanCreator;
 import com.lxf.protocol.RouteBean;
 import com.lxf.Router.RareCore;
 import com.lxf.protocol.CheckResult;
@@ -185,16 +186,17 @@ public class DataChecker implements Checker {
                 String askPrefix = askStrChild.substring(0, askIndex);
                 String replyPrefix = replyStrChild.substring(0, replyIndex);
                 if (askPrefix.equals(replyPrefix)) {
-                    Object tmpContainer = createJavaUtil(askPrefix);
-                    if (tmpContainer == null) {
-                        return false;
-                    }
-                    if (methodRes == null) {
-                        methodRes = tmpContainer;
-                    } else {
-                        javaUtilAdd(methodRes,tmpContainer);
-                    }
-
+//                    Object tmpContainer = createJavaUtil(askPrefix);
+//                    if (tmpContainer == null) {
+//                        return false;
+//                    }
+//                    if (methodRes == null) {
+//                        methodRes = tmpContainer;
+//                    } else {
+//                        javaUtilAdd(methodRes,tmpContainer);
+//                    }
+                    askStrChild = askStrChild.substring(askIndex + 1, askStrChild.length() - 1);
+                    replyStrChild = replyStrChild.substring(replyIndex + 1, replyStrChild.length() - 1);
                 } else {
                     return false;
                 }
@@ -205,6 +207,16 @@ public class DataChecker implements Checker {
         if (askStrChild.contains("<") || replyStrChild.contains("<")) {
             return false;
         }
+        DataBeanCreator askCreator = RareCore.getRareCore().beanGenerate(askStrChild);
+        DataBeanCreator replyCreator = RareCore.getRareCore().beanGenerate(replyStrChild);
+        Object askP,replyP;
+        if (askCreator!=null){
+            askP = askCreator.createInstance();
+        }
+        if (replyCreator!=null){
+            replyP = replyCreator.createInstance();
+        }
+        if (RouterParcelable.class.isInstance())
 
         /* 如果都是 List、ArrayList、LinkedList 类型 */
         if (askCls == List.class && replyCls == List.class) {
@@ -227,7 +239,7 @@ public class DataChecker implements Checker {
         return false;
     }
 
-    private void javaUtilAdd(Object father,Object child){
+    private void javaUtilAdd(Object father, Object child) {
 
     }
 
