@@ -209,16 +209,31 @@ public class DataChecker implements Checker {
         }
         DataBeanCreator askCreator = RareCore.getRareCore().beanGenerate(askStrChild);
         DataBeanCreator replyCreator = RareCore.getRareCore().beanGenerate(replyStrChild);
-        Object askP,replyP;
-        if (askCreator!=null){
+        Object askP, replyP;
+        if (askCreator != null) {
             askP = askCreator.createInstance();
+        } else {
+            try {
+                askP = Class.forName(askStrChild);
+            } catch (ClassNotFoundException e) {
+                return false;
+            }
         }
-        if (replyCreator!=null){
+        if (replyCreator != null) {
             replyP = replyCreator.createInstance();
+        } else {
+            try {
+                replyP = Class.forName(replyStrChild);
+            } catch (ClassNotFoundException e) {
+                return false;
+            }
         }
-//        if (RouterParcelable.class.isInstance()){
-//
-//        }
+        if (RouterParcelable.class.isInstance(askP)&& RouterParcelable.class.isInstance(replyP)){
+
+            //两个类型可以相互转换
+
+        }
+
 
         /* 如果都是 List、ArrayList、LinkedList 类型 */
         if (askCls == List.class && replyCls == List.class) {
