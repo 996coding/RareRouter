@@ -65,7 +65,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void downloadJar() {
-        String url = "http://192.168.124.8:8080/hotfix_war_exploded/down/a.jar";
+//        String url = "http://192.168.124.8:8080/hotfix_war_exploded/down/a.jar";
+        String url = "http://192.168.43.203/a.jar";
         DownloadUtil.get().download(url, "", new DownloadUtil.OnDownloadListener() {
             @Override
             public void onDownloadSuccess(String path) {
@@ -130,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
 
             Object obj = localConstructor.newInstance(new Object[] {});
 
+            Log.e("lv123","------加载完成");
 
 
         } catch (Exception e) {

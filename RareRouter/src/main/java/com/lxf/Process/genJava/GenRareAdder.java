@@ -1,5 +1,7 @@
 package com.lxf.Process.genJava;
 
+import com.lxf.Process.base.BaseProcessor;
+
 import java.io.File;
 import java.net.URI;
 import java.util.Set;
@@ -30,6 +32,7 @@ public class GenRareAdder {
         sb.append("package " + GenConfig.PACKAGE_JAVA_CODE + ";\n\n");
         sb.append("public class " + clsName + " {\n");
         sb.append("    public static boolean enable = true;\n");
+        sb.append("    public static long app_build_time = " + BaseProcessor.buildTime + "l;\n");
         sb.append(class_field(set));
         sb.append("}\n");
         return sb.toString();
