@@ -1,6 +1,8 @@
 package com.lxf.data;
 
 
+import java.util.*;
+
 public final class DataType {
     public static final String TYPE_int = "int";
     public static final String TYPE_Integer = "java.lang.Integer";
@@ -80,4 +82,21 @@ public final class DataType {
     java.util.HashSet<java.lang.Integer>
 
     */
+
+    public static boolean isJavaUtilContainer(String pkgName) {
+        if (List.class.getName().equals(pkgName) || ArrayList.class.getName().equals(pkgName)) {
+            return true;
+        }
+        if (Map.class.getName().equals(pkgName) || HashMap.class.getName().equals(pkgName)) {
+            return true;
+        }
+        if (Set.class.getName().equals(pkgName) || HashSet.class.getName().equals(pkgName)) {
+            return true;
+        }
+        /*  LinkedList放到最后，因为使用频率最低  */
+        if (LinkedList.class.getName().equals(pkgName)) {
+            return true;
+        }
+        return false;
+    }
 }

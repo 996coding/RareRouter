@@ -120,18 +120,6 @@ public class DataChecker implements Checker {
 //        }
 //
 
-
-         /*
-        集合数据,:
-        1、list;
-        2、map;
-        3、set;
-         */
-//        if (askCls == replyCls && askStr.startsWith("java.util.") && replyStr.startsWith("java.util.")) {
-//            /* 如果两个类型相同，编译时产生的askStr、replyStr却不一样，说明一定有泛型。*/
-//            return containerConvert(askStr, askCls, replyStr, replyCls, index);
-//        }
-
         /* 查看是否为：RareParcelable类型. */
         if (isRareParcelable(askCls) && isRareParcelable(replyCls)) {
             //转换
@@ -147,6 +135,17 @@ public class DataChecker implements Checker {
             return true;
         }
 
+        /*
+        集合数据,:
+        1、list;
+        2、map;
+        3、set;
+         */
+//        if (askCls == replyCls) {
+//            /* 如果两个类型相同，编译时产生的askStr、replyStr却不一样，说明一定有泛型。*/
+//            return containerConvert(askStr, askCls, replyStr, replyCls, index);
+//        }
+
 
         return false;
     }
@@ -159,21 +158,6 @@ public class DataChecker implements Checker {
         所以，replyStrNew、replyStrNew 只能是 泛型 或者 RouterParcelable类型。
         换句话：如果不包含泛型，又不是RouterParcelable类型，无法进行转换。
          */
-//        int askGrcIndex = askStr.indexOf("<");
-//        int replyGrcIndex = askStr.indexOf("<");
-//        if (askGrcIndex < 0 || replyGrcIndex < 0) {
-//            return false;
-//        }
-//        String askStrNew = askStr.substring(askGrcIndex + 1, askStr.length() - 1);
-//        String replyStrNew = replyStr.substring(replyGrcIndex + 1, replyStr.length() - 1);
-//
-//        boolean isAskGrc = askStrNew.contains("<");
-//        boolean isReplyGrc = replyStrNew.contains("<");
-//
-//        if (isAskGrc != isReplyGrc) {
-//            return false;
-//        }
-
         Object methodRes = null;
 
         String askStrChild = askStr;
@@ -185,16 +169,7 @@ public class DataChecker implements Checker {
             if (askIndex == replyIndex) {
                 String askPrefix = askStrChild.substring(0, askIndex);
                 String replyPrefix = replyStrChild.substring(0, replyIndex);
-                if (askPrefix.equals(replyPrefix)) {
-//                    Object tmpContainer = createJavaUtil(askPrefix);
-//                    if (tmpContainer == null) {
-//                        return false;
-//                    }
-//                    if (methodRes == null) {
-//                        methodRes = tmpContainer;
-//                    } else {
-//                        javaUtilAdd(methodRes,tmpContainer);
-//                    }
+                if (askPrefix.equals(replyPrefix) && DataType.isJavaUtilContainer(askPrefix)) {
                     askStrChild = askStrChild.substring(askIndex + 1, askStrChild.length() - 1);
                     replyStrChild = replyStrChild.substring(replyIndex + 1, replyStrChild.length() - 1);
                 } else {
@@ -228,73 +203,12 @@ public class DataChecker implements Checker {
                 return false;
             }
         }
-        if (RouterParcelable.class.isInstance(askP)&& RouterParcelable.class.isInstance(replyP)){
-
+        if (RouterParcelable.class.isInstance(askP) && RouterParcelable.class.isInstance(replyP)) {
             //两个类型可以相互转换
 
         }
 
-
-        /* 如果都是 List、ArrayList、LinkedList 类型 */
-        if (askCls == List.class && replyCls == List.class) {
-
-        } else if (askCls == ArrayList.class && replyCls == ArrayList.class) {
-
-        } else if (askCls == LinkedList.class && replyCls == LinkedList.class) {
-
-        } else if (askCls == ArrayList.class && replyCls == ArrayList.class) {
-
-        } else if (askCls == Set.class && replyCls == Set.class) {
-
-        } else if (askCls == HashSet.class && replyCls == HashSet.class) {
-
-        } else if (askCls == Map.class && replyCls == Map.class) {
-
-        } else if (askCls == HashMap.class && replyCls == HashMap.class) {
-
-        }
         return false;
-    }
-
-    private void javaUtilAdd(Object father, Object child) {
-
-    }
-
-    private Object createJavaUtil(String pkgName) {
-        if (List.class.getName().equals(pkgName) || ArrayList.class.getName().equals(pkgName)) {
-            return new ArrayList();
-        } else if (LinkedList.class.getName().equals(pkgName)) {
-            return new LinkedList();
-        } else if (Set.class.getName().equals(pkgName) || HashSet.class.getName().equals(pkgName)) {
-            return new HashSet();
-        } else if (Map.class.getName().equals(pkgName) || HashMap.class.getName().equals(pkgName)) {
-            return new HashMap();
-        }
-        return null;
-    }
-
-    private boolean listConvert(List sourceList, List aimList, String askStr, String replyStr) {
-
-        /* askStrNew 和 replyStrNew 肯定不会相等，否则走不到这一步 */
-        String askStrNew = askStr.substring("java.util.List<".length(), askStr.length() - 1);
-        String replyStrNew = replyStr.substring("java.util.List<".length(), replyStr.length() - 1);
-
-        /* askStrNew 和 replyStrNew 肯定不是基本数据类型，否则不可能不相等 */
-        /* askStrNew 和 replyStrNew 看下收否还存在泛型 */
-        boolean askGeneric = askStrNew.contains("<");
-        boolean replyGeneric = replyStr.contains("<");
-        if (askGeneric && replyGeneric) {
-            /* askStrNew 和 replyStrNew 都是泛型 */
-
-
-        } else if (!askGeneric && !replyGeneric) {
-            /* askStrNew 和 replyStrNew 都不是泛型，只能是 RareParcelable，否则类型检测失败 */
-
-        } else {
-            return false;
-        }
-        return false;
-
     }
 
     private boolean isRareParcelable(Class<?> clazz) {
