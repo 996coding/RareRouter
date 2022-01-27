@@ -171,8 +171,28 @@ public class DataChecker implements Checker {
             int askIndex = askStr.indexOf("<");
             int replyIndex = askStr.indexOf("<");
             if (askIndex == replyIndex) {
+                if (askIndex < 0) {
+                    continue;
+                }
                 String askPrefix = askStrChild.substring(0, askIndex);
                 String replyPrefix = replyStrChild.substring(0, replyIndex);
+
+                int askComma = askPrefix.indexOf(",");
+                int replyComma = replyPrefix.indexOf(",");
+                if (askComma>=0 || replyComma>=0){
+                    if (askComma==replyComma){
+                        String askCommaPre = askPrefix.substring(0,askComma);
+                        String replyCommaPre = replyPrefix.substring(0,replyComma);
+                        if (askCommaPre.equals(replyCommaPre)){
+                            askPrefix = askPrefix.substring(askComma+1);
+                            replyPrefix = replyPrefix.substring(replyComma+1);
+                        }else {
+                            return false;
+                        }
+                    }else {
+                        return false;
+                    }
+                }
                 if (askPrefix.equals(replyPrefix) && DataType.isJavaUtilContainer(askPrefix)) {
                     clsPrefixArr.add(askPrefix);
                     askStrChild = askStrChild.substring(askIndex + 1, askStrChild.length() - 1);
@@ -273,6 +293,9 @@ public class DataChecker implements Checker {
                 resList.add(aimObj);
             }
             return resList;
+        } else if (Map.class.getName().equals(pkgName) || HashMap.class.getName().equals(pkgName)) {
+
+            return true;
         }
         return null;
     }
