@@ -89,6 +89,9 @@ public class DataChecker implements Checker {
     }
 
     private boolean parameterCheck(String askStr, Class<?> askCls, String replyStr, Class<?> replyCls, int index) {
+        if (result.parameterArray[index] == null) {
+            return true;
+        }
         /*
         只能解析：
         1、基本数据类型；
@@ -163,6 +166,7 @@ public class DataChecker implements Checker {
         String askStrChild = askStr;
         String replyStrChild = replyStr;
 
+        List<String> clsPrefixArr = new ArrayList<>();
         while (askStrChild.contains("<") && replyStrChild.contains("<")) {
             int askIndex = askStr.indexOf("<");
             int replyIndex = askStr.indexOf("<");
@@ -170,6 +174,7 @@ public class DataChecker implements Checker {
                 String askPrefix = askStrChild.substring(0, askIndex);
                 String replyPrefix = replyStrChild.substring(0, replyIndex);
                 if (askPrefix.equals(replyPrefix) && DataType.isJavaUtilContainer(askPrefix)) {
+                    clsPrefixArr.add(askPrefix);
                     askStrChild = askStrChild.substring(askIndex + 1, askStrChild.length() - 1);
                     replyStrChild = replyStrChild.substring(replyIndex + 1, replyStrChild.length() - 1);
                 } else {
@@ -182,30 +187,18 @@ public class DataChecker implements Checker {
         if (askStrChild.contains("<") || replyStrChild.contains("<")) {
             return false;
         }
-        DataBeanCreator askCreator = RareCore.getRareCore().beanGenerate(askStrChild);
-        DataBeanCreator replyCreator = RareCore.getRareCore().beanGenerate(replyStrChild);
-        Object askP, replyP;
-        if (askCreator != null) {
-            askP = askCreator.createInstance();
-        } else {
-            try {
-                askP = Class.forName(askStrChild);
-            } catch (ClassNotFoundException e) {
-                return false;
-            }
-        }
-        if (replyCreator != null) {
-            replyP = replyCreator.createInstance();
-        } else {
-            try {
-                replyP = Class.forName(replyStrChild);
-            } catch (ClassNotFoundException e) {
-                return false;
-            }
-        }
+
+        DataBeanCreator askCreator = new DataBeanGetter(askStrChild);
+        DataBeanCreator replyCreator = new DataBeanGetter(replyStrChild);
+        Object askP = askCreator.createInstance();
+        Object replyP = replyCreator.createInstance();
         if (RouterParcelable.class.isInstance(askP) && RouterParcelable.class.isInstance(replyP)) {
             //两个类型可以相互转换
-
+            Object aimParam = getConvertRes(result.parameterArray[index], clsPrefixArr, 0, replyCreator);
+            if (aimParam != null) {
+                result.parameterArray[index] = aimParam;
+                return true;
+            }
         }
 
         return false;
@@ -254,5 +247,33 @@ public class DataChecker implements Checker {
         source.routerParcelableRead(convert);
         des.routerParcelableWrite(convert);
         return true;
+    }
+
+    private Object getConvertRes(Object sourceContainer, List<String> clsPrefixArr, int arrIndex, DataBeanCreator creator) {
+        String pkgName = clsPrefixArr.get(arrIndex);
+        if (RouterParcelable.class.isInstance(sourceContainer)) {
+            Object aimObj = creator.createInstance();
+            if (convert((RouterParcelable) sourceContainer, (RouterParcelable) aimObj)) {
+                return aimObj;
+            }
+            return null;
+        }
+
+        if (List.class.getName().equals(pkgName) || ArrayList.class.getName().equals(pkgName)) {
+            List sourceList = (List) sourceContainer;
+            ArrayList resList = new ArrayList();
+            if (sourceList.size() == 0) {
+                return resList;
+            }
+            for (Object obj : sourceList) {
+                Object aimObj = getConvertRes(obj, clsPrefixArr, arrIndex + 1, creator);
+                if (aimObj == null) {
+                    return null;
+                }
+                resList.add(aimObj);
+            }
+            return resList;
+        }
+        return null;
     }
 }
