@@ -28,10 +28,9 @@ public class HelloWorldImpl {
     public void say(Context context, List<People> list) {
         StringBuilder sb = new StringBuilder();
         if (list!=null){
-//            for (People p : list) {
-//                sb.append(p.name_Server + ">");
-//            }
-            sb.append("=="+list.size());
+            for (People p : list) {
+                sb.append(p.name_Server + ">");
+            }
 
         }else {
             sb.append("error");

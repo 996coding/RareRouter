@@ -132,12 +132,6 @@ public class DataChecker implements Checker {
             return true;
         }
 
-        if (askCls.isInterface() && replyCls.isInterface()) {
-            result.parameterArray[index] = Proxy.newProxyInstance(replyCls.getClassLoader(), new Class<?>[]{replyCls},
-                    new CallBackHandler(replyCls, result.parameterArray[index], askCls));
-            return true;
-        }
-
         /*
         集合数据,:
         1、list;
@@ -147,6 +141,12 @@ public class DataChecker implements Checker {
         if (askCls == replyCls) {
             /* 如果两个类型相同，编译时产生的askStr、replyStr却不一样，说明一定有泛型。*/
             return containerConvert(askStr, askCls, replyStr, replyCls, index);
+        }
+
+        if (askCls.isInterface() && replyCls.isInterface()) {
+            result.parameterArray[index] = Proxy.newProxyInstance(replyCls.getClassLoader(), new Class<?>[]{replyCls},
+                    new CallBackHandler(replyCls, result.parameterArray[index], askCls));
+            return true;
         }
 
         return false;
@@ -269,7 +269,6 @@ public class DataChecker implements Checker {
     }
 
     private Object getConvertRes(Object sourceContainer, List<String> clsPrefixArr, int arrIndex, DataBeanCreator creator) {
-        String pkgName = clsPrefixArr.get(arrIndex);
         if (RouterParcelable.class.isInstance(sourceContainer)) {
             Object aimObj = creator.createInstance();
             if (convert((RouterParcelable) sourceContainer, (RouterParcelable) aimObj)) {
@@ -277,6 +276,7 @@ public class DataChecker implements Checker {
             }
             return null;
         }
+        String pkgName = clsPrefixArr.get(arrIndex);
 
         if (List.class.getName().equals(pkgName) || ArrayList.class.getName().equals(pkgName)) {
             List sourceList = (List) sourceContainer;

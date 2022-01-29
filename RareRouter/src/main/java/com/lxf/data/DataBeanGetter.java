@@ -29,12 +29,13 @@ public class DataBeanGetter implements DataBeanCreator {
     @Override
     public Object createInstance() {
         if (proxy != null) {
-            proxy.createInstance();
+            return proxy.createInstance();
         }
         Class<?> cls = getClazz();
         if (cls != null) {
             try {
-                cls.getDeclaredConstructor().newInstance();
+                Object res = cls.getDeclaredConstructor().newInstance();
+                return res;
             } catch (Exception e) {
                 e.printStackTrace();
             }
