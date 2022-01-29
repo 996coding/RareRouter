@@ -99,13 +99,10 @@ public class DataChecker implements Checker {
         3、自定义数据类型，Parcelable；
         4、接口；
         以及集合类：
-        1、List；
-        2、Map；
-        3、Set；
+        1、List、ArrayList、LinkedList；
+        2、Map、HashMap；
+        3、Set、HashSet；
          */
-//        if (result.parameterArray[index] == null) {
-//            return true;
-//        }
         if (askStr.equals(replyStr)) {
             return true;
         }
@@ -115,13 +112,6 @@ public class DataChecker implements Checker {
         2、接口；
         3、泛型。
          */
-//        int askBasicTypeID = DataType.getBasicTypeID(askStr);
-//        int replyBasicTypeID = DataType.getBasicTypeID(replyStr);
-//
-//        if (askBasicTypeID > 0 && askBasicTypeID == replyBasicTypeID) {
-//            return true;
-//        }
-//
 
         /* 查看是否为：RareParcelable类型. */
         if (isRareParcelable(askCls) && isRareParcelable(replyCls)) {
