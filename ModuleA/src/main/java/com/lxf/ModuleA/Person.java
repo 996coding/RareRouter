@@ -14,6 +14,11 @@ public class Person implements RouterParcelable {
     public Person() {
     }
 
+    public Person(String name, String sex) {
+        this.name = name;
+        this.sex = sex;
+    }
+
     public Person(String name, String sex, int id) {
         this.name = name;
         this.sex = sex;

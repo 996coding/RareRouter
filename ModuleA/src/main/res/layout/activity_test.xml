@@ -30,4 +30,12 @@
         android:layout_marginTop="30dp"
         android:text="异步回调方法"
         android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/test_btn_3"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="30dp"
+        android:text="传递集合"
+        android:textAllCaps="false" />
 </LinearLayout>

@@ -6,6 +6,8 @@ import android.widget.Toast;
 
 import com.lxf.Annotation.RouterMethod;
 
+import java.util.List;
+
 public class HelloWorldImpl {
     @RouterMethod(path = "say_hello_world")
     public String say(String content) {
@@ -20,5 +22,21 @@ public class HelloWorldImpl {
                 Toast.makeText(context, sth + "->HelloWorldImpl", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    @RouterMethod(path = "say_hello_world3")
+    public void say(Context context, List<People> list) {
+        StringBuilder sb = new StringBuilder();
+        if (list!=null){
+//            for (People p : list) {
+//                sb.append(p.name_Server + ">");
+//            }
+            sb.append("=="+list.size());
+
+        }else {
+            sb.append("error");
+        }
+
+        Toast.makeText(context, sb.toString(), Toast.LENGTH_LONG).show();
     }
 }

@@ -10,11 +10,15 @@ import android.widget.Toast;
 import com.lxf.Annotation.RouterClass;
 import com.lxf.RareApplication;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RouterClass(path = "this_is_TestActivity")
 public class TestActivity extends AppCompatActivity {
 
     private TextView textView;
     HelloWorld helloWorld;
+    final List<Person> list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +52,19 @@ public class TestActivity extends AppCompatActivity {
                             callBack3.returnSth(str);
                         }
                     });
+                }
+            }
+        });
+
+        list.add(new Person("张三", "男"));
+        list.add(new Person("Tom", "boy"));
+
+        findViewById(R.id.test_btn_3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (helloWorld != null) {
+                    helloWorld.say(TestActivity.this, list);
                 }
             }
         });
