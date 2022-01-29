@@ -144,11 +144,10 @@ public class DataChecker implements Checker {
         2、map;
         3、set;
          */
-//        if (askCls == replyCls) {
-//            /* 如果两个类型相同，编译时产生的askStr、replyStr却不一样，说明一定有泛型。*/
-//            return containerConvert(askStr, askCls, replyStr, replyCls, index);
-//        }
-
+        if (askCls == replyCls) {
+            /* 如果两个类型相同，编译时产生的askStr、replyStr却不一样，说明一定有泛型。*/
+            return containerConvert(askStr, askCls, replyStr, replyCls, index);
+        }
 
         return false;
     }
@@ -179,17 +178,17 @@ public class DataChecker implements Checker {
 
                 int askComma = askPrefix.indexOf(",");
                 int replyComma = replyPrefix.indexOf(",");
-                if (askComma>=0 || replyComma>=0){
-                    if (askComma==replyComma){
-                        String askCommaPre = askPrefix.substring(0,askComma);
-                        String replyCommaPre = replyPrefix.substring(0,replyComma);
-                        if (askCommaPre.equals(replyCommaPre)){
-                            askPrefix = askPrefix.substring(askComma+1);
-                            replyPrefix = replyPrefix.substring(replyComma+1);
-                        }else {
+                if (askComma >= 0 || replyComma >= 0) {
+                    if (askComma == replyComma) {
+                        String askCommaPre = askPrefix.substring(0, askComma);
+                        String replyCommaPre = replyPrefix.substring(0, replyComma);
+                        if (askCommaPre.equals(replyCommaPre)) {
+                            askPrefix = askPrefix.substring(askComma + 1).trim();
+                            replyPrefix = replyPrefix.substring(replyComma + 1).trim();
+                        } else {
                             return false;
                         }
-                    }else {
+                    } else {
                         return false;
                     }
                 }
@@ -286,6 +285,10 @@ public class DataChecker implements Checker {
                 return resList;
             }
             for (Object obj : sourceList) {
+                if (obj == null) {
+                    resList.add(obj);
+                    continue;
+                }
                 Object aimObj = getConvertRes(obj, clsPrefixArr, arrIndex + 1, creator);
                 if (aimObj == null) {
                     return null;
@@ -294,8 +297,59 @@ public class DataChecker implements Checker {
             }
             return resList;
         } else if (Map.class.getName().equals(pkgName) || HashMap.class.getName().equals(pkgName)) {
-
-            return true;
+            Map sourceMap = (Map) sourceContainer;
+            HashMap resMap = new HashMap();
+            if (sourceMap.size() == 0) {
+                return resMap;
+            }
+            for (Object key : sourceMap.keySet()) {
+                if (sourceMap.get(key) == null) {
+                    resMap.put(key, null);
+                    continue;
+                }
+                Object aimObj = getConvertRes(sourceMap.get(key), clsPrefixArr, arrIndex + 1, creator);
+                if (aimObj == null) {
+                    return null;
+                }
+                resMap.put(key, aimObj);
+            }
+            return resMap;
+        } else if (Set.class.getName().equals(pkgName) || HashSet.class.getName().equals(pkgName)) {
+            Set sourceSet = (Set) sourceContainer;
+            HashSet resSet = new HashSet();
+            if (sourceSet.size() == 0) {
+                return resSet;
+            }
+            for (Object val : sourceSet) {
+                if (val == null) {
+                    resSet.add(null);
+                    continue;
+                }
+                Object aimObj = getConvertRes(val, clsPrefixArr, arrIndex + 1, creator);
+                if (aimObj == null) {
+                    return null;
+                }
+                resSet.add(aimObj);
+            }
+            return resSet;
+        } else if (LinkedList.class.getName().equals(pkgName)) {
+            LinkedList sourceLink = (LinkedList) sourceContainer;
+            LinkedList resLink = new LinkedList();
+            if (sourceLink.size() == 0) {
+                return resLink;
+            }
+            for (Object obj : sourceLink) {
+                if (obj == null) {
+                    resLink.add(null);
+                    continue;
+                }
+                Object aimObj = getConvertRes(obj, clsPrefixArr, arrIndex + 1, creator);
+                if (aimObj == null) {
+                    return null;
+                }
+                resLink.add(aimObj);
+            }
+            return resLink;
         }
         return null;
     }
