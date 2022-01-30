@@ -29,9 +29,9 @@ public class GenModuleRareImpl {
     private static String static_code() {
         StringBuilder sb = new StringBuilder();
         sb.append("    static {\n");
-        sb.append("        RareImplAdder.addRareImpl(new " + CLASS_NAME + "(), " + BaseProcessor.buildTime + "l);\n");
+        sb.append("        RareImplAdder.addRareImpl(new " + CLASS_NAME + "());\n");
         sb.append("    }\n\n");
-        sb.append("    public static int flag = 0;\n\n");
+        sb.append("    public static String flag = " + CLASS_NAME + ".class.getName();\n\n");
         return sb.toString();
     }
 

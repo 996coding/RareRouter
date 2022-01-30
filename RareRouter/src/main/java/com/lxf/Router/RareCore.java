@@ -14,16 +14,17 @@ import java.util.Set;
 
 public class RareCore implements ClassBeans, MethodBeans, RouterClazz, MethodProxy, InstanceCreator, IntentStarter {
     private static final RareCore instance = new RareCore();
-    private long APP_BUILD_TIME = 0l;
     private List<RareInterface> rareImplList_Local;
     private List<RareInterface> rareImplList_OnLine;
     private Set<String> implPkgSet;
     private IntentStarter intentStarter;
+    private List<String> localRares;
 
     private RareCore() {
         rareImplList_Local = new ArrayList<>();
         rareImplList_OnLine = new ArrayList<>();
         implPkgSet = new HashSet<>();
+        localRares = new ArrayList<>();
 //        autoAddRareImpl();
     }
 
@@ -31,35 +32,36 @@ public class RareCore implements ClassBeans, MethodBeans, RouterClazz, MethodPro
         return instance;
     }
 
-    public static void addRareImpl(RareInterface rareImpl, long buildTime) {
+    public static void addRareImpl(RareInterface rareImpl) {
         if (rareImpl == null) {
             return;
         }
         String pkgName = rareImpl.getClass().getName();
         synchronized (RareCore.class) {
-            instance.putRareImpl(pkgName, rareImpl, buildTime);
+            instance.putRareImpl(pkgName, rareImpl);
         }
     }
 
     public void autoAddRareImpl() {
         if (RareAdder.enable) {
-            APP_BUILD_TIME = RareAdder.app_build_time;
+            localRares.addAll(RareAdder.localRares);
         } else {
             try {
                 Class<?> backUp = Class.forName(GenConfig.PACKAGE_JAVA_CODE + "." + GenRareAdder.CLASS_NAME_BACK_UP);
-                APP_BUILD_TIME = backUp.getField("app_build_time").getLong("app_build_time");
+                List<String> stringList = (List<String>) backUp.getField("localRares").get(null);
+                localRares.addAll(stringList);
             } catch (Exception e) {
-                e.printStackTrace();
+
             }
         }
     }
 
-    private void putRareImpl(String rareId, RareInterface rareModuleImpl, long buildTime) {
+    private void putRareImpl(String rareId, RareInterface rareModuleImpl) {
         if (implPkgSet.contains(rareId)) {
             return;
         }
         implPkgSet.add(rareId);
-        if (buildTime <= APP_BUILD_TIME) {
+        if (localRares.contains(rareModuleImpl.getClass().getName())) {
             rareImplList_Local.add(0, rareModuleImpl);
         } else {
             rareImplList_OnLine.add(0, rareModuleImpl);

@@ -32,18 +32,18 @@ public class GenRareAdder {
         sb.append("package " + GenConfig.PACKAGE_JAVA_CODE + ";\n\n");
         sb.append("public class " + clsName + " {\n");
         sb.append("    public static boolean enable = true;\n");
-        sb.append("    public static long app_build_time = " + BaseProcessor.buildTime + "l;\n");
+        sb.append("    public static java.util.List<String> localRares = new java.util.ArrayList<>();\n\n");
+        sb.append("    static {\n");
         sb.append(class_field(set));
+        sb.append("    }\n");
         sb.append("}\n");
         return sb.toString();
     }
 
     private static String class_field(Set<String> set) {
         StringBuilder sb = new StringBuilder();
-        int i = 0;
         for (String pkgName : set) {
-            i++;
-            sb.append("    public static int flag" + i + " = " + pkgName + ".flag;\n");
+            sb.append("        localRares.add(" + pkgName + ".flag);\n");
         }
         return sb.toString();
     }
