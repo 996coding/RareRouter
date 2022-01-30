@@ -9,9 +9,12 @@ import java.net.URI;
 public class GenModuleRareImpl {
     public static String CLASS_NAME = "ModuleRareImpl";
     public static String FILE_PATH;
+    public static boolean execute = false;
 
     public static void gen(FilerGen filerGen) {
         CLASS_NAME = CLASS_NAME + "_" + BaseProcessor.moduleName;
+
+        execute = true;
 
         StringBuilder sb = new StringBuilder();
         sb.append(class_import());

@@ -48,7 +48,9 @@ public class LastProcessor extends BaseProcessor {
     @Override
     public void process(RoundEnvironment roundEnvironment) {
         if (roundEnvironment.processingOver()) {
-            TxtWriter.txtAppendWrite(txt_rare_list, GenConfig.PACKAGE + "." + GenModuleRareImpl.CLASS_NAME);
+            if (GenModuleRareImpl.execute){
+                TxtWriter.txtAppendWrite(txt_rare_list, GenConfig.PACKAGE + "." + GenModuleRareImpl.CLASS_NAME);
+            }
             if (RareXml.appModule == null || RareXml.appModule.length() == 0) {
                 lastAdder = TxtReader.readTxt(txt_last_add).trim();
                 lastAdder_bp = TxtReader.readTxt(txt_last_add_bp).trim();
