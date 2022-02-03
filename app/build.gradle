@@ -31,7 +31,6 @@ dependencies {
 
     implementation project(path: ':ModuleA')
     implementation project(path: ':ModuleB')
-   implementation project(path: ':ModuleOnline')
 
 
     implementation project(path: ':RareRouter')
