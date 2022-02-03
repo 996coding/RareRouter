@@ -9,9 +9,12 @@ import java.net.URI;
 public class GenModuleRareImpl {
     public static String CLASS_NAME = "ModuleRareImpl";
     public static String FILE_PATH;
+    public static boolean execute = false;
 
     public static void gen(FilerGen filerGen) {
         CLASS_NAME = CLASS_NAME + "_" + BaseProcessor.moduleName;
+
+        execute = true;
 
         StringBuilder sb = new StringBuilder();
         sb.append(class_import());
@@ -29,9 +32,9 @@ public class GenModuleRareImpl {
     private static String static_code() {
         StringBuilder sb = new StringBuilder();
         sb.append("    static {\n");
-        sb.append("        RareImplAdder.addRareImpl(new " + CLASS_NAME + "(), " + BaseProcessor.buildTime + "l);\n");
+        sb.append("        RareImplAdder.addRareImpl(new " + CLASS_NAME + "());\n");
         sb.append("    }\n\n");
-        sb.append("    public static int flag = 0;\n\n");
+        sb.append("    public static String flag = " + CLASS_NAME + ".class.getName();\n\n");
         return sb.toString();
     }
 

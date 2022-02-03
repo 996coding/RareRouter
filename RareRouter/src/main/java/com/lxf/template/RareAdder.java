@@ -1,7 +1,10 @@
 package com.lxf.template;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RareAdder {
     public static boolean enable = false;
-    public static long app_build_time = -1l;
-    public static int flag = 0;
+    public static List<String> localRares = new ArrayList<>();
+
 }
