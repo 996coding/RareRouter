@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textAllCaps="false"
-        android:textSize="22dp" />
+        android:textSize="22dp"
+        android:text="展示Module A调用Module B的方法"/>
 
     <Button
         android:id="@+id/test_btn_1"

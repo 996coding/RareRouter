@@ -2,7 +2,7 @@ package com.lxf.log;
 
 public class RareLog {
     private static Printer printer;
-    public static boolean isOpen = true;
+    public static boolean isOpen = false;
 
     public static void setLogger(Printer logger) {
         printer = logger;
