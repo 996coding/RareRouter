@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_centerVertical="true"
-        android:text="点击进入 Module A"
+        android:text="组件化 展示"
         android:textAllCaps="false" />
 
     <Button

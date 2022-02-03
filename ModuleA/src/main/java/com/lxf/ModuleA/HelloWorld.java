@@ -7,6 +7,9 @@ import com.lxf.Annotation.RouterMethod;
 import java.util.List;
 
 public interface HelloWorld {
+    @RouterMethod(path = "new_page_demo_activity")
+    void startNewPage(Context context);
+
     @RouterMethod(path = "say_hello_world")
     String say(String content);
 

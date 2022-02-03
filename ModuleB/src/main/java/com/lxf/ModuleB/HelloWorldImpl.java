@@ -1,6 +1,7 @@
 package com.lxf.ModuleB;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -9,6 +10,13 @@ import com.lxf.Annotation.RouterMethod;
 import java.util.List;
 
 public class HelloWorldImpl {
+
+    @RouterMethod(path = "new_page_demo_activity")
+    public void startNewPage(Context context) {
+        Intent intent = new Intent(context, DemoActivity.class);
+        context.startActivity(intent);
+    }
+
     @RouterMethod(path = "say_hello_world")
     public String say(String content) {
         return content + "->HelloWorldImpl";
@@ -27,12 +35,12 @@ public class HelloWorldImpl {
     @RouterMethod(path = "say_hello_world3")
     public void say(Context context, List<People> list) {
         StringBuilder sb = new StringBuilder();
-        if (list!=null){
+        if (list != null) {
             for (People p : list) {
                 sb.append(p.name_Server + ">");
             }
 
-        }else {
+        } else {
             sb.append("error");
         }
 

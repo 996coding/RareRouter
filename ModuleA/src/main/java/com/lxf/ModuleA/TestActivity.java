@@ -2,6 +2,7 @@ package com.lxf.ModuleA;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -48,6 +49,25 @@ public class TestActivity extends AppCompatActivity {
                 onClick3();
             }
         });
+
+        findViewById(R.id.test_btn_4).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClick4();
+            }
+        });
+        findViewById(R.id.test_btn_5).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClick5();
+            }
+        });
+        findViewById(R.id.test_btn_6).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClick6();
+            }
+        });
     }
 
     private void onClick1() {
@@ -79,6 +99,22 @@ public class TestActivity extends AppCompatActivity {
             list.add(new Person("张三", "男"));
             list.add(new Person("Tom", "boy"));
             helloWorld.say(TestActivity.this, list);
+        }
+    }
+
+    private void onClick4() {
+        RareApplication.startIntent(TestActivity.this, "demo_activity_module_B");
+    }
+
+    private void onClick5() {
+        Class<?> clazz = RareApplication.annotateClazz("demo_activity_module_B");
+        Intent intent = new Intent(TestActivity.this, clazz);
+        startActivity(intent);
+    }
+
+    private void onClick6() {
+        if (helloWorld != null) {
+            helloWorld.startNewPage(TestActivity.this);
         }
     }
 }
