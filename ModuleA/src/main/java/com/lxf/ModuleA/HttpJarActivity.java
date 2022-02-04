@@ -142,12 +142,13 @@ public class HttpJarActivity extends AppCompatActivity {
             Toast.makeText(HttpJarActivity.this, jarName + "不存在！", Toast.LENGTH_SHORT).show();
             return;
         }
+        String clazzName = "com.lxf.genCode.ModuleRareImpl_" + jarName.substring(0,jarName.indexOf("."));
 
         String tmpPath = getApplicationContext().getDir("Jar", 0).getAbsolutePath();
         DexClassLoader cl = new DexClassLoader(jarPath, tmpPath, null, this.getClass().getClassLoader());
         Class<?> libProviderCls = null;
         try {
-            libProviderCls = cl.loadClass("com.lxf.genCode.ModuleRareImpl_" + jarName);
+            libProviderCls = cl.loadClass(clazzName);
 
             Constructor<?> localConstructor = libProviderCls.getConstructor(new Class[]{});
 
