@@ -11,28 +11,19 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_centerVertical="true"
-        android:text="组件化 展示"
+        android:text="组件化 方法调用"
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/http_load_jar"
+        android:id="@+id/http_jar"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_below="@+id/main_module"
         android:layout_centerVertical="true"
         android:layout_marginTop="10dp"
-        android:text="下载jar包"
+        android:text="热修复 方法调用"
         android:textAllCaps="false" />
 
-    <Button
-        android:id="@+id/local_load_jar"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_below="@+id/http_load_jar"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="10dp"
-        android:text="加载jar包"
-        android:textAllCaps="false" />
 
     <TextView
         android:layout_width="match_parent"
@@ -41,7 +32,7 @@
         android:layout_marginLeft="70dp"
         android:layout_marginRight="70dp"
         android:layout_marginBottom="70dp"
-        android:text="此Demo展示 Module-A 与 Module-B 之间的通信。\n包含方法调用、activity启动。"
+        android:text="Demo展示 Module-A、Module-B、热修复jar包 之间的通信。\n包含方法调用、activity启动。"
         android:textAllCaps="false"
         android:textSize="22dp" />
 

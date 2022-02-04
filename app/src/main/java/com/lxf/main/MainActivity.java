@@ -2,6 +2,7 @@ package com.lxf.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 
 import com.lxf.Annotation.RouterClass;
 import com.lxf.Annotation.RouterBean;
+import com.lxf.ModuleA.TestActivity;
 import com.lxf.RareApplication;
 import com.lxf.log.RareLog;
 
@@ -35,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         RareLog.setLogger(new MyLog());
 
         downLoadDir = this.getFilesDir().getAbsolutePath();
-        jarPath = downLoadDir+"/a.jar";
+        jarPath = downLoadDir + "/a.jar";
         findViewById(R.id.main_module).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,21 +45,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.http_load_jar).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.http_jar).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                downloadJar();
+                Class<?> clazz = RareApplication.annotateClazz("http_jar_activity");
+                Intent intent = new Intent(MainActivity.this, clazz);
+                startActivity(intent);
             }
         });
 
-        findViewById(R.id.local_load_jar).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                loadJar(jarPath);
-                a(jarPath);
-            }
-        });
     }
 
 
@@ -85,38 +81,5 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void a(String jarPath){
 
-        File path = new File(jarPath);
-        if (!path.exists()){
-            Log.e("lv123", "jar不存在  "+jarPath);
-            return;
-        }
-
-
-        String tmpPath = getApplicationContext().getDir("Jar", 0).getAbsolutePath();
-
-        DexClassLoader cl = new DexClassLoader(jarPath, tmpPath
-
-                , null, this.getClass().getClassLoader());
-
-        Class<?> libProviderCls = null;
-
-        try {
-             libProviderCls = cl.loadClass("com.lxf.genCode.ModuleRareImpl_ModuleOnline");
-
-            Constructor<?> localConstructor = libProviderCls.getConstructor(new Class[] {});
-
-            Object obj = localConstructor.newInstance(new Object[] {});
-
-            Log.e("lv123","------加载完成");
-
-
-        } catch (Exception e) {
-
-            Log.e("lv123",e.getMessage());
-            e.printStackTrace();
-
-        }
-    }
 }
