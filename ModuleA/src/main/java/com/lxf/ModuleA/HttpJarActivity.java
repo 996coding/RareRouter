@@ -156,6 +156,7 @@ public class HttpJarActivity extends AppCompatActivity {
         for (File file : dir.listFiles()) {
             file.delete();
         }
+        Toast.makeText(HttpJarActivity.this, "--清理完毕--", Toast.LENGTH_SHORT).show();
     }
 
     /**
