@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.lxf.Annotation.RouterClass;
+import com.lxf.RareApplication;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
@@ -55,6 +56,15 @@ public class HttpJarActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 clearJar();
+            }
+        });
+        findViewById(R.id.test_method).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HelloWorld helloWorld = RareApplication.createImpl(HelloWorld.class);
+                if (helloWorld != null) {
+                    helloWorld.say("调用hotfix代码");
+                }
             }
         });
     }

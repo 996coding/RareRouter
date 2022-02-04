@@ -49,4 +49,12 @@
         android:layout_marginTop="10dp"
         android:text="清空jar包"
         android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/test_method"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="10dp"
+        android:text="调用热修复代码"
+        android:textAllCaps="false" />
 </LinearLayout>
