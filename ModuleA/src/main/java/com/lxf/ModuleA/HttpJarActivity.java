@@ -63,7 +63,8 @@ public class HttpJarActivity extends AppCompatActivity {
             public void onClick(View v) {
                 HelloWorld helloWorld = RareApplication.createImpl(HelloWorld.class);
                 if (helloWorld != null) {
-                    helloWorld.say("调用hotfix代码");
+                    String str = helloWorld.say("调用hotfix代码");
+                    Toast.makeText(HttpJarActivity.this, str, Toast.LENGTH_SHORT).show();
                 }
             }
         });
