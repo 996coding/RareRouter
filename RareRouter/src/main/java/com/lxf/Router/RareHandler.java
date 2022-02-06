@@ -9,15 +9,22 @@ import com.lxf.protocol.Checker;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RareHandler implements InvocationHandler {
 
     private Class<?> service;
     private Object proxyInstance;
+    private Map<String, MethodExecute> executeMap;
+    private Map<String, RouteBean> tableMap;
+
 
     public RareHandler(Class<?> service, Object proxyInstance) {
         this.service = service;
         this.proxyInstance = proxyInstance;
+        this.executeMap = new HashMap<>();
+        this.tableMap = new HashMap<>();
     }
 
     @Override
@@ -33,12 +40,24 @@ public class RareHandler implements InvocationHandler {
         if (annotationPath == null || annotationPath.length() == 0) {
             return null;
         }
-        RouteBean askBean = RareCore.getRareCore().methodAskRouteBean(annotationPath, service.getName());
+        RouteBean askBean = tableMap.get(annotationPath);
         if (askBean == null) {
-            return null;
+            askBean = RareCore.getRareCore().methodAskRouteBean(annotationPath, service.getName());
+            if (askBean == null) {
+                return null;
+            }
+            tableMap.put(annotationPath, askBean);
+        }
+
+        MethodExecute methodProxy = executeMap.get(askBean.path);
+        if (methodProxy == null) {
+            methodProxy = RareCore.getRareCore().proxy(askBean.path);
+            if (methodProxy == null) {
+                return null;
+            }
+            executeMap.put(askBean.path, methodProxy);
         }
         Checker checker = new DataChecker(askBean, method);
-        MethodExecute methodProxy = RareCore.getRareCore().proxy(askBean.path);
         Object result = methodProxy.execute(proxyInstance, checker, args);
         if (result == MethodReturn.ERROR_PARAMETER) {
             // 参数不匹配
