@@ -11,11 +11,9 @@ public class TxtPath {
     private final String BUILD_DIR_PROCESS = "process";
 
     private final String ROUTE_SCAN_RES = "RouteScanResult.txt";
-    private final String ROUTE_DATA_OBJ = "RouteDataObj.txt";
     private final String LOG_TXT = "log.txt";
 
     public static String PATH_SCAN_RES;
-    public static String PATH_SCAN_DATA_OBJ;
 
     public static String DELETE_DIR;
     public static String LOG_INFO;
@@ -31,7 +29,6 @@ public class TxtPath {
         String base_dir = RareXml.logDir + BaseProcessor.systemDirPathSplit + BUILD_DIR +
                 BaseProcessor.systemDirPathSplit + BUILD_DIR_PROCESS + BaseProcessor.systemDirPathSplit;
         PATH_SCAN_RES = base_dir + ROUTE_SCAN_RES;
-        PATH_SCAN_DATA_OBJ = base_dir + ROUTE_DATA_OBJ;
         LOG_INFO = RareXml.logDir + BaseProcessor.systemDirPathSplit + BUILD_DIR +
                 BaseProcessor.systemDirPathSplit + LOG_TXT;
         DELETE_DIR = base_dir;
@@ -44,7 +41,6 @@ public class TxtPath {
         */
         TxtCreator.createDir(DELETE_DIR);
         TxtCreator.createFileIfNone(PATH_SCAN_RES);
-        TxtCreator.createFileIfNone(PATH_SCAN_DATA_OBJ);
         TxtCreator.createFileIfNone(LOG_INFO);
     }
 

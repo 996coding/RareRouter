@@ -260,7 +260,7 @@ public class CoreProcessor extends BaseProcessor {
 
         Set<Bean> newSet = TxtWriter.writeBeans(this.beanSet);
 
-        TxtWriter.recordParamClazz(newSet);
+
     }
 
     private void logTxt() {

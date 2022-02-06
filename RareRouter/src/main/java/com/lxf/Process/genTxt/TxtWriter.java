@@ -60,22 +60,4 @@ public class TxtWriter {
         return TxtReader.readBeans();
     }
 
-
-    public static void recordParamClazz(Set<Bean> set) {
-        StringBuilder sb = new StringBuilder();
-        for (Bean bean : set) {
-            if (bean.returnType != null && bean.returnType.length() > 0) {
-                sb.append(bean.returnType.trim());
-                sb.append("\n");
-            }
-            for (String param : bean.paramsList) {
-                if (param != null && param.length() > 0) {
-                    sb.append(param.trim());
-                    sb.append("\n");
-                }
-            }
-        }
-        writeTxt(TxtPath.PATH_SCAN_DATA_OBJ, sb.toString());
-
-    }
 }
