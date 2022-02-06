@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.lxf.Process.configure.TxtPath.DELETE_DIR;
+import static com.lxf.Process.configure.TxtPath.Log_Dir;
 import static com.lxf.Process.configure.TxtPath.LOG_INFO;
 
 public class TxtLogger {
@@ -48,7 +48,7 @@ public class TxtLogger {
         if (delayWrite.size() == 0) {
             return true;
         }
-        TxtCreator.createDir(DELETE_DIR);
+        TxtCreator.createDir(Log_Dir);
         TxtCreator.createFileIfNone(LOG_INFO);
         StringBuilder allTxt = new StringBuilder();
         for (String str : delayWrite) {

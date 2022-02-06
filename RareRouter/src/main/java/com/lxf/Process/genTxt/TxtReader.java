@@ -93,31 +93,4 @@ public class TxtReader {
         return set;
     }
 
-    public static Set<Bean> readBeans() {
-        File filename = new File(TxtPath.PATH_SCAN_RES);
-        Set<Bean> set = new HashSet<>();
-        if (!filename.exists()) {
-            return set;
-        }
-        try {
-            InputStreamReader reader = new InputStreamReader(new FileInputStream(filename));
-            BufferedReader br = new BufferedReader(reader);
-            String line = "";
-            line = br.readLine();
-            while (line != null) {
-                String tmp = line.trim();
-                if (tmp.length() > 0) {
-                    Bean b = Bean.convertStrToBean(tmp);
-                    if (b != null) {
-                        set.add(b);
-                    }
-                }
-                line = br.readLine();
-            }
-        } catch (IOException e) {
-
-        }
-        return set;
-    }
-
 }

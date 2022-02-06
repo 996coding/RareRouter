@@ -54,7 +54,7 @@ public class CoreProcessor extends BaseProcessor {
         TxtLogger.output_in_section("--->>>process方法第 " + processIndex + " 次执行\n");
 
         if (roundEnvironment.processingOver()) {
-            genRecordRouteInfo();
+            recordAnnotationInfo();
             //--------------------------------------------------------
             GenClassBeansImpl.gen(clsSet, filerGen);
             GenMethodBeansImpl.gen(askSet, impSet, filerGen);
@@ -252,15 +252,9 @@ public class CoreProcessor extends BaseProcessor {
         return bean;
     }
 
-    public void genRecordRouteInfo() {
+    public void recordAnnotationInfo() {
         logTxt();
-        if (this.beanSet == null || this.beanSet.size() == 0) {
-            return;
-        }
-
-        Set<Bean> newSet = TxtWriter.writeBeans(this.beanSet);
-
-
+        TxtWriter.writeScanAnnotation(this.beanSet);
     }
 
     private void logTxt() {
