@@ -1,5 +1,6 @@
 package com.lxf;
 
+import com.lxf.Router.AnnotateInterceptor;
 import com.lxf.Router.RareHandler;
 import com.lxf.Router.RareCore;
 import com.lxf.protocol.DataBeanCreator;
@@ -11,14 +12,16 @@ public final class RareApplication {
         RareCore.getRareCore().autoAddRareImpl();
     }
 
-    public static <T> T createImpl(Class<T> service, Object proxyInstance) {
-        return (T) Proxy.newProxyInstance(service.getClassLoader(),
-                new Class<?>[]{service},
-                new RareHandler(service, proxyInstance));
+    public static <T> T createImpl(Class<T> service, Object proxyInstance, AnnotateInterceptor interceptor) {
+        return (T) Proxy.newProxyInstance(service.getClassLoader(), new Class<?>[]{service}, new RareHandler(service, proxyInstance, interceptor));
+    }
+
+    public static <T> T createImpl(Class<T> service, RareHandler handler) {
+        return (T) Proxy.newProxyInstance(service.getClassLoader(), new Class<?>[]{service}, handler);
     }
 
     public static <T> T createImpl(Class<T> service) {
-        return createImpl(service, null);
+        return createImpl(service, null, null);
     }
 
     public static Class<?> annotateClazz(String annotateClazzPath) {

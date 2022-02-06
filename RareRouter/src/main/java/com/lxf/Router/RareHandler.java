@@ -18,13 +18,14 @@ public class RareHandler implements InvocationHandler {
     private Object proxyInstance;
     private Map<String, MethodExecute> executeMap;
     private Map<String, RouteBean> tableMap;
+    private AnnotateInterceptor interceptor;
 
-
-    public RareHandler(Class<?> service, Object proxyInstance) {
+    public RareHandler(Class<?> service, Object proxyInstance, AnnotateInterceptor interceptor) {
         this.service = service;
         this.proxyInstance = proxyInstance;
         this.executeMap = new HashMap<>();
         this.tableMap = new HashMap<>();
+        this.interceptor = interceptor;
     }
 
     @Override
@@ -37,6 +38,9 @@ public class RareHandler implements InvocationHandler {
             return null;
         }
         String annotationPath = annotation.path();
+        if (interceptor != null) {
+            annotationPath = interceptor.onIntercept(annotationPath);
+        }
         if (annotationPath == null || annotationPath.length() == 0) {
             return null;
         }
