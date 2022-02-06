@@ -7,23 +7,31 @@ dependencies {
     annotationProcessor 'com.google.auto.service:auto-service:1.0-rc3'
 }
 
+/*
+-----------------------------------------------
+需要在 gradle.properties 指定一下属性：
+    MavenPath = /home/lv/code/github/RouterMaven
+    GROUDID=com.lxf
+    ARTIFACTID = RareRouter
+    RouterVersion = 2.0
+----------------------------------------------
+*/
 
+/*
+uploadArchives {
+    repositories.mavenDeployer {
+        //maven 本地文件地址
+        def mavenLib = file(getProperty('MavenPath'))
+        repository(url: "file://${mavenLib.absolutePath}")
+        pom.project {
+            version RouterVersion
+            groupId GROUDID
+            artifactId ARTIFACTID
+        }
+    }
 
-
-//uploadArchives {
-//    repositories.mavenDeployer {
-//        //maven 本地文件地址
-//        def mavenLib = file(getProperty('MavenPath'))
-//        repository(url: "file://${mavenLib.absolutePath}")
-//        pom.project {
-//            version RouterVersion
-//            groupId GROUDID
-//            artifactId ARTIFACTID
-//        }
-//    }
-//
-//}
-
+}
+ */
 
 
 sourceCompatibility = "1.7"
