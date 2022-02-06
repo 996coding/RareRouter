@@ -26,8 +26,6 @@ public abstract class BaseProcessor extends AbstractProcessor {
     public static String modulePath;
     public static String systemDirPathSplit;
 
-    public static long buildTime = System.currentTimeMillis();
-
     @Override
     public final synchronized void init(ProcessingEnvironment processingEnvironment) {
         super.init(processingEnvironment);

@@ -3,10 +3,8 @@ package com.lxf.Process;
 import com.google.auto.service.AutoService;
 import com.lxf.Process.base.BaseProcessor;
 import com.lxf.Process.configure.RareXml;
-import com.lxf.Process.configure.ScanIndex;
 import com.lxf.Process.configure.TxtPath;
 import com.lxf.Process.genJava.GenConfig;
-import com.lxf.Process.genTxt.TxtLogger;
 import com.lxf.utils.XmlParser;
 
 import java.io.File;
@@ -22,10 +20,11 @@ public class AheadProcessor extends BaseProcessor {
 
     @Override
     public void init() {
+        genFlagJavaClass();
+
         txtPath = new TxtPath();
         txtPath.init();
-        ScanIndex.initScanInfo();
-        genFlagJavaClass();
+
     }
 
     private void genFlagJavaClass() {
@@ -38,24 +37,6 @@ public class AheadProcessor extends BaseProcessor {
         URI uri = this.filerGen.genJavaClass(sb.toString(), FLAG_CLASS_NAME);
         File flagClassFile = new File(uri);
         initDirPathInfo(flagClassFile.getAbsolutePath());
-        logTxt(flagClassFile.getAbsolutePath());
-    }
-
-    private void logTxt(String flagJavaPath) {
-        StringBuilder log_sb = new StringBuilder();
-        log_sb.append("第 " + ScanIndex.getScanIndex() + "/" + ScanIndex.getScanTotal() + " 次扫描,当前module是：");
-        if (moduleName == null && modulePath == null) {
-            log_sb.append("未知\n");
-            log_sb.append("生产的Java标记类路径是：");
-            log_sb.append(flagJavaPath);
-        } else {
-            log_sb.append(moduleName);
-            log_sb.append("\n");
-            log_sb.append("当前module所在目录：");
-            log_sb.append(modulePath);
-        }
-        log_sb.append("\n");
-        TxtLogger.output_new_section(log_sb.toString());
     }
 
 

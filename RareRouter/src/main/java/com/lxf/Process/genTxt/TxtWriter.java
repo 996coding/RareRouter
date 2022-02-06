@@ -60,22 +60,6 @@ public class TxtWriter {
         return TxtReader.readBeans();
     }
 
-    public static void writeMethodImpClazz(Set<String> classes) {
-        if (classes == null || classes.size() == 0) {
-            return;
-        }
-        StringBuilder sb = new StringBuilder();
-        String readContent = readTxt(TxtPath.PATH_SCAN_PROXY);
-        if (readContent != null && readContent.length() > 0) {
-            sb.append(readContent);
-            sb.append("\n");
-        }
-        for (String s : classes) {
-            sb.append(s);
-            sb.append("\n");
-        }
-        writeTxt(TxtPath.PATH_SCAN_PROXY, sb.toString());
-    }
 
     public static void recordParamClazz(Set<Bean> set) {
         StringBuilder sb = new StringBuilder();
