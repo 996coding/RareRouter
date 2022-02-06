@@ -8,6 +8,7 @@ import com.lxf.Process.base.BaseProcessor;
 import com.lxf.Process.base.Bean;
 import com.lxf.Process.genJava.GenClassBeansImpl;
 import com.lxf.Process.genJava.GenInstanceCreatorImpl;
+import com.lxf.Process.genJava.GenMethodExeImpl;
 import com.lxf.Process.genJava.GenModuleRareImpl;
 import com.lxf.Process.genJava.GenRouterClazzImpl;
 import com.lxf.Process.genJava.GenMethodBeansImpl;
@@ -60,6 +61,7 @@ public class CoreProcessor extends BaseProcessor {
             GenMethodBeansImpl.gen(askSet, impSet, filerGen);
             GenRouterClazzImpl.gen(clsSet, filerGen);
             GenMethodProxyImpl.gen(impSet, filerGen);
+            GenMethodExeImpl.gen(impSet, filerGen);
             GenInstanceCreatorImpl.gen(dataBeanMap, filerGen);
             GenModuleRareImpl.gen(filerGen);//该条必须最后执行
         } else {
