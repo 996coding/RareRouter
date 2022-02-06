@@ -163,26 +163,20 @@ public class RareCore implements ClassBeans, MethodBeans, RouterClazz, MethodPro
     }
 
     @Override
-    public Object proxy(Object instance, Checker checker, String annotationPath, Object... parameters) {
+    public MethodExecute proxy(String annotationPath) {
         for (RareInterface impl : rareImplList_OnLine) {
-            Object methodReturn = impl.methodProxy().proxy(instance, checker, annotationPath, parameters);
-            if (methodReturn == null) {
+            MethodExecute methodProxy = impl.methodProxy().proxy(annotationPath);
+            if (methodProxy == null) {
                 continue;
             }
-            if (methodReturn instanceof MethodReturn) {
-                return null;
-            }
-            return methodReturn;
+            return methodProxy;
         }
         for (RareInterface impl : rareImplList_Local) {
-            Object methodReturn = impl.methodProxy().proxy(instance, checker, annotationPath, parameters);
-            if (methodReturn == null) {
+            MethodExecute methodProxy = impl.methodProxy().proxy(annotationPath);
+            if (methodProxy == null) {
                 continue;
             }
-            if (methodReturn instanceof MethodReturn) {
-                return null;
-            }
-            return methodReturn;
+            return methodProxy;
         }
         return null;
     }

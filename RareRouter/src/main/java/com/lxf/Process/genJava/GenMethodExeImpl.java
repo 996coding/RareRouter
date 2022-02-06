@@ -134,7 +134,7 @@ public class GenMethodExeImpl {
         }
         sb.append(");\n");
         if (voidReturn) {
-            sb.append("        return MethodReturn.NULL;\n");
+            sb.append("        return null;\n");
         }
         return sb.toString();
     }

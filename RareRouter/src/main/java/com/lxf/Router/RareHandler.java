@@ -2,6 +2,8 @@ package com.lxf.Router;
 
 import com.lxf.Annotation.RouterMethod;
 import com.lxf.data.DataChecker;
+import com.lxf.protocol.MethodExecute;
+import com.lxf.protocol.MethodReturn;
 import com.lxf.protocol.RouteBean;
 import com.lxf.protocol.Checker;
 
@@ -36,6 +38,12 @@ public class RareHandler implements InvocationHandler {
             return null;
         }
         Checker checker = new DataChecker(askBean, method);
-        return RareCore.getRareCore().proxy(proxyInstance, checker, annotation.path(), args);
+        MethodExecute methodProxy = RareCore.getRareCore().proxy(askBean.path);
+        Object result = methodProxy.execute(proxyInstance, checker, args);
+        if (result == MethodReturn.ERROR_PARAMETER) {
+            // 参数不匹配
+            return null;
+        }
+        return result;
     }
 }
