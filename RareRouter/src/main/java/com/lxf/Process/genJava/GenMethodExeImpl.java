@@ -3,6 +3,9 @@ package com.lxf.Process.genJava;
 import com.lxf.Process.base.BaseProcessor;
 import com.lxf.Process.base.Bean;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class GenMethodExeImpl {
@@ -11,20 +14,23 @@ public class GenMethodExeImpl {
 
     private static long method_index = 0;
 
-    public static void gen(Set<Bean> set, FilerGen filerGen) {
+    public static Map<String, Bean> gen(Set<Bean> set, FilerGen filerGen) {
 
-        if (set == null || set.size() == 0) {
-            return;
+        Map<String, Bean> exeClazz = new HashMap<>();
+        if (set == null) {
+            return exeClazz;
         }
         for (Bean bean : set) {
-            genEveryOne(bean, filerGen);
+            genEveryOne(bean, filerGen, exeClazz);
         }
 
+        return exeClazz;
     }
 
-    private static void genEveryOne(Bean bean, FilerGen filerGen) {
+    private static void genEveryOne(Bean bean, FilerGen filerGen, Map<String, Bean> exeClazz) {
         CLASS_NAME = Pre_Name + "_" + BaseProcessor.moduleName + "_" + method_index;
         method_index++;
+        exeClazz.put(CLASS_NAME, bean);
 
         StringBuilder sb = new StringBuilder();
         sb.append(class_import());

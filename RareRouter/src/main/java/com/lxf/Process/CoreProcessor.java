@@ -60,8 +60,8 @@ public class CoreProcessor extends BaseProcessor {
             GenClassBeansImpl.gen(clsSet, filerGen);
             GenMethodBeansImpl.gen(askSet, impSet, filerGen);
             GenRouterClazzImpl.gen(clsSet, filerGen);
-            GenMethodProxyImpl.gen(impSet, filerGen);
-            GenMethodExeImpl.gen(impSet, filerGen);
+            Map<String, Bean> methodProxyMap = GenMethodExeImpl.gen(impSet, filerGen);
+            GenMethodProxyImpl.gen(methodProxyMap, filerGen);
             GenInstanceCreatorImpl.gen(dataBeanMap, filerGen);
             GenModuleRareImpl.gen(filerGen);//该条必须最后执行
         } else {
