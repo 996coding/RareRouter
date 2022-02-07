@@ -21,7 +21,7 @@
         android:layout_below="@+id/main_module"
         android:layout_centerVertical="true"
         android:layout_marginTop="10dp"
-        android:text="热修复 方法调用"
+        android:text="jar包插件 方法调用"
         android:textAllCaps="false" />
 
 
