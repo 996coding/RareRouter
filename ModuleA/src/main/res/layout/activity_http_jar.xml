@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".HttpJarActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="70dp"
+        android:text="jar包下载地址："
+        android:textAllCaps="false"
+        android:textSize="14dp" />
+
+    <EditText
+        android:id="@+id/edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="70dp"
+        android:text="http://81.70.151.252/Test.jar"
+        android:textAllCaps="false"
+        android:textSize="14dp" />
+
+    <Button
+        android:id="@+id/http_down_jar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="10dp"
+        android:text="下载jar包"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/local_load_jar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="10dp"
+        android:text="加载jar包"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/clear_local_jar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="10dp"
+        android:text="清空jar包"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/test_method"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="10dp"
+        android:text="调用插件代码"
+        android:textAllCaps="false" />
+</LinearLayout>

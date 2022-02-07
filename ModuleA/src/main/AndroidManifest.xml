@@ -3,7 +3,10 @@
     package="com.lxf.ModuleA">
 
     <application>
-        <activity android:name="com.lxf.ModuleA.ClientActivity"></activity>
+        <activity android:name=".HttpJarActivity"></activity>
+        <activity
+            android:name=".TestActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

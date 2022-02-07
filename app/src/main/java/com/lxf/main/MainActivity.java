@@ -7,7 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.lxf.Annotation.RouterClass;
-import com.lxf.ModuleA.ClientActivity;
+import com.lxf.RareApplication;
+import com.lxf.log.RareLog;
 
 @RouterClass(path = "this_is_activity")
 public class MainActivity extends AppCompatActivity {
@@ -15,20 +16,26 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().setTitle("Main Module");
-
+        getSupportActionBar().setTitle("组件化 Demo");
         setContentView(R.layout.activity_main);
+
+
 
         findViewById(R.id.main_module).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ClientActivity.class);
-                startActivity(intent);
+                RareApplication.startIntent(MainActivity.this, "this_is_TestActivity");
             }
         });
 
+        findViewById(R.id.http_jar).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Class<?> clazz = RareApplication.annotateClazz("http_jar_activity");
+                Intent intent = new Intent(MainActivity.this, clazz);
+                startActivity(intent);
+            }
+        });
     }
-
-
 
 }

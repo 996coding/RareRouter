@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".TestActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/test_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="展示Module A调用Module B的方法"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textSize="22dp" />
+
+            <Button
+                android:id="@+id/test_btn_1"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="30dp"
+                android:text="同步方法"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/test_btn_2"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="30dp"
+                android:text="异步回调方法"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/test_btn_3"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="30dp"
+                android:text="传递集合"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/test_btn_4"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="30dp"
+                android:text="启动activity-->方式1"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/test_btn_5"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="30dp"
+                android:text="启动activity-->方式2"
+                android:textAllCaps="false" />
+            <Button
+                android:id="@+id/test_btn_6"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="30dp"
+                android:text="启动activity-->方式3"
+                android:textAllCaps="false" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

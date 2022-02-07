@@ -26,14 +26,18 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'
 
     implementation project(path: ':ModuleA')
     implementation project(path: ':ModuleB')
 
+    /* 方式一、 libs依赖 RareRouter */
+    implementation files('libs/RareRouter-2.0.jar')
+    annotationProcessor files('libs/RareRouter-2.0.jar')
 
-    implementation 'com.lxf:RareRouter:1.0'
-    annotationProcessor 'com.lxf:RareRouter:1.0'
+
+    /* 方式二、 maven 依赖 RareRouter*/
+//    implementation 'com.lxf:RareRouter:2.0'
+//    annotationProcessor 'com.lxf:RareRouter:2.0'
 
 }

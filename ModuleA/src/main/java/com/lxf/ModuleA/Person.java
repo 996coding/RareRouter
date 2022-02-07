@@ -1,15 +1,22 @@
 package com.lxf.ModuleA;
 
+import com.lxf.Annotation.RouterBean;
 import com.lxf.data.read.Reader;
 import com.lxf.data.RouterParcelable;
 import com.lxf.data.write.Writer;
 
+@RouterBean(path = "annotate.com.lxf.ModuleA.Person")
 public class Person implements RouterParcelable {
     public String name = "";
     public String sex = "";
     public int id = 0;
 
     public Person() {
+    }
+
+    public Person(String name, String sex) {
+        this.name = name;
+        this.sex = sex;
     }
 
     public Person(String name, String sex, int id) {
