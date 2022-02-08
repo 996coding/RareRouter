@@ -10,21 +10,21 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="70dp"
-        android:layout_marginRight="70dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
         android:text="jar包下载地址："
         android:textAllCaps="false"
-        android:textSize="14dp" />
+        android:textSize="15dp" />
 
     <EditText
         android:id="@+id/edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="70dp"
-        android:layout_marginRight="70dp"
-        android:text="http://81.70.151.252/Test.jar"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:text="http://81.70.151.252:8080/file/down/Test.jar"
         android:textAllCaps="false"
-        android:textSize="14dp" />
+        android:textSize="15dp" />
 
     <Button
         android:id="@+id/http_down_jar"
@@ -55,6 +55,18 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginTop="10dp"
-        android:text="调用插件代码"
+        android:text="调用热修复代码"
         android:textAllCaps="false" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:text="demo提供临时测试服务器，可以浏览器打开 http://81.70.151.252:8080/file 将jar包上传。
+        jar包上传前需要进行dex转换。jar包需要依赖 RareRouter Sdk 一起编译。
+        命令：dx --dex --output=aim.jar original.jar"
+        android:textAllCaps="false"
+        android:textSize="15dp" />
 </LinearLayout>

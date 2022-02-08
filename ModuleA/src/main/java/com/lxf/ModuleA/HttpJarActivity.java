@@ -14,6 +14,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.lxf.Annotation.RouterClass;
+import com.lxf.ModuleA.downJar.HttpParameter;
+import com.lxf.ModuleA.downJar.OkHttpDownload;
+import com.lxf.ModuleA.downJar.StatusListener;
 import com.lxf.RareApplication;
 
 import java.io.File;
@@ -70,24 +73,31 @@ public class HttpJarActivity extends AppCompatActivity {
     }
 
     private void downLoadJar() {
-        DownloadUtil.get().download(editText.getText().toString().trim(), downLoadDir, new DownloadUtil.OnDownloadListener() {
+
+        HttpParameter parameter = new HttpParameter(editText.getText().toString().trim(),downLoadDir);
+        OkHttpDownload.downLoadFile(parameter, new StatusListener() {
             @Override
-            public void onDownloadSuccess(final String path) {
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onProgress(int progress, long currentLength, long totalLength) {
+
+            }
+
+            @Override
+            public void onFinish(final String info) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(HttpJarActivity.this, "下载成功!" + path, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HttpJarActivity.this, "下载成功!" + info, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
 
             @Override
-            public void onDownloading(int progress) {
-
-            }
-
-            @Override
-            public void onDownloadFailed(String error) {
+            public void onFail(String errorInfo) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -128,6 +138,7 @@ public class HttpJarActivity extends AppCompatActivity {
         });
 
         dialog.show();
+        //此处设置位置窗体大小，我这里设置为了手机屏幕宽度的3/4  注意一定要在show方法调用后再写设置窗口大小的代码，否则不起效果会
         dialog.getWindow().setLayout((getScreenWidth() / 4 * 3), LinearLayout.LayoutParams.WRAP_CONTENT);
     }
 
