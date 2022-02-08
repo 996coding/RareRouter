@@ -1,6 +1,5 @@
 package com.lxf.Process.genTxt;
 
-import com.lxf.Process.base.BaseProcessor;
 import com.lxf.Process.base.Bean;
 import com.lxf.Process.configure.TxtPath;
 
@@ -26,17 +25,36 @@ public class TxtWriter {
         }
     }
 
-    public static void writeScanAnnotation(Set<Bean> set) {
+    public static void writeScanAnnotation(Set<Bean> clsSet, Set<Bean> bSet, Set<Bean> askSet, Set<Bean> impSet) {
         StringBuilder sb = new StringBuilder();
-        if (set == null || set.size() == 0) {
-            sb.append(BaseProcessor.moduleName + " module has no Rare Annotation.");
-        } else {
-            for (Bean bean : set) {
-                sb.append(bean.toString());
-                sb.append("\n");
-            }
+        for (Bean bean : clsSet) {
+            sb.append(bean.toString());
+            sb.append("\n");
         }
-
+        if (clsSet.size() > 0) {
+            sb.append("\n");
+        }
+        for (Bean bean : bSet) {
+            sb.append(bean.toString());
+            sb.append("\n");
+        }
+        if (bSet.size() > 0) {
+            sb.append("\n");
+        }
+        for (Bean bean : askSet) {
+            sb.append(bean.toString());
+            sb.append("\n");
+        }
+        if (askSet.size() > 0) {
+            sb.append("\n");
+        }
+        for (Bean bean : impSet) {
+            sb.append(bean.toString());
+            sb.append("\n");
+        }
+//        if (sb.length() == 0) {
+//            sb.append(BaseProcessor.moduleName + " module has no Rare Annotation.");
+//        }
         writeTxt(TxtPath.PATH_SCAN_RES, sb.toString());
     }
 

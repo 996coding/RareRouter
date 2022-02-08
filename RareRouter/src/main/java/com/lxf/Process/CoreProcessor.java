@@ -1,5 +1,7 @@
 package com.lxf.Process;
 
+import static com.lxf.Process.genTxt.TxtLogger.logTxt;
+
 import com.google.auto.service.AutoService;
 import com.lxf.Annotation.RouterClass;
 import com.lxf.Annotation.RouterBean;
@@ -32,12 +34,10 @@ import javax.lang.model.element.VariableElement;
 
 @AutoService(Processor.class)
 public class CoreProcessor extends BaseProcessor {
-    private Set<Bean> beanSet = new HashSet<>();
-    private Set<Bean> clsSet = new HashSet<>();
-    private Set<Bean> askSet = new HashSet<>();
-    private Set<Bean> impSet = new HashSet<>();
-    private Map<String, String> dataBeanMap = new HashMap<>();
-    private int processIndex = 0;
+    private Set<Bean> rClassSet = new HashSet<>();
+    private Set<Bean> rMethodAskSet = new HashSet<>();
+    private Set<Bean> rMethodImplSet = new HashSet<>();
+    private Set<Bean> rBeanSet = new HashSet<>();
 
     @Override
     public Set<String> getScanAnnotation() {
@@ -51,19 +51,17 @@ public class CoreProcessor extends BaseProcessor {
 
     @Override
     public void process(RoundEnvironment roundEnvironment) {
-        processIndex++;
-        TxtLogger.output_in_section("--->>>process方法第 " + processIndex + " 次执行\n");
-
         if (roundEnvironment.processingOver()) {
-            recordAnnotationInfo();
-            //--------------------------------------------------------
-            GenClassBeansImpl.gen(clsSet, filerGen);
-            GenMethodBeansImpl.gen(askSet, impSet, filerGen);
-            GenRouterClazzImpl.gen(clsSet, filerGen);
-            Map<String, Bean> methodProxyMap = GenMethodExeImpl.gen(impSet, filerGen);
+            GenClassBeansImpl.gen(rClassSet, filerGen);
+            GenMethodBeansImpl.gen(rMethodAskSet, rMethodImplSet, filerGen);
+            GenRouterClazzImpl.gen(rClassSet, filerGen);
+            Map<String, Bean> methodProxyMap = GenMethodExeImpl.gen(rMethodImplSet, filerGen);
             GenMethodProxyImpl.gen(methodProxyMap, filerGen);
-            GenInstanceCreatorImpl.gen(dataBeanMap, filerGen);
+            GenInstanceCreatorImpl.gen(rBeanSet, filerGen);
             GenModuleRareImpl.gen(filerGen);//该条必须最后执行
+            /* 生成 log 日志*/
+            logTxt(moduleName, rClassSet, rBeanSet, rMethodAskSet, rMethodImplSet);
+            TxtWriter.writeScanAnnotation(this.rClassSet, this.rBeanSet, this.rMethodAskSet, this.rMethodImplSet);
         } else {
             Set<? extends Element> setMethod = roundEnvironment.getElementsAnnotatedWith(RouterMethod.class);
             Set<? extends Element> setClass = roundEnvironment.getElementsAnnotatedWith(RouterClass.class);
@@ -73,11 +71,10 @@ public class CoreProcessor extends BaseProcessor {
                 for (Element e : setMethod) {
                     Bean bean = scanMethodAnnotation(e, RouterMethod.class);
                     if (bean != null) {
-                        this.beanSet.add(bean);
                         if (bean.isInterface.equals("1")) {
-                            this.askSet.add(bean);
+                            this.rMethodAskSet.add(bean);
                         } else {
-                            this.impSet.add(bean);
+                            this.rMethodImplSet.add(bean);
                         }
                     }
                 }
@@ -86,23 +83,27 @@ public class CoreProcessor extends BaseProcessor {
                 for (Element e : setClass) {
                     Bean bean = scanClassAnnotation(e, RouterClass.class);
                     if (bean != null) {
-                        this.beanSet.add(bean);
-                        this.clsSet.add(bean);
+                        this.rClassSet.add(bean);
                     }
                 }
             }
             if (setRouteBean != null && setRouteBean.size() > 0) {
                 for (Element e : setRouteBean) {
+                    Bean bean = scanRouterBeanAnnotation(e, RouterBean.class);
+                    if (bean != null) {
+                        this.rBeanSet.add(bean);
+                    }
+
                     scanRouterBeanAnnotation(e, RouterBean.class);
                 }
             }
         }
     }
 
-    public void scanRouterBeanAnnotation(Element e, Class<RouterBean> clazz) {
+    public Bean scanRouterBeanAnnotation(Element e, Class<RouterBean> clazz) {
         String pkgName = e.asType().toString();
         if (!e.getKind().name().toLowerCase().equals("class")) {
-            return;
+            return null;
         }
         Set<Modifier> modifiers = e.getModifiers();
         if (modifiers != null) {
@@ -117,15 +118,12 @@ public class CoreProcessor extends BaseProcessor {
             }
             if (!isPublic || isAbstract) {
                 //如果是个接口，将会过滤掉
-                return;
+                return null;
             }
         }
         String path = e.getAnnotation(clazz).path();
-        if (dataBeanMap.keySet().contains(path)) {
-            dataBeanMap.remove(path);
-        } else {
-            dataBeanMap.put(path, pkgName);
-        }
+        Bean bean = new Bean(path, pkgName, "0");
+        return bean;
     }
 
     public Bean scanClassAnnotation(Element e, Class<RouterClass> clazz) {
@@ -253,69 +251,4 @@ public class CoreProcessor extends BaseProcessor {
         Bean bean = new Bean(sb_type.toString(), path, pkgName, method, returnType, paramsList, (isInterface ? "1" : "0"));
         return bean;
     }
-
-    public void recordAnnotationInfo() {
-        logTxt();
-        TxtWriter.writeScanAnnotation(this.beanSet);
-    }
-
-    private void logTxt() {
-        String placeholder1 = "!@#$%^&*()-=ABC";
-        String placeholder2 = "!@#$%^&*()-=DEF\n";
-        String placeholder3 = "!@#$%^&*()-=GHI";
-        String placeholder4 = "!@#$%^&*()-=JKL\n";
-        StringBuilder sb = new StringBuilder();
-        String space = "  ";
-        sb.append("当前module中，包含注解 RouterMethod 的方法，有：" + placeholder1 + " 个。\n");
-        sb.append(placeholder2);
-        sb.append("当前module中，包含注解 RouterClass 的类，有：" + placeholder3 + " 个。\n");
-        sb.append(placeholder4);
-        int methodNum = 0, clazzNum = 0;
-        StringBuilder methodBody = new StringBuilder();
-        StringBuilder clazzBody = new StringBuilder();
-        if (this.beanSet != null && this.beanSet.size() > 0) {
-            for (Bean bean : this.beanSet) {
-                if (bean.method == null || bean.method.length() == 0) {
-                    clazzNum++;
-                    clazzBody.append(space);
-                    clazzBody.append(clazzNum + "、注解值：");
-                    clazzBody.append(bean.path);
-                    clazzBody.append(getSpaceString(25 - bean.path.length()));
-                    clazzBody.append("包名：");
-                    clazzBody.append(bean.pkgName);
-                    clazzBody.append("\n");
-                } else {
-                    methodNum++;
-                    methodBody.append(space);
-                    methodBody.append(methodNum + "、注解值：");
-                    methodBody.append(bean.path);
-                    methodBody.append(getSpaceString(25 - bean.path.length()));
-                    methodBody.append("方法名：");
-                    methodBody.append(bean.method);
-                    methodBody.append(getSpaceString(20 - bean.method.length()));
-                    methodBody.append("包名：");
-                    methodBody.append(bean.pkgName);
-                    methodBody.append("\n");
-                }
-            }
-        }
-        String logStr = sb.toString().
-                replace(placeholder1, methodNum + "").
-                replace(placeholder3, clazzNum + "").
-                replace(placeholder2, methodBody.toString()).
-                replace(placeholder4, clazzBody.toString());
-        TxtLogger.output_in_section(logStr);
-    }
-
-    private String getSpaceString(int num) {
-        if (num <= 0) {
-            return "";
-        }
-        StringBuilder space = new StringBuilder();
-        for (int i = 0; i < num; i++) {
-            space.append(" ");
-        }
-        return space.toString();
-    }
-
 }

@@ -46,4 +46,9 @@ public class HelloWorldImpl {
 
         Toast.makeText(context, sb.toString(), Toast.LENGTH_LONG).show();
     }
+
+//    @RouterMethod(path = "static_method_get_words")
+//    public static String getWords() {
+//        return "hello from Module B Static Method.";
+//    }
 }

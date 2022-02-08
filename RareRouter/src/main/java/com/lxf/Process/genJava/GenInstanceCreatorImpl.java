@@ -1,25 +1,26 @@
 package com.lxf.Process.genJava;
 
 import com.lxf.Process.base.BaseProcessor;
+import com.lxf.Process.base.Bean;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class GenInstanceCreatorImpl {
     public static String CLASS_NAME = "InstanceCreatorImpl";
 
-    public static void gen(Map<String, String> map, FilerGen filerGen) {
-
+    public static void gen(Set<Bean> routerBeanSet, FilerGen filerGen) {
         Map<String, String> newMapCreate = new HashMap<>();
         Map<String, String> newMapGen = new HashMap<>();
-        for (String annotate : map.keySet()) {
-            String className = map.get(annotate);
+        for (Bean bean : routerBeanSet) {
+            String annotate = bean.path;
+            String className = bean.pkgName;
             String pkgName = className.replace(".", "_") + "_Impl";
             newMapCreate.put(pkgName, annotate);
-            newMapGen.put(className,pkgName);
+            newMapGen.put(className, pkgName);
             genCreatorImpl(pkgName, className, filerGen);
         }
-
 
         CLASS_NAME = CLASS_NAME + "_" + BaseProcessor.moduleName;
 
