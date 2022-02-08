@@ -4,7 +4,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,6 +14,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.lxf.Annotation.RouterClass;
+import com.lxf.ModuleA.downJar.HttpParameter;
+import com.lxf.ModuleA.downJar.OkHttpDownload;
+import com.lxf.ModuleA.downJar.StatusListener;
 import com.lxf.RareApplication;
 
 import java.io.File;
@@ -71,24 +73,31 @@ public class HttpJarActivity extends AppCompatActivity {
     }
 
     private void downLoadJar() {
-        DownloadUtil.get().download(editText.getText().toString().trim(), downLoadDir, new DownloadUtil.OnDownloadListener() {
+
+        HttpParameter parameter = new HttpParameter(editText.getText().toString().trim(),downLoadDir);
+        OkHttpDownload.downLoadFile(parameter, new StatusListener() {
             @Override
-            public void onDownloadSuccess(final String path) {
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onProgress(int progress, long currentLength, long totalLength) {
+
+            }
+
+            @Override
+            public void onFinish(final String info) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(HttpJarActivity.this, "下载成功!" + path, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HttpJarActivity.this, "下载成功!" + info, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
 
             @Override
-            public void onDownloading(int progress) {
-
-            }
-
-            @Override
-            public void onDownloadFailed(String error) {
+            public void onFail(String errorInfo) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

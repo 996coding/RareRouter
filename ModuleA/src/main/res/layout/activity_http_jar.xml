@@ -10,21 +10,21 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="70dp"
-        android:layout_marginRight="70dp"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_horizontal"
         android:text="jar包下载地址："
         android:textAllCaps="false"
-        android:textSize="14dp" />
+        android:textSize="15dp" />
 
     <EditText
         android:id="@+id/edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="70dp"
-        android:layout_marginRight="70dp"
-        android:text="http://81.70.151.252:8080/file/"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_horizontal"
+        android:text="http://81.70.151.252:8080/file/down/Test.jar"
         android:textAllCaps="false"
-        android:textSize="14dp" />
+        android:textSize="15dp" />
 
     <Button
         android:id="@+id/http_down_jar"

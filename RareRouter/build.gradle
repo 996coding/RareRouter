@@ -17,7 +17,7 @@ dependencies {
 ----------------------------------------------
 */
 
-/*
+
 uploadArchives {
     repositories.mavenDeployer {
         //maven 本地文件地址
@@ -31,7 +31,7 @@ uploadArchives {
     }
 
 }
- */
+
 
 
 sourceCompatibility = "1.7"
