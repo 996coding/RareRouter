@@ -31,11 +31,14 @@
 
 代码示例：
      假设 组件化模块A 调用 模块B 的代码。
+     
      Module A中代码：
+          先定义一个接口：
           public interface HelloWorld {
                     @RouterMethod(path = "say_hello_world")
                     String say(String content);
           }
+          调用Module B的代码：
           HelloWorld impl = RareApplication.createImpl(HelloWorld.class);
           String res = impl.say("Hello World!");
 
