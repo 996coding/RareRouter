@@ -50,6 +50,14 @@
                 android:textAllCaps="false" />
 
             <Button
+                android:id="@+id/test_btn_static_method"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="30dp"
+                android:text="调用静态方法"
+                android:textAllCaps="false" />
+
+            <Button
                 android:id="@+id/test_btn_4"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"

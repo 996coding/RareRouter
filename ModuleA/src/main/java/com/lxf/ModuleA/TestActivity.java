@@ -49,6 +49,12 @@ public class TestActivity extends AppCompatActivity {
                 onClick3();
             }
         });
+        findViewById(R.id.test_btn_static_method).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClick_static();
+            }
+        });
 
         findViewById(R.id.test_btn_4).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,6 +121,13 @@ public class TestActivity extends AppCompatActivity {
     private void onClick6() {
         if (helloWorld != null) {
             helloWorld.startNewPage(TestActivity.this);
+        }
+    }
+
+    private void onClick_static() {
+        if (helloWorld != null) {
+            Toast.makeText(TestActivity.this, helloWorld.getWords(), Toast.LENGTH_LONG).show();
+
         }
     }
 }

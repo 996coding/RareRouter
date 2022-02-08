@@ -62,7 +62,12 @@ public class RareHandler implements InvocationHandler {
             executeMap.put(askBean.path, methodProxy);
         }
         Checker checker = new DataChecker(askBean, method);
-        Object result = methodProxy.execute(proxyInstance, checker, args);
+        Object result = null;
+        if (args == null) {
+            result = methodProxy.execute(proxyInstance, checker);
+        } else {
+            result = methodProxy.execute(proxyInstance, checker, args);
+        }
         if (result == MethodReturn.ERROR_PARAMETER) {
             // 参数不匹配
             return null;

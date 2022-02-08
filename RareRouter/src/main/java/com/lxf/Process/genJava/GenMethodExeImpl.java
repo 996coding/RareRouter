@@ -114,17 +114,25 @@ public class GenMethodExeImpl {
 
     private static String create_sentence(Bean bean) {
         StringBuilder sb = new StringBuilder();
-        sb.append("        " + bean.pkgName + " proxyInstance = null;\n");
-        sb.append("        if (checker.instanceCheck(instance, " + bean.pkgName + ".class)) {\n");
-        sb.append("            proxyInstance = (" + bean.pkgName + ") instance;\n");
-        sb.append("        }else {\n");
-        sb.append("            proxyInstance = new " + bean.pkgName + "();\n");
-        sb.append("        }\n");
         boolean voidReturn = "void".equals(bean.returnType.toLowerCase());
-        if (voidReturn) {
-            sb.append("        proxyInstance." + bean.method + "(");
+        if (bean.isStaticMethodImpl()) {
+            if (voidReturn) {
+                sb.append("        " + bean.pkgName + "." + bean.method + "(");
+            } else {
+                sb.append("        return " + bean.pkgName + "." + bean.method + "(");
+            }
         } else {
-            sb.append("        return proxyInstance." + bean.method + "(");
+            sb.append("        " + bean.pkgName + " proxyInstance = null;\n");
+            sb.append("        if (checker.instanceCheck(instance, " + bean.pkgName + ".class)) {\n");
+            sb.append("            proxyInstance = (" + bean.pkgName + ") instance;\n");
+            sb.append("        }else {\n");
+            sb.append("            proxyInstance = new " + bean.pkgName + "();\n");
+            sb.append("        }\n");
+            if (voidReturn) {
+                sb.append("        proxyInstance." + bean.method + "(");
+            } else {
+                sb.append("        return proxyInstance." + bean.method + "(");
+            }
         }
         for (int i = 0; i < bean.paramsList.size(); i++) {
             sb.append("(" + bean.paramsList.get(i) + ") result.parameterArray[" + i + "]");
@@ -138,5 +146,4 @@ public class GenMethodExeImpl {
         }
         return sb.toString();
     }
-
 }

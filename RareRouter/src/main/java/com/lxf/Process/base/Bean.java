@@ -50,6 +50,10 @@ public class Bean {
         this.type = "0";
     }
 
+    public boolean isStaticMethodImpl() {
+        return "100".equals(type);
+    }
+
     @Override
     public String toString() {
         String str = "path=" + path + '#' +
