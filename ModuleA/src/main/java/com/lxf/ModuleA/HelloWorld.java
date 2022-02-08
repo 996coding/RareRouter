@@ -18,4 +18,7 @@ public interface HelloWorld {
 
     @RouterMethod(path = "say_hello_world3")
     void say(Context context, List<Person> list);
+
+    @RouterMethod(path = "static_method_get_words")
+    String getWords();
 }
