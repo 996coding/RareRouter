@@ -163,7 +163,7 @@ public class HttpJarActivity extends AppCompatActivity {
 
             Object obj = localConstructor.newInstance(new Object[]{});
 
-            Toast.makeText(HttpJarActivity.this, "--加载完成--", Toast.LENGTH_SHORT).show();
+            Toast.makeText(HttpJarActivity.this, "--加载完成-->默认反射类："+clazzName, Toast.LENGTH_SHORT).show();
 
 
         } catch (Exception e) {

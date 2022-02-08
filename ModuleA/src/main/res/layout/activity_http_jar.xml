@@ -64,9 +64,12 @@
         android:layout_marginTop="14dp"
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"
-        android:text="demo提供临时测试服务器，可以浏览器打开 http://81.70.151.252:8080/file 将jar包上传。
-        jar包上传前需要进行dex转换。jar包需要依赖 RareRouter Sdk 一起编译。
+        android:text="
+        临时测试服务器，浏览器打开 http://81.70.151.252:8080/file 将插件jar包上传。\n
+        jar包上传前需要进行dex转换。jar包需要依赖 RareRouter Sdk 一起编译。\n
         命令：dx --dex --output=aim.jar original.jar"
         android:textAllCaps="false"
-        android:textSize="15dp" />
+        android:textAlignment="textStart"
+        android:textSize="15dp"
+        tools:ignore="RtlCompat" />
 </LinearLayout>
