@@ -2,7 +2,7 @@ package com.lxf.Router;
 
 import com.lxf.Annotation.RouterMethod;
 import com.lxf.data.DataChecker;
-import com.lxf.protocol.MethodExecute;
+import com.lxf.protocol.MethodExecutor;
 import com.lxf.protocol.MethodReturn;
 import com.lxf.protocol.RouteBean;
 import com.lxf.protocol.Checker;
@@ -16,7 +16,7 @@ public class RareHandler implements InvocationHandler {
 
     private Class<?> service;
     private Object proxyInstance;
-    private Map<String, MethodExecute> executeMap;
+    private Map<String, MethodExecutor> executeMap;
     private Map<String, RouteBean> tableMap;
     private AnnotateInterceptor interceptor;
 
@@ -53,7 +53,7 @@ public class RareHandler implements InvocationHandler {
             tableMap.put(annotationPath, askBean);
         }
 
-        MethodExecute methodProxy = executeMap.get(askBean.path);
+        MethodExecutor methodProxy = executeMap.get(askBean.path);
         if (methodProxy == null) {
             methodProxy = RareCore.getRareCore().proxy(askBean.path);
             if (methodProxy == null) {
@@ -62,12 +62,7 @@ public class RareHandler implements InvocationHandler {
             executeMap.put(askBean.path, methodProxy);
         }
         Checker checker = new DataChecker(askBean, method);
-        Object result = null;
-        if (args == null) {
-            result = methodProxy.execute(proxyInstance, checker);
-        } else {
-            result = methodProxy.execute(proxyInstance, checker, args);
-        }
+        Object result = methodProxy.execute(proxyInstance, checker, args);
         if (result == MethodReturn.ERROR_PARAMETER) {
             // 参数不匹配
             return null;

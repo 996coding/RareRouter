@@ -30,7 +30,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_marginTop="30dp"
-                android:text="同步方法"
+                android:text="同步方法 方式一"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/test_btn_1_2"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="30dp"
+                android:text="同步方法 方式二"
                 android:textAllCaps="false" />
 
             <Button

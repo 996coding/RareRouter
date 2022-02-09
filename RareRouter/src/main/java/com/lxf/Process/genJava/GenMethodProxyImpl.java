@@ -47,7 +47,7 @@ public class GenMethodProxyImpl {
     private static String method_head() {
         StringBuilder sb = new StringBuilder();
         sb.append("    @Override\n");
-        sb.append("    public MethodExecute proxy(String annotationPath) {\n");
+        sb.append("    public MethodExecutor proxy(String annotationPath) {\n");
         return sb.toString();
     }
 

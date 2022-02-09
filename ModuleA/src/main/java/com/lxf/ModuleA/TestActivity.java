@@ -34,6 +34,12 @@ public class TestActivity extends AppCompatActivity {
                 onClick1();
             }
         });
+        findViewById(R.id.test_btn_1_2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClick1_2();
+            }
+        });
 
         findViewById(R.id.test_btn_2).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +86,12 @@ public class TestActivity extends AppCompatActivity {
         if (helloWorld != null) {
             Toast.makeText(TestActivity.this, helloWorld.say("你好！Hello World!"), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void onClick1_2() {
+        Object result = RareApplication.executeMethod("say_hello_world",null);
+        Toast.makeText(TestActivity.this, result.toString(), Toast.LENGTH_SHORT).show();
+
     }
 
     private void onClick2() {

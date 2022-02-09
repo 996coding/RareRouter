@@ -9,8 +9,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class GenMethodExeImpl {
-    private static String CLASS_NAME = "MethodExecuteImpl";
-    private static final String Pre_Name = "MethodExecuteImpl";
+    private static String CLASS_NAME = "MethodExecutorImpl";
+    private static final String Pre_Name = "MethodExecutorImpl";
 
     private static long method_index = 0;
 
@@ -61,7 +61,7 @@ public class GenMethodExeImpl {
     private static String class_head() {
         return "public class " +
                 CLASS_NAME +
-                " implements MethodExecute { \n\n";
+                " implements MethodExecutor { \n\n";
     }
 
     private static String clazz_tail() {

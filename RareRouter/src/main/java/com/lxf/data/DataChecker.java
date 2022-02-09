@@ -58,8 +58,14 @@ public class DataChecker implements Checker {
             return result;
         }
         Class<?>[] parameters = askMethod.getParameterTypes();
-        if (parameters.length != parameterArray.length) {
+        if (parameterArray == null){
+            result.parameterArray = new Object[parameters.length];
+            result.isOk = true;
             return result;
+        }else {
+            if (parameters.length != parameterArray.length) {
+                return result;
+            }
         }
         result.parameterArray = parameterArray;
         for (int i = 0; i < parameters.length; i++) {
