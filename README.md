@@ -1,21 +1,10 @@
 # RareRouter
-简介：该路由框架主要用于解决android组件化不同Module之间方法调用、activity启动等。
-     该代码仓库中，main分支为demo示例，用来参考如何使用，SourceCode分支为jar包源码。
-
-原理：不同module之间，将需要相互调用的方法加上相应的注解。编译时，该框架通过识别注解，同时自动生成一些java文件，
-     这些java文件将调用和被调用方关联起来。运行时，调用方通过该框架去调用被调用方的实现方法。
-
-特点：1、使用简单，只需maven依赖、增加一个配置文件RareRouter.xml。
-     2、App运行时，不需要初始化，直接使用，不影响启动时间。
-     3、App运行时，路由表的生成0反射，避免大量反射引起性能问题。
-     4、App运行时，路由表存在于方法区域，不会在堆区占用内存。
-     5、使用方式类似于Spring、retrofit框架。
-     6、module之间方法调用，不需要使用公共common-module或者base-module做胶水连接。
-     7、module之间方法调用，参数、返回值支持基本数据类型、复杂数据类型(需要实现RouterParcelable接口)，复杂数据类型自动转换。
-     8、module之间方法调用，支持同步、异步、回调。
+简介：该路由框架用于android组件化、插件化。解决组件化中不同module之间方法访问问题；解决插件化中访问插件方法问题。
+     该代码仓库中，main分支为demo示例，SourceCode分支为框架源码。
 
 
-使用方法：
+如何使用：
+编译配置，以下3种选择一种即可：
      1、maven依赖方式。
         参与编译的module中添加：
           implementation 'com.lxf:RareRouter:2.0'
@@ -34,21 +23,28 @@
      
      Module A中代码：
           先定义一个接口：
-          public interface HelloWorld {
+          public interface HelloWorld_Visitor {
                     @RouterMethod(path = "say_hello_world")
                     String say(String content);
           }
           调用Module B的代码：
-          HelloWorld impl = RareApplication.createImpl(HelloWorld.class);
-          String res = impl.say("Hello World!");
+          HelloWorld_Visitor visitor = RareApplication.createImpl(HelloWorld_Visitor.class);
+          String res = visitor.say("Hello World!");//该行代码调用到了Module B的代码
 
      Module B中代码(ModuleB也可以是热加载插件)：
-          public class HelloWorldImpl {
+          public class HelloWorld_Provider {
                     @RouterMethod(path = "say_hello_world")
                     public String say(String content) {
-                         return content + "->HelloWorldImpl";
+                         return content + "->HelloWorld_Provider";
                     }
           }
+     运行结果：
+     当Module A中执行 String res = visitor.say("Hello World!") 时，将会调用Module B的HelloWorld_Provider中
+     的say方法，res将被赋值："Hello World!->HelloWorld_Provider"
+
+     备注：插件化中，插件必须和RareRouter一起编译，宿主需要反射插件中一个固定类："com.lxf.genCode.ModuleRareImpl_插件名",
+          该类是编译时候自动生成，无需手动编写，详细使用示例见demo源码中HttpJarActivity。
+
 
 
 

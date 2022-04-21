@@ -152,6 +152,7 @@ public class HttpJarActivity extends AppCompatActivity {
             return;
         }
         String clazzName = "com.lxf.genCode.ModuleRareImpl_" + jarName.substring(0,jarName.indexOf("."));
+        // "com.lxf.genCode.ModuleRareImpl_插件名"
 
         String tmpPath = getApplicationContext().getDir("Jar", 0).getAbsolutePath();
         DexClassLoader cl = new DexClassLoader(jarPath, tmpPath, null, this.getClass().getClassLoader());
