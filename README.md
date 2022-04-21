@@ -7,9 +7,9 @@
 ## 如何使用：
 ### 一、配置文件。
    项目根目录添加配置文件：RareRouter.xml,配置文件内容如下：  
-     &lt;Rare AppModule="app"&gt;
-           &lt;Log dir="./app/build" /&gt;
-     &lt;/Rare&gt;
+     &lt;Rare AppModule="app"&gt;  
+           &lt;Log dir="./app/build" /&gt;  
+     &lt;/Rare&gt;  
      其中，AppModule属性值为项目的ApplicationModule名称(主Module名字)；log标签中dir属性为编译日志存储目录。
      
 ### 二、编译配置(3选1即可)：
