@@ -4,7 +4,15 @@
 
 
 如何使用：
-编译配置，以下3种选择一种即可：
+一、配置文件。
+     项目根目录添加配置文件：RareRouter.xml,配置文件内容如下：
+        <?xml version="1.0" encoding="UTF-8"?>
+        <Rare AppModule="app">
+            <Log dir="./app/build" />
+        </Rare>
+     其中，AppModule属性值为项目的ApplicationModule名称(主Module名字)；log标签中dir属性为编译日志存储目录。
+     
+二、编译配置(3选1即可)：
      1、maven依赖方式。
         参与编译的module中添加：
           implementation 'com.lxf:RareRouter:2.0'
@@ -18,7 +26,7 @@
      3、工程源码依赖。
         参考代码仓库的SourceCode分支。
 
-代码示例：
+三、代码示例：
      假设 组件化模块A 调用 模块B 的代码。
      
      Module A中代码：
