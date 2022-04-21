@@ -8,7 +8,7 @@ import com.lxf.Annotation.RouterMethod;
 
 import java.util.List;
 
-public class HelloWorldImpl {
+public class HelloWorld_Provider {
 
     @RouterMethod(path = "new_page_demo_activity")
     public void startNewPage(Context context) {
@@ -18,15 +18,15 @@ public class HelloWorldImpl {
 
     @RouterMethod(path = "say_hello_world")
     public String say(String content) {
-        return content + "->HelloWorldImpl";
+        return content + "->HelloWorld_Provider";
     }
 
     @RouterMethod(path = "say_hello_world2")
     public void say(final Context context, String str, CallBack2 callBack2) {
-        callBack2.returnCallBackSth(str + "->HelloWorldImpl", new CallBack3() {
+        callBack2.returnCallBackSth(str + "->HelloWorld_Provider", new CallBack3() {
             @Override
             public void returnSth(String sth) {
-                Toast.makeText(context, sth + "->HelloWorldImpl", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, sth + "->HelloWorld_Provider", Toast.LENGTH_LONG).show();
             }
         });
     }

@@ -63,9 +63,9 @@ public class HttpJarActivity extends AppCompatActivity {
         findViewById(R.id.test_method).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HelloWorld helloWorld = RareApplication.createImpl(HelloWorld.class);
-                if (helloWorld != null) {
-                    String str = helloWorld.say("调用hotfix代码");
+                HelloWorld_Visitor visitor = RareApplication.createImpl(HelloWorld_Visitor.class);
+                if (visitor != null) {
+                    String str = visitor.say("调用hotfix代码");
                     Toast.makeText(HttpJarActivity.this, str, Toast.LENGTH_SHORT).show();
                 }
             }

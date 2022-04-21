@@ -18,7 +18,7 @@ import java.util.List;
 public class TestActivity extends AppCompatActivity {
 
     private TextView textView;
-    HelloWorld helloWorld;
+    HelloWorld_Visitor visitor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,7 @@ public class TestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_test);
 
         textView = findViewById(R.id.test_text_view);
-        helloWorld = RareApplication.createImpl(HelloWorld.class);
+        visitor = RareApplication.createImpl(HelloWorld_Visitor.class);
         findViewById(R.id.test_btn_1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,14 +77,14 @@ public class TestActivity extends AppCompatActivity {
     }
 
     private void onClick1() {
-        if (helloWorld != null) {
-            Toast.makeText(TestActivity.this, helloWorld.say("你好！Hello World!"), Toast.LENGTH_SHORT).show();
+        if (visitor != null) {
+            Toast.makeText(TestActivity.this, visitor.say("你好！Hello World!"), Toast.LENGTH_SHORT).show();
         }
     }
 
     private void onClick2() {
-        if (helloWorld != null) {
-            helloWorld.say(TestActivity.this, "你好！Hello World!", new CallBack2() {
+        if (visitor != null) {
+            visitor.say(TestActivity.this, "你好！Hello World!", new CallBack2() {
                 @Override
                 public void returnSth(String sth) {
                     Toast.makeText(TestActivity.this, sth, Toast.LENGTH_LONG).show();
@@ -100,11 +100,11 @@ public class TestActivity extends AppCompatActivity {
     }
 
     private void onClick3() {
-        if (helloWorld != null) {
+        if (visitor != null) {
             List<Person> list = new ArrayList<>();
             list.add(new Person("张三", "男"));
             list.add(new Person("Tom", "boy"));
-            helloWorld.say(TestActivity.this, list);
+            visitor.say(TestActivity.this, list);
         }
     }
 
@@ -119,14 +119,14 @@ public class TestActivity extends AppCompatActivity {
     }
 
     private void onClick6() {
-        if (helloWorld != null) {
-            helloWorld.startNewPage(TestActivity.this);
+        if (visitor != null) {
+            visitor.startNewPage(TestActivity.this);
         }
     }
 
     private void onClick_static() {
-        if (helloWorld != null) {
-            Toast.makeText(TestActivity.this, helloWorld.getWords(), Toast.LENGTH_LONG).show();
+        if (visitor != null) {
+            Toast.makeText(TestActivity.this, visitor.getWords(), Toast.LENGTH_LONG).show();
 
         }
     }
