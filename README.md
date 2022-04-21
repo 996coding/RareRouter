@@ -7,12 +7,15 @@
 ## 如何使用：
 ### 一、配置文件。  
      项目根目录添加配置文件：RareRouter.xml。  
-     配置文件内容如下：   
+     配置文件内容如下：     
      <?xml version="1.0" encoding="UTF-8"?>  
-     &lt;Rare AppModule="app"&gt;  
-           &lt;Log dir="./app/build" /&gt;  
-     &lt;/Rare&gt;  
-     其中，AppModule属性值为项目的ApplicationModule名称(主Module名字)；log标签中dir属性为编译日志存储目录。
+     <!--    根节点至少包含一个AppModule属性,属性值为项目的ApplicationModule名称-->  
+     <Rare AppModule="app">    
+      <!--    指定log输出日志的目录，默认目录：rootDir/ApplicationModule/build-->  
+      <!--    rootDir代表项目根目录路径，ApplicationModule代表主module名字-->  
+      <Log dir="./app/build" />  
+    </Rare>  
+     
      
 ### 二、编译配置(3选1即可)：
      1、maven依赖方式。
