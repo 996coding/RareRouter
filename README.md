@@ -5,8 +5,9 @@
 
 
 ## 如何使用：
-### 一、配置文件。
-   项目根目录添加配置文件：RareRouter.xml,配置文件内容如下：  
+### 一、配置文件。  
+   项目根目录添加配置文件：RareRouter.xml,配置文件内容如下： 
+     &lt;?xml version="1.0" encoding="UTF-8"?&gt;  
      &lt;Rare AppModule="app"&gt;  
            &lt;Log dir="./app/build" /&gt;  
      &lt;/Rare&gt;  
