@@ -1,17 +1,18 @@
 # RareRouter
-简介：该路由框架用于android组件化、插件化。解决组件化中不同module之间方法访问问题；解决插件化中访问插件方法问题。
-     该代码仓库中，main分支为demo示例，SourceCode分支为框架源码。
+## 简介：  
+   该路由框架用于android组件化、插件化。解决组件化中不同module之间方法访问问题；解决插件化中访问插件方法问题。
+   该代码仓库中，main分支为demo示例，SourceCode分支为框架源码。
 
 
-如何使用：
-一、配置文件。
-   项目根目录添加配置文件：RareRouter.xml,配置文件内容如下：
+## 如何使用：
+### 一、配置文件。
+   项目根目录添加配置文件：RareRouter.xml,配置文件内容如下：  
      <Rare AppModule="app">
            <Log dir="./app/build" />
      </Rare>
      其中，AppModule属性值为项目的ApplicationModule名称(主Module名字)；log标签中dir属性为编译日志存储目录。
      
-二、编译配置(3选1即可)：
+### 二、编译配置(3选1即可)：
      1、maven依赖方式。
         参与编译的module中添加：
           implementation 'com.lxf:RareRouter:2.0'
@@ -25,7 +26,7 @@
      3、工程源码依赖。
         参考代码仓库的SourceCode分支。
 
-三、代码示例：
+### 三、代码示例：
      假设 组件化模块A 调用 模块B 的代码。
      
      Module A中代码：
