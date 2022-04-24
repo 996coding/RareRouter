@@ -17,7 +17,8 @@
     </Rare>  
      
      
-### 二、编译配置(3选1即可)：
+### 二、编译配置：
+     application module需要依赖每个library module，library module之间可以不存在任何依赖。以下编译配置3选1即可。
      1、maven依赖方式。
         参与编译的module中添加：
           implementation 'com.lxf:RareRouter:2.0'
