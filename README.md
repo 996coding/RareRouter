@@ -1,4 +1,7 @@
 # RareRouter
+
+<a href="https://github.com/creekrouter/creekrouter_for_android">请移步至CreekRouter,本仓库不再维护</a>
+
 ## 简介：  
      该框架用于android组件化、插件化。解决组件化中不同module之间方法访问问题；解决插件化中访问插件方法问题。
      该代码仓库中，main分支为demo示例，SourceCode分支为框架源码。
